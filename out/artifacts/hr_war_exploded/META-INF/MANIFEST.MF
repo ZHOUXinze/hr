@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: hr
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: zhoux
+Implementation-Vendor-Id: com.manage
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8
+Main-Class: ${start-class}
+
