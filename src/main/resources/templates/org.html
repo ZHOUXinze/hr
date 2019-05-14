@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>组织结构设置</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <!--<link href="../build/css/custom.min.css" rel="stylesheet">-->
+
+    <style>
+        ul li{
+            list-style: none;
+        }
+        ul .lefttop{
+            width: 338px;
+            display: inline-block;
+            height: 40px;
+            vertical-align: middle;
+        }
+        ul .leftfooter1{
+            width: 600px;
+            display: inline-block;
+            height: 40px;
+            vertical-align: middle;
+
+        }
+        ul .leftfooter{
+            width: 600px;
+            display: inline-block;
+            height: 80px;
+            line-height: 20px;
+            vertical-align: middle;
+
+        }
+        .leftl{
+            float: left;
+            position: relative;
+        }
+        .rightr{
+            position: absolute;
+            left: 200px;
+        }
+
+    </style>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 ">
+            <div class="left_col scroll-view">
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="leftl">
+
+                    <ul class="nav side-menu">
+
+                        <li><a><span class="fa fa-chevron-down">&nbsp;</span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 我的工作平台 </font></font></a>
+                            <ul class="nav child_menu">
+                                <li><a href="daibanliebiao.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;代办列表</font></font></a></li>
+                                <li><a href="xiugaimima.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;修改密码</font></font></a></li>
+
+                            </ul>
+                        </li>
+                        <li><a><span class="fa fa-chevron-down">&nbsp;</span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">系统设置 </font></font></a>
+                            <ul class="nav child_menu">
+                                <li><a href="form.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;组织结构设置</font></font></a></li>
+                                <li><a href="form_advanced.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;用户管理</font></font></a></li>
+                                <li><a href="form_validation.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;职位设置</font></font></a></li>
+                                <li><a href="form_wizards.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;职称设置</font></font></a></li>
+                                <li><a href="form_upload.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;酬薪项目设置</font></font></a></li>
+
+                            </ul>
+                        </li>
+                        <li class="active"><a><span class="fa fa-chevron-down">&nbsp;</span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font></a>
+                            <ul class="nav child_menu" style="display: block;">
+                                <li class="current-page"><a href="general_elements.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪标准管理</font></font></a></li>
+                                <li><a href="media_gallery.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;酬薪发放管理</font></font></a></li>
+
+                            </ul>
+                        </li>
+                        <li><a><span class="fa fa-chevron-down">&nbsp;</span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 人事管理</font></font></a>
+                            <ul class="nav child_menu">
+                                <li><a href="tables.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;人事档案管理</font></font></a></li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="rightr">
+            <div class="page-title">
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                    <ul>
+                        <li class="lefttop">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgCode">组织编码:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="orgCode" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="lefttop">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgBelong">所属组织:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="orgBelong" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="lefttop">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgAbbr">组织简称:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="orgAbbr" name="orgAbbr" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="lefttop">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgName">组织全称:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="orgName" name="orgName" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="leftfooter1">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="leftfooter">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="Info">简介:</label>
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <textarea class="form-control" ></textarea>
+                                </div>
+                            </div>
+                            <br/>
+                        </li><br/>
+
+                        <li class="leftfooter">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="zhengzhi">备注:</label>
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <textarea class="form-control" ></textarea>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                    <ul class="form-group">
+                        <li class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">保存</button>
+                            <button type="submit" class="btn btn-success">提交</button>
+                        </li>
+                    </ul>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- validator -->
+<script src="../vendors/validator/validator.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+
+<!-- validator -->
+<script>
+    // initialize the validator function
+    validator.message.date = 'not a real date';
+
+    // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+    $('form')
+        .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+        .on('change', 'select.required', validator.checkField)
+        .on('keypress', 'input[required][pattern]', validator.keypress);
+
+    $('.multi.required').on('keyup blur', 'input', function() {
+        validator.checkField.apply($(this).siblings().last()[0]);
+    });
+
+    $('form').submit(function(e) {
+        e.preventDefault();
+        var submit = true;
+
+        // evaluate the form using generic validaing
+        if (!validator.checkAll($(this))) {
+            submit = false;
+        }
+
+        if (submit)
+            this.submit();
+
+        return false;
+    });
+</script>
+<!-- /validator -->
+</body>
+</html>
