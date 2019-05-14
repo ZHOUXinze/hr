@@ -40,6 +40,4 @@ public class Dictionary {
         this.dateName = dateName;
     }
 
-    static Map<Integer, List<Dictionary>> dataMap;
-
 }

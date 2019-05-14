@@ -1,8 +1,10 @@
 package com.manage.hr.dao;
 
-import java.util.List;
-import java.util.Map;
+import com.manage.hr.entity.Dictionary;
+import org.springframework.stereotype.Repository;
 
-public interface DataDao {
-    Map<Integer, List> dictionary();
+import java.util.List;
+@Repository
+public interface DataDao{
+    List<Dictionary> listDictionary();
 }

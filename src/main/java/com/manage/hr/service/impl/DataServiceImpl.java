@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-
 @Service
-public class SalaryServiceImpl {
+public class DataServiceImpl implements DataService {
+    @Resource
+    private DataDao dataDao;
 
+    @Override
+    public List<Dictionary> listDictionary() {
+       return dataDao.listDictionary();
+    }
 }
