@@ -1,11 +1,13 @@
 package com.manage.hr.entity;
 
+import java.util.List;
+import java.util.Map;
+
 public class Dictionary {
     private Integer id;
     private String dataType;
     private String dataCode;
     private String dateName;
-
     public Integer getId() {
         return id;
     }
@@ -37,4 +39,7 @@ public class Dictionary {
     public void setDateName(String dateName) {
         this.dateName = dateName;
     }
+
+    static Map<Integer, List<Dictionary>> dataMap;
+
 }
