@@ -7,4 +7,8 @@
         select `id`,`depCode`,`depName`,`abbreviation`,`higherOffice`,`address`,`introduction`,`remark`,`enable`
         from department;
     </select>
+    <select id="cacheDepartment" parameterType="int" resultType="Department">
+        select `id`,`depCode`,`depName`,`higherOffice`
+        from department;
+    </select>
 </mapper>

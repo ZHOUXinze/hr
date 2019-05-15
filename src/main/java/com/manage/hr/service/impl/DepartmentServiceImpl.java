@@ -17,4 +17,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> listDepartment() {
         return departmentDao.listDepartment();
     }
+
+    @Override
+    public List<Department> cacheDepartment() {
+        return departmentDao.cacheDepartment();
+    }
 }

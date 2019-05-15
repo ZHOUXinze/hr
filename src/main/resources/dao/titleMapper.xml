@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.hr.dao.TitleDao">
+    <select id="listTitle" parameterType="int" resultType="Title">
+        select `id`,`titleCode`,`titleName`,`depId`,`introduction`,`remark`,`enable`
+        from `title`
+    </select>
+    <select id="cacheTitle" parameterType="int" resultType="Title">
+        select `id`,`titleCode`,`titleName`,`depId`
+        from `title`
+    </select>
+</mapper>

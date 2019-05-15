@@ -1,8 +1,5 @@
 package com.manage.hr.entity;
 
-import java.util.List;
-import java.util.Map;
-
 public class Dictionary {
     private Integer id;
     private String dataType;

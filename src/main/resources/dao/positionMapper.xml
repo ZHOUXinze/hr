@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.hr.dao.PositionDao">
+    <select id="listPosition" parameterType="int" resultType="Position">
+        select `id`,`posCode`,`posName`,`posClass`,`depId`,`introduction`,`remark`,`enable`
+        from `position`
+    </select>
+    <select id="cachePosition" parameterType="int" resultType="Position">
+          SELECT `id`,`posCode`,`posName` FROM `position`
+    </select>
+</mapper>
