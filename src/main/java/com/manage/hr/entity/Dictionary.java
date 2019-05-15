@@ -7,7 +7,7 @@ public class Dictionary {
     private Integer id;
     private String dataType;
     private String dataCode;
-    private String dateName;
+    private String dataName;
     public Integer getId() {
         return id;
     }
@@ -32,12 +32,12 @@ public class Dictionary {
         this.dataCode = dataCode;
     }
 
-    public String getDateName() {
-        return dateName;
+    public String getDataName() {
+        return dataName;
     }
 
-    public void setDateName(String dateName) {
-        this.dateName = dateName;
+    public void setDataName(String dateName) {
+        this.dataName = dateName;
     }
 
 }

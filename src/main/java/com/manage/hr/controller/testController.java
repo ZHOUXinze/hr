@@ -20,9 +20,8 @@ public class testController {
     @RequestMapping(value = "/test")
     public String test(Model model) {
         LoadDataBase.loadDictionary();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("Dictionary");
-        Dictionary dictionary = dictionaryList.get(0);
-        model.addAttribute("id", dictionary.getId());
+        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+        model.addAttribute("id", dictionaryList.get(0).getDataName());
         return "test";
     }
 
