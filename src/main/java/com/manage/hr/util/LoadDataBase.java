@@ -1,24 +1,18 @@
 package com.manage.hr.util;
 
-import com.manage.hr.entity.Department;
 import com.manage.hr.entity.Dictionary;
-import com.manage.hr.entity.Position;
-import com.manage.hr.entity.Title;
-import com.manage.hr.service.DataService;
+import com.manage.hr.service.impl.DataServiceImpl;
 
 import java.util.List;
 import java.util.Map;
 
 public class LoadDataBase {
-    private DataService dataService;
-    public static Map<String, List<Dictionary>> DICTIONARY;
-    public static Map<String, List<Position>> POSITION;
-    public static Map<String, List<Title>> TITILE;
-    public static Map<String, List<Department>> DEPARTMENT;
+    private DataServiceImpl dataServiceImpl = new DataServiceImpl();
+    public static Map<String, List> DICTIONARY;
 
-    public void loadDataBase(){
-        List<Dictionary> dictionaryList = dataService.listDictionary();
+    public void loadDictionary(){
+        List<Dictionary> dictionaryList = dataServiceImpl.listDictionary();
         DICTIONARY.put("dictionary",dictionaryList);
-        System.out.println(dictionaryList.get(1).getDateName());
     }
+
 }
