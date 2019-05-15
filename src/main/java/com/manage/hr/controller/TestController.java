@@ -42,4 +42,8 @@ public class TestController {
         return "test";
     }
 
+    @RequestMapping(value = "/xinzidengji")
+    public String main(){
+        return "xinzidengji" ;
+    }
 }
