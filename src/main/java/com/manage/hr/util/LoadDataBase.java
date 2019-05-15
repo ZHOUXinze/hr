@@ -23,14 +23,15 @@ public class LoadDataBase {
 //        return LoadDatabaseHolder.INSTANCE;
 //    }
     @Resource
-    private static DictionaryService dataService;
+    private static DictionaryService dictionaryService;
     @Resource
     private static DepartmentService departmentService;
 
     public static Map<String, List> DATA_BASE = new HashMap<>();
 
     public static void loadDictionary() {
-        List<Dictionary> dictionaryList = dataService.listDictionary();
+        List<Dictionary> dictionaryList = dictionaryService.listDictionary();
+        System.out.println(2);
         DATA_BASE.put("dictionary", dictionaryList);
     }
 
