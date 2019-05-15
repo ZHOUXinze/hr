@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-public class testController {
+public class TestController {
 
     @Resource
     private DictionaryService dictionaryService;
