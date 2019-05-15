@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class LoadDataBase {
     private DataServiceImpl dataServiceImpl = new DataServiceImpl();
-    public static Map<String, List> DICTIONARY;
+    public static Map<String, List> DATA_BASE;
 
     public void loadDictionary(){
         List<Dictionary> dictionaryList = dataServiceImpl.listDictionary();
-        DICTIONARY.put("dictionary",dictionaryList);
+        DATA_BASE.put("dictionary",dictionaryList);
     }
 
 }
