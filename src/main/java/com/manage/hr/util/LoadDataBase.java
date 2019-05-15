@@ -1,13 +1,16 @@
 package com.manage.hr.util;
 
+import com.manage.hr.entity.Department;
 import com.manage.hr.entity.Dictionary;
-import com.manage.hr.service.impl.DataServiceImpl;
+import com.manage.hr.service.impl.DictionaryServiceImpl;
+import com.manage.hr.service.impl.DepartmentServiceImpl;
 
 import java.util.List;
 import java.util.Map;
 
 public class LoadDataBase {
-    private DataServiceImpl dataServiceImpl = new DataServiceImpl();
+    private DictionaryServiceImpl dataServiceImpl;
+    private DepartmentServiceImpl departmentServiceImpl;
     public static Map<String, List> DATA_BASE;
 
     public void loadDictionary(){
@@ -15,4 +18,8 @@ public class LoadDataBase {
         DATA_BASE.put("dictionary",dictionaryList);
     }
 
+    public void loadDepartment(){
+        List<Department> departmentList = departmentServiceImpl.listDepartment();
+        DATA_BASE.put("department",departmentList);
+    }
 }

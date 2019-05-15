@@ -2,6 +2,8 @@ package com.manage.hr.service;
 
 import com.manage.hr.entity.Department;
 
+import java.util.List;
+
 public interface DepartmentService {
-    Department listDepartment();
+    List<Department> listDepartment();
 }

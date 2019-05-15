@@ -4,6 +4,6 @@ import com.manage.hr.entity.Dictionary;
 
 import java.util.List;
 
-public interface DataService {
+public interface DictionaryService {
     List<Dictionary> listDictionary();
 }
