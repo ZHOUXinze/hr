@@ -8,6 +8,7 @@ import com.manage.hr.service.impl.DictionaryServiceImpl;
 import com.manage.hr.service.impl.DepartmentServiceImpl;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,23 +22,23 @@ public class LoadDataBase {
 //    public static final LoadDatabase getInstance() {
 //        return LoadDatabaseHolder.INSTANCE;
 //    }
-//    @Resource
-//    private static DictionaryService dataService;
-//    @Resource
-//    private static DepartmentService departmentService;
+    @Resource
+    private static DictionaryService dataService;
+    @Resource
+    private static DepartmentService departmentService;
 
-//    public static Map<String, List> DATA_BASE;
-//
-//    public static void loadDictionary() {
-//        List<Dictionary> dictionaryList = dataService.listDictionary();
-//        DATA_BASE.put("dictionary", dictionaryList);
-//    }
-//
-//    public static void loadDepartment() {
-//        List<Department> departmentList = departmentService.listDepartment();
-//        System.out.println(departmentList.get(0));
-//        DATA_BASE.put("department", departmentList);
-//    }
+    public static Map<String, List> DATA_BASE = new HashMap<>();
+
+    public static void loadDictionary() {
+        List<Dictionary> dictionaryList = dataService.listDictionary();
+        DATA_BASE.put("dictionary", dictionaryList);
+    }
+
+    public static void loadDepartment() {
+        List<Department> departmentList = departmentService.listDepartment();
+        System.out.println(departmentList.get(0));
+        DATA_BASE.put("department", departmentList);
+    }
 }
 
 
