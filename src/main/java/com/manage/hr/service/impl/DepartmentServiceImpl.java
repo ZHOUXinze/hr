@@ -12,6 +12,7 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     @Resource
     private DepartmentDao departmentDao;
+
     @Override
     public List<Department> listDepartment() {
         return departmentDao.listDepartment();

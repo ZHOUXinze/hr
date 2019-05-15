@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manage.hr.dao.DepartmentDao">
-    <select id="listDepartment" resultType="Department">
+    <select id="listDepartment" parameterType="int" resultType="Department">
         select `id`,`depCode`,`depName`,`abbreviation`,`higherOffice`,`address`,`introduction`,`remark`,`enable`
         from department;
     </select>

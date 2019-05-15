@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface DataDao{
+public interface DictionaryDao {
     List<Dictionary> listDictionary();
 }
