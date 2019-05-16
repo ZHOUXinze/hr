@@ -23,12 +23,11 @@ public class SalaryItemController {
 
     @RequestMapping(value = "/saveSalaryItem", method = RequestMethod.POST)
     @ResponseBody
-    public String saveSalaryItem(@RequestParam List<SalaryItem> salaryItemList) {
-        if (salaryItemList.size() > 1) {
-            return "success";
-        } else {
-            return "error";
+    public String saveSalaryItem(@RequestBody List<SalaryItem> salaryItemList) {
+        for (SalaryItem salaryItem : salaryItemList) {
+            System.out.println(salaryItem.getItemName());
         }
+        return "success";
     }
 
     @RequestMapping(value = "/updateSalaryItem")

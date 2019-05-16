@@ -10,6 +10,18 @@
     </style>
     <script th:src="@{/js/jquery.js}"></script>
     <script>
+
+        var DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json
+            formToJson: function (data) {
+                data = data.replace(/&/g, "\",\"");
+                data = data.replace(/=/g, "\":\"");
+                data = "{\"" + data + "\"}";
+                return data;
+            },
+        };
+
+
         $(document).ready(function () {
             //
             var updateArr = new Array();
@@ -47,19 +59,60 @@
                 }
             });
             //保存，保存修改和添加的数据
+            $.fn.serializeJson = function () {
+                var jsonData1 = {};
+                var serializeArray = this.serializeArray();
+                // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
+                $(serializeArray).each(function () {
+                    if (jsonData1[this.name]) {
+                        if ($.isArray(jsonData1[this.name])) {
+                            jsonData1[this.name].push(this.value);
+                        } else {
+                            jsonData1[this.name] = [jsonData1[this.name], this.value];
+                        }
+                    } else {
+                        jsonData1[this.name] = this.value;
+                    }
+                });
+                // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
+                var vCount = 0;
+                // 计算json内部的数组最大长度
+                for (var item in jsonData1) {
+                    var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
+                    vCount = (tmp > vCount) ? tmp : vCount;
+                }
+
+                if (vCount > 1) {
+                    var jsonData2 = new Array();
+                    for (var i = 0; i < vCount; i++) {
+                        var jsonObj = {};
+                        for (var item in jsonData1) {
+                            jsonObj[item] = jsonData1[item][i];
+                        }
+                        jsonData2.push(jsonObj);
+                    }
+                    return JSON.stringify(jsonData2);
+                } else {
+                    return "[" + JSON.stringify(jsonData1) + "]";
+                }
+            };
             $('#save').click(function () {
-                alert($('#saveSalaryItemForm').serialize());
+                // var data = $('#saveSalaryItemForm').serialize();//获取值
+                // data = decodeURIComponent(data, true);//防止中文乱码
+                // var json = DataDeal.formToJson(data);//转化为json
+                var jsonStr = $('#saveSalaryItemForm').serializeJson();
+                alert(jsonStr);
                 $.ajax({
                     type: "POST",
-                    url: "/saveSalaryItem" ,
-                    contentType:"application/json;charset=utf-8",
-                    data: $('#saveSalaryItemForm').serialize(),
+                    url: "/saveSalaryItem",
+                    contentType: "application/json;charset=utf-8",
+                    data: jsonStr,
                     success: function (data) {
-                      if (data == "success")   {
-                          alert(1);
-                      }else {
-                          alert(2);
-                      }
+                        if (data == "success") {
+                            alert(1);
+                        } else {
+                            alert(2);
+                        }
                     }
                 });
             });
@@ -85,7 +138,7 @@
         </thead>
         <tbody>
         <tr th:each="salaryItem,status:${salaryItemList}" th:id="${salaryItem.getId()}">
-            <input type="hidden"  th:name="id" th:value="${salaryItem.getId()}">
+            <input type="hidden" th:name="id" th:value="${salaryItem.getId()}">
             <td>
                 <input type="radio" class="si">
             </td>
