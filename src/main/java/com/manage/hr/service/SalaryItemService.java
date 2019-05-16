@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SalaryItemService {
     List<SalaryItem> listSalaryItem();
+    SalaryItem insertSalaryItem(SalaryItem salaryItem);
 }

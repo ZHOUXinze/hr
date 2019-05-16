@@ -17,4 +17,10 @@ public class SalaryItemServiceImpl implements SalaryItemService {
     public List<SalaryItem> listSalaryItem() {
         return salaryItemDao.listSalaryItem();
     }
+
+    @Override
+    public SalaryItem insertSalaryItem(SalaryItem salaryItem) {
+        return salaryItemDao.insertSalaryItem(salaryItem);
+    }
+
 }

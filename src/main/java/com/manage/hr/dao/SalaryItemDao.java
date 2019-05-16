@@ -7,5 +7,5 @@ import java.util.List;
 @Repository
 public interface SalaryItemDao {
     List<SalaryItem> listSalaryItem();
-    SalaryItem insertSalaryItem();
+    SalaryItem insertSalaryItem(SalaryItem salaryItem);
 }

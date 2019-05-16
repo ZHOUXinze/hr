@@ -109,30 +109,30 @@
         </thead>
 
         <tbody>
-        <form>
-            <tr role="row" class="odd" th:each="salaryItem,status:${salaryItemList}">
-                <td>
-                    <input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;">
-                </td>
-                <td class="sorting_1" th:text="${status.count}">
-                    <input type="hidden" th:value="${salaryItem.getId()}">
-                </td>
-                <td>
-                    <input type="text" th:value="${salaryItem.getItemCode()}">
-                </td>
-                <td>
-                    <input type="text" th:value="${salaryItem.getItemName()}">
-                </td>
-                <td>
-                    <input type="text" th:value="${salaryItem.getIntroduction()}">
-                </td>
-                <td th:if="${salaryItem.getEnable()}==3">
-                    <input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"
-                           th:checked="true">
-                </td>
-                <td th:if="${salaryItem.getEnable()}==4">
-                    <input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;">
-                </td>
+        <!--<form>-->
+            <!--<tr role="row" class="odd" th:each="salaryItem,status:${salaryItemList}">-->
+                <!--<td>-->
+                    <!--<input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;">-->
+                <!--</td>-->
+                <!--<td class="sorting_1" th:text="${status.count}">-->
+                    <!--<input type="hidden" th:value="${salaryItem.getId()}">-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<input type="text" th:value="${salaryItem.getItemCode()}">-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<input type="text" th:value="${salaryItem.getItemName()}">-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<input type="text" th:value="${salaryItem.getIntroduction()}">-->
+                <!--</td>-->
+                <!--<td th:if="${salaryItem.getEnable()}==3">-->
+                    <!--<input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"-->
+                           <!--th:checked="true">-->
+                <!--</td>-->
+                <!--<td th:if="${salaryItem.getEnable()}==4">-->
+                    <!--<input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;">-->
+                <!--</td>-->
             </tr>
         </form>
         </tbody>

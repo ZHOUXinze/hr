@@ -19,27 +19,27 @@ public class TestController {
     @Resource
     private DictionaryService dictionaryService;
 
-    @RequestMapping(value = "/test")
-    public String test(Model model) {
-
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-
-
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
-
-
-        model.addAttribute("name1", dictionaryList.get(0).getDataName());
-        model.addAttribute("name2", departmentList.get(0).getDepName());
-        model.addAttribute("name3", positionList.get(0).getPosName());
-        model.addAttribute("name4", titleList.get(1).getTitleName());
-
-        return "test";
-    }
+//    @RequestMapping(value = "/test")
+//    public String test(Model model) {
+//
+//        LoadDataBase.loadDictionary();
+//        LoadDataBase.loadDepartment();
+//        LoadDataBase.loadPosition();
+//        LoadDataBase.loadTitle();
+//
+//
+//        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+//        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
+//        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
+//        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
+//
+//
+//        model.addAttribute("name1", dictionaryList.get(0).getDataName());
+//        model.addAttribute("name2", departmentList.get(0).getDepName());
+//        model.addAttribute("name3", positionList.get(0).getPosName());
+//        model.addAttribute("name4", titleList.get(1).getTitleName());
+//
+//        return "test";
+//    }
 
 }
