@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface SalaryItemService {
     List<SalaryItem> listSalaryItem();
-    SalaryItem insertSalaryItem(SalaryItem salaryItem);
+
+    int saveSalaryItem(List<SalaryItem> salaryItemList);
+
+    int deleteSalaryItem(int id);
 }

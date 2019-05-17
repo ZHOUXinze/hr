@@ -3,6 +3,7 @@ package com.manage.hr.controller;
 import com.manage.hr.entity.SalaryItem;
 import com.manage.hr.service.SalaryItemService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,27 +15,24 @@ public class SalaryItemController {
     @Resource
     private SalaryItemService salaryItemService;
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/salaryItem2")
     public String showSalaryItem(Model model) {
         List<SalaryItem> salaryItemList = salaryItemService.listSalaryItem();
         model.addAttribute("salaryItemList", salaryItemList);
-        return "test";
+        return "salaryItem2";
     }
 
     @RequestMapping(value = "/saveSalaryItem", method = RequestMethod.POST)
     @ResponseBody
     public String saveSalaryItem(@RequestBody List<SalaryItem> salaryItemList) {
-        for (SalaryItem salaryItem : salaryItemList) {
-            System.out.println(salaryItem.getEnable());
-        }
-        return "success";
+        return salaryItemService.saveSalaryItem(salaryItemList) == 1 ? "success" : "error";
     }
 
-    @RequestMapping(value = "/updateSalaryItem")
-    public String updateSalaryItem(SalaryItem salaryItem) {
-        List<SalaryItem> salaryItemList = salaryItemService.listSalaryItem();
 
-        return "test";
+    @RequestMapping(value = "/deleteSalaryItem", method = RequestMethod.GET)
+    @ResponseBody
+    public String updateSalaryItem(int id) {
+        return salaryItemService.deleteSalaryItem(id) > 0 ? "success" : "error";
     }
 
 }
