@@ -4,46 +4,69 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style type="text/css">
-        table, th, td {
-            border: 1px solid #00243F;
+        table {
+            font-family: verdana, arial, sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+
+        th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
+        td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+
+        input[type = "text"] {
+            border: none;
+            width: 100%
         }
     </style>
     <script th:src="@{/js/jquery.js}"></script>
     <script>
         $(document).ready(function () {
-            //
-            var updateArr = new Array();
-            var i = 0;
             //添加，页面增加新的空行
             $('#insert').click(function () {
                 var tr = '<tr>\n' +
                     '            <input type="hidden" name="id" >\n' +
-                    '            <td>\n' +
-                    '                <input type="checkbox">\n' +
+                    '            <input type="hidden" name="modelStatus" value="2">' +
+                    '            <td align="center">\n' +
+                    '                <input type="radio" name="dr" class="dr">\n' +
                     '            </td>\n' +
                     '            <td >\n' +
                     '            </td>\n' +
                     '            <td>\n' +
-                    '                <input type="text" name="code" >\n' +
+                    '                <input type="text" name="itemCode" class="si" placeholder="必填">\n' +
                     '            </td>\n' +
                     '            <td>\n' +
-                    '                <input type="text" name="name" >\n' +
+                    '                <input type="text" name="itemName" class="si" placeholder="必填">\n' +
                     '            </td>\n' +
                     '            <td>\n' +
-                    '                <input type="text" name="intro" >\n' +
+                    '                <input type="text" name="introduction" class="si" >\n' +
                     '            </td>\n' +
-                    '            <td>\n' +
-                    '                <input type="checkbox" name="enable" value="3">\n' +
+                    '            <td align="center">\n' +
+                    '                <input type="checkbox" name="enable" value="3" class="si" >\n' +
                     '            </td>\n' +
                     '        </tr>';
                 $(" table").append(tr);
             });
             //获取表格的修改状态
-            $(":input").change(function () {
-                var hidden = $(this).parent().parent().children("input").val();
-                if (updateArr.indexOf(hidden) == -1) {
-                    updateArr[i] = hidden;
-                    i++;
+            $(".si").change(function () {
+                var hidden = $(this).parent().parent().children("input:last");
+                if (hidden.val() == 0) {
+                    hidden.val(1);
                 }
             });
             //保存，保存修改和添加的数据
@@ -69,7 +92,6 @@
                     var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
                     vCount = (tmp > vCount) ? tmp : vCount;
                 }
-
                 if (vCount > 1) {
                     var jsonData2 = new Array();
                     for (var i = 0; i < vCount; i++) {
@@ -85,8 +107,8 @@
                 }
             };
             $('#save').click(function () {
+                $('#saveSalaryItemForm :radio').removeAttr("name");
                 var jsonStr = $('#saveSalaryItemForm').serializeJson();
-                alert(jsonStr);
                 $.ajax({
                     type: "POST",
                     url: "/saveSalaryItem",
@@ -94,6 +116,7 @@
                     data: jsonStr,
                     success: function (data) {
                         if (data == "success") {
+                            window.location.reload();
                             alert("保存成功");
                         } else if (data == "error") {
                             alert("保存失败");
@@ -102,47 +125,71 @@
                 });
             });
             //删除，异步删除，并remove元素
-
+            $('#delete').click(function () {
+                var radio = $('#saveSalaryItemForm :radio:checked');
+                var id = radio.val();
+                if (confirm("确认删除吗?")) {
+                    $.get("deleteSalaryItem", {"id": id}, function (data) {
+                        if (data == "success") {
+                            radio.parent().parent().remove();
+                            alert("删除成功!");
+                        } else {
+                            alert("出现了一点小错误");
+                        }
+                    });
+                }
+            });
+            //撤销
+            $('#cancel').click(function () {
+                if (confirm("此操作将取消所有未保存的操作（修改、新增），确定取消这些操作吗？")) {
+                    window.location.reload();
+                }
+            });
         });
 
     </script>
 </head>
 <body>
+<button id="insert">新增</button>
 <button id="save">保存</button>
-<button id="insert">添加</button>
+<button id="cancel">取消</button>
 <button id="delete">删除</button>
 <form name="salaryItemList" id="saveSalaryItemForm">
     <table id="salaryItemTable">
         <thead>
         <th>选择</th>
         <th>序号</th>
-        <th>编号</th>
-        <th>名称</th>
-        <th>描述</th>
-        <th>提交</th>
+        <th>薪酬项目编码</th>
+        <th>薪酬项目名称</th>
+        <th>薪酬项目描述</th>
+        <th>是否启用</th>
         </thead>
         <tbody>
-        <tr th:each="salaryItem,status:${salaryItemList}" th:id="${salaryItem.getId()}">
+        <tr th:each="salaryItem,status:${salaryItemList}">
             <input type="hidden" th:name="id" th:value="${salaryItem.getId()}">
-            <td>
-                <input type="radio" class="si">
+            <input type="hidden" th:name="modelStatus" value="0">
+            <td align="center">
+                <input type="radio" class="dr" name="dr" th:value="${salaryItem.getId()}">
             </td>
             <td th:text="${status.count}">
             </td>
             <td>
-                <input type="text" th:name="itemCode" th:value="${salaryItem.getItemCode()}" class="si">
+                <input type="text" th:name="itemCode" th:value="${salaryItem.getItemCode()}" class="si"
+                       placeholder="必填">
             </td>
             <td>
-                <input type="text" th:name="itemName" th:value="${salaryItem.getItemName()}" class="si">
+                <input type="text" th:name="itemName" th:value="${salaryItem.getItemName()}" class="si"
+                       placeholder="必填">
             </td>
             <td>
-                <input type="text" th:name="introduction" th:value="${salaryItem.getIntroduction()}" class="si">
+                <input type="text" th:name="introduction" th:value="${salaryItem.getIntroduction()}" class="si"
+                >
             </td>
-            <td th:if="${salaryItem.getEnable()}==3">
+            <td th:if="${salaryItem.getEnable()}==3" align="center">
                 <input type="checkbox" th:name="enable"
                        checked="checked" value="3" class="si">
             </td>
-            <td th:if="${salaryItem.getEnable()}==4">
+            <td th:if="${salaryItem.getEnable()}==4" align="center">
                 <input type="checkbox" th:name="enable" value="3" class="si">
             </td>
         </tr>

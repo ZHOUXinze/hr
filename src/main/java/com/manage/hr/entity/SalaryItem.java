@@ -6,6 +6,7 @@ public class SalaryItem {
     private String itemName;
     private String introduction;
     private Integer enable;
+
     private int modelStatus;
 
     public int getModelStatus() {

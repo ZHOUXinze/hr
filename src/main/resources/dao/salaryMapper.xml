@@ -4,12 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manage.hr.dao.SalaryItemDao">
     <select id="listSalaryItem" parameterType="int" resultType="SalaryItem">
-    select `id`,`itemCode`,`itemName`,`introduction`,`enable`
-    from salaryitem
+        select `id`,`itemCode`,`itemName`,`introduction`,`enable`
+        from salaryitem
     </select>
 
     <insert id="insertSalaryItem" parameterType="SalaryItem">
-    INSERT INTO `salaryitem`(`itemCode`,`itemName`,`introduction`,`enable`)
-    VALUES (#{itemCode},#{itemName},#{introduction},#{enable})
+        INSERT INTO `salaryitem`(`itemCode`,`itemName`,`introduction`,`enable`)
+        VALUES (#{itemCode},#{itemName},#{introduction},#{enable})
     </insert>
+
+    <update id="updateSalaryItem" parameterType="SalaryItem">
+        update `salaryItem` set
+        `itemCode`= #{itemCode},
+        `itemName`= #{itemName},
+        `introduction`= #{introduction},
+        `enable`= #{enable}
+        where `id` = #{id}
+    </update>
+
+    <delete id="deleteSalaryItem" parameterType="int">
+        delete from `salaryItem` where `id` = #{id}
+    </delete>
 </mapper>
