@@ -1,140 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" />
 		<title>用户管理修改</title>
-		<!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-    			<!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="../build/css/custom.min.css" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            #yincang{
+                width: 90px;height: 30px;margin:0 auto;float: right;
 
-	</head>
-	<body>
-		<div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                 
-                  <div class="x_content">
+            }
 
-                    <form class="form-horizontal form-label-left" novalidate="">
 
-                      
-                      <span class="section"></span>
-					  <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">用户编码 <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" id="number" name="number" required="required" data-validate-minmax="10,100" class="form-control col-md-7 col-xs-12">
+        </style>
+
+    </head>
+    <body>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_content">
+
+                    <form class="form-horizontal form-label-left" novalidate="" th:action="@{/yonghuguanlixiugai}" method="post">
+
+
+                        <span class="section"></span>
+                         <input type="hidden" name="id"  th:value="${user.id}">
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number" >用户编码 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12" >
+                                <input th:value="${user.userCode}" type="text" id="number" name="userCode" required="required"
+                                       data-validate-minmax="10,100" class="form-control col-md-7 col-xs-12">
+                            </div>
                         </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">用户名称<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="请输入用户名称" required="required" type="text">
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">用户名称<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input th:value="${user.userName}" id="name" class="form-control col-md-7 col-xs-12"
+                                       data-validate-length-range="6" data-validate-words="2"
+                                       name="userName"  required="required" type="text">
+                            </div>
                         </div>
-                      </div>
-                      <div class="item form-group">
-                        <label for="password" class="control-label col-md-3">密码</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="password" type="password" name="password" data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
+                        <div class="item form-group">
+                            <label for="password" class="control-label col-md-3">密码</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input th:value="${user.password}" id="password" type="password" name="password"
+                                       data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">用户角色</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control">
-                        <option selected="" value="-- 请选择 --">-- 请选择 --</option>
-        				<option value="系统管理员">系统管理员</option>
-        				<option value="人事专员">人事专员</option>
-        				<option value="人事经理">人事经理</option>
-        				<option value="薪酬专员">薪酬专员</option>
-        				<option value="薪酬经理">薪酬经理</option>
-        				<option value="人力资源部负责人">人力资源部负责人</option>
-        				<option value="公司领导">公司领导</option>
-      
-                          </select>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">用户角色</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select  class="form-control" name="dictionid">
+
+
+
+                                    <option  th:each="diction:${dictionaryList}" th:if="${diction.getDataType()}==userRole"
+                                             th:text="${diction.dataName}" th:selected="(${diction.id}==${user.userRole})"
+                                             th:value="${diction.id}">-- 请选择 --
+
+
+                                    </option>
+
+
+                                </select>
+                            </div>
                         </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">所属部门 <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="occupation" type="text" name="occupation" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
-                        </div><i class="fa fa-search-plus"></i>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">联系电话<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="tel" id="telephone" name="phone" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="depName">所属部门 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input th:value="${user.depName}"  readonly="readonly" id="depName" type="text" name="depName"
+                                       data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+                                <input type="hidden"  id="depId" name="depId" th:value="${user.depId}" >
+                            </div><i  id="myBT"  class="fa fa-search-plus"></i>
+                            <div id="yincang" >
+                                <ul  >
+
+                                    <li th:each="department:${departmentList}">
+                                        <span th:text="${department.depName}"  th:id="${department.id}"></span>
+                                    </li>
+                                </ul>
+
+
+
+                            </div >
                         </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <div class="col-md-6 col-md-offset-3">
-                        	<button id="send" type="submit" class="btn btn-success">保存</button>
-                          <button type="submit" class="btn btn-primary">返回</button>
-                          
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">联系电话<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input th:value="${user.phoneNumber}" type="number" id="telephone" name="phoneNumber" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                            </div>
                         </div>
-                      </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success" >修改</button>
+                                <button type="submit" class="btn btn-primary">返回</button>
+
+                            </div>
+                        </div>
                     </form>
-                  </div>
                 </div>
-              </div>
             </div>
-		<!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.js"></script>
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!--<script src="../vendors/fastclick/lib/fastclick.js"></script>-->
     <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!--<script src="../vendors/nprogress/nprogress.js"></script>-->
     <!-- validator -->
-    <script src="../vendors/validator/validator.js"></script>
+    <!--<script src="../vendors/validator/validator.js"></script>-->
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //获取所属部门
+            $("#yincang  span").click(function () {
+                var id=$(this).attr("id");
+                var depname=$(this).text();
+                $("#depId").val(id);
+                $("#depName").val(depname);
+
+            })
+
+
+            //点击显示和隐藏
+            $("#myBT").click(function () {
+                var o=$("#yincang");
+                if(o.css("display")!="none"){
+                    o.hide();
+                    $(this).html("");
+                }else {
+                    o.show();
+                    $(this).html("");
+                }
+            })
+        })
+
+
+
+    </script>
+
+
+
     <!-- validator -->
     <script>
-      // initialize the validator function
-      validator.message.date = 'not a real date';
+        // initialize the validator function
+        validator.message.date = 'not a real date';
 
-      // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
-      $('form')
-        .on('blur', 'input[required], input.optional, select.required', validator.checkField)
-        .on('change', 'select.required', validator.checkField)
-        .on('keypress', 'input[required][pattern]', validator.keypress);
+        // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+        $('form')
+            .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+            .on('change', 'select.required', validator.checkField)
+            .on('keypress', 'input[required][pattern]', validator.keypress);
 
-      $('.multi.required').on('keyup blur', 'input', function() {
-        validator.checkField.apply($(this).siblings().last()[0]);
-      });
+        $('.multi.required').on('keyup blur', 'input', function() {
+            validator.checkField.apply($(this).siblings().last()[0]);
+        });
 
-      $('form').submit(function(e) {
-        e.preventDefault();
-        var submit = true;
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var submit = true;
 
-        // evaluate the form using generic validaing
-        if (!validator.checkAll($(this))) {
-          submit = false;
-        }
+            // evaluate the form using generic validaing
+            if (!validator.checkAll($(this))) {
+                submit = false;
+            }
 
-        if (submit)
-          this.submit();
+            if (submit)
+                this.submit();
 
-        return false;
-      });
+            return false;
+        });
     </script>
     <!-- /validator -->
-		
-    
-	</body>
+
+
+    </body>
 </html>

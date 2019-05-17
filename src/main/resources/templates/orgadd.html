@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>组织结构设置</title>
-
+    <meta charset="UTF-8">
+    <title>组织结构增加</title>
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -18,11 +12,7 @@
 
     <!-- Custom Theme Style -->
     <!--<link href="../build/css/custom.min.css" rel="stylesheet">-->
-    <style type="text/css">
-        #yincang{
-            width: 150px;height: 100px;margin:0 auto;float: left;border:1px solid  #000;
 
-        }
 
 
 
@@ -70,27 +60,7 @@
 
     </div>
 
-    <div id="yincang">
-        <form>
-            <input type="hidden" th:value="${department.id}" name="id" >
 
-
-            <ul >
-                <li th:each="department:${departmentList} "th:if="${department.higherOffice}==0" >
-
-              <a th:href="@{/orgadd(depNames=${department.depName})}" >    <i  id="add" name=""  class="fa fa-search-plus"></i>  </a>          <span th:text="${department.depName}" th:id="${department.id}"></span>
-                </li>
-                <ul>
-                    <li th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1">
-                        <i   id="${department.id}" class="fa fa-search-minus"></i>           <span  th:text="${department2.depName}"th:id="${department2.id}"></span>
-                    </li>
-
-                </ul>
-
-            </ul>
-
-        </form>
-    </div>
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="rightr">
@@ -166,7 +136,7 @@
 
                     <ul class="form-group">
                         <li class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
-                          <!--  <button type="submit" class="btn btn-primary">保存</button>-->
+                            <!--  <button type="submit" class="btn btn-primary">保存</button>-->
                             <button type="submit" class="btn btn-success">提交</button>
                         </li>
                     </ul>
@@ -248,4 +218,5 @@
 </script>
 <!-- /validator -->
 </body>
+
 </html>
