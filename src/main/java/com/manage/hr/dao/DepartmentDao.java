@@ -9,4 +9,5 @@ import java.util.List;
 public interface DepartmentDao {
     List<Department> listDepartment();
     List<Department> cacheDepartment();
+    int addDepartment(Department department);
 }

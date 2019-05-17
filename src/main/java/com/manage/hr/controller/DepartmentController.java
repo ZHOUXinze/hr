@@ -36,8 +36,14 @@ public class DepartmentController {
       model.addAttribute("department",department);
         return "org";
     }
+    //添加
     @RequestMapping(value = "orgadd",method = RequestMethod.GET)
     public  String orgAdd(Model model, Department department, @RequestParam String depNames){
+        LoadDataBase.loadDictionary();
+
+        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+
+        model.addAttribute("dictionaryList",dictionaryList);
       model.addAttribute("depNames",depNames);
       Department department1=new Department();
 model.addAttribute("department1",department1);

@@ -11,4 +11,9 @@
         select `id`,`depCode`,`depName`,`higherOffice`
         from department;
     </select>
+    <insert id="addDepartment" parameterType="Department">
+INSERT INTO `department`(`depCode`,`depName`,`abbreviation`,`higherOffice`,`address`,`introduction`,`remark`,`enable`)
+VALUES(#{depCode},#{depName},#{abbreviation},#{higherOffice},#{address},#{introduction},#{remark},#{enable})
+
+    </insert>
 </mapper>

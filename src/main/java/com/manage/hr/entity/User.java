@@ -9,7 +9,18 @@ public class User {
     @NotEmpty(message = "用户名称不能为空")
     private String userName;
     private Integer userRole;
+   private  String userRoleName;
+
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
     private Integer depId;
+
     @NotEmpty(message = "密码名称不能为空")
     private String password;
     @NotEmpty(message = "电话号码名称不能为空")

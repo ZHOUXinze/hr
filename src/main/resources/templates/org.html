@@ -82,7 +82,7 @@
                 </li>
                 <ul>
                     <li th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1">
-                        <i   id="${department.id}" class="fa fa-search-minus"></i>           <span  th:text="${department2.depName}"th:id="${department2.id}"></span>
+                <a   >        <i   id="${department.id}" class="fa fa-search-minus"></i>    </a>       <span  th:text="${department2.depName}"th:id="${department2.id}"></span>
                     </li>
 
                 </ul>
@@ -162,6 +162,23 @@
                             </div>
 
                         </li>
+                        <li class="leftfooter1">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">是否启用</label>
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <select  class="form-control" name="">
+
+
+
+                                        <option   >-- 请选择 --
+
+
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+
                     </ul>
 
                     <ul class="form-group">

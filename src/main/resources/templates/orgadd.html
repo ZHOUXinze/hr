@@ -81,9 +81,9 @@
                         </li>
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgBelong">所属组织:</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgBelong" >所属组织:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input  readonly="readonly" type="text" id="orgBelong" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input th:value="${depNames}" readonly="readonly" type="text" id="orgBelong" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                         </li>
@@ -131,6 +131,21 @@
                                 </div>
                             </div>
 
+                        </li>
+                        <li class="leftfooter1">
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">是否启用:</label>
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    <select  class="form-control" name="">
+
+
+
+                                        <option th:each="dictionary:"  >-- 请选择 --
+
+
+                                        </option>
+                                    </select>
+                            </div>
                         </li>
                     </ul>
 
