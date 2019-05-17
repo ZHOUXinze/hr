@@ -25,7 +25,7 @@ public class SalaryItemController {
     @ResponseBody
     public String saveSalaryItem(@RequestBody List<SalaryItem> salaryItemList) {
         for (SalaryItem salaryItem : salaryItemList) {
-            System.out.println(salaryItem.getItemName());
+            System.out.println(salaryItem.getEnable());
         }
         return "success";
     }

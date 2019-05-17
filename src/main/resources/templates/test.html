@@ -10,18 +10,6 @@
     </style>
     <script th:src="@{/js/jquery.js}"></script>
     <script>
-
-        var DataDeal = {
-            //将从form中通过$('#form').serialize()获取的值转成json
-            formToJson: function (data) {
-                data = data.replace(/&/g, "\",\"");
-                data = data.replace(/=/g, "\":\"");
-                data = "{\"" + data + "\"}";
-                return data;
-            },
-        };
-
-
         $(document).ready(function () {
             //
             var updateArr = new Array();
@@ -97,9 +85,6 @@
                 }
             };
             $('#save').click(function () {
-                // var data = $('#saveSalaryItemForm').serialize();//获取值
-                // data = decodeURIComponent(data, true);//防止中文乱码
-                // var json = DataDeal.formToJson(data);//转化为json
                 var jsonStr = $('#saveSalaryItemForm').serializeJson();
                 alert(jsonStr);
                 $.ajax({
@@ -109,9 +94,9 @@
                     data: jsonStr,
                     success: function (data) {
                         if (data == "success") {
-                            alert(1);
-                        } else {
-                            alert(2);
+                            alert("保存成功");
+                        } else if (data == "error") {
+                            alert("保存失败");
                         }
                     }
                 });

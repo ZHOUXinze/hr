@@ -6,6 +6,15 @@ public class SalaryItem {
     private String itemName;
     private String introduction;
     private Integer enable;
+    private int modelStatus;
+
+    public int getModelStatus() {
+        return modelStatus;
+    }
+
+    public void setModelStatus(int modelStatus) {
+        this.modelStatus = modelStatus;
+    }
 
     public Integer getId() {
         return id;
