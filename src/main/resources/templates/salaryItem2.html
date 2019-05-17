@@ -150,51 +150,55 @@
     </script>
 </head>
 <body>
-<button id="insert">新增</button>
-<button id="save">保存</button>
-<button id="cancel">取消</button>
-<button id="delete">删除</button>
-<form name="salaryItemList" id="saveSalaryItemForm">
-    <table id="salaryItemTable">
-        <thead>
-        <th>选择</th>
-        <th>序号</th>
-        <th>薪酬项目编码</th>
-        <th>薪酬项目名称</th>
-        <th>薪酬项目描述</th>
-        <th>是否启用</th>
-        </thead>
-        <tbody>
-        <tr th:each="salaryItem,status:${salaryItemList}">
-            <input type="hidden" th:name="id" th:value="${salaryItem.getId()}">
-            <input type="hidden" th:name="modelStatus" value="0">
-            <td align="center">
-                <input type="radio" class="dr" name="dr" th:value="${salaryItem.getId()}">
-            </td>
-            <td th:text="${status.count}">
-            </td>
-            <td>
-                <input type="text" th:name="itemCode" th:value="${salaryItem.getItemCode()}" class="si"
-                       placeholder="必填">
-            </td>
-            <td>
-                <input type="text" th:name="itemName" th:value="${salaryItem.getItemName()}" class="si"
-                       placeholder="必填">
-            </td>
-            <td>
-                <input type="text" th:name="introduction" th:value="${salaryItem.getIntroduction()}" class="si"
-                >
-            </td>
-            <td th:if="${salaryItem.getEnable()}==3" align="center">
-                <input type="checkbox" th:name="enable"
-                       checked="checked" value="3" class="si">
-            </td>
-            <td th:if="${salaryItem.getEnable()}==4" align="center">
-                <input type="checkbox" th:name="enable" value="3" class="si">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
+<div>
+    <button id="insert">新增</button>
+    <button id="save">保存</button>
+    <button id="cancel">取消</button>
+    <button id="delete">删除</button>
+</div>
+<div>
+    <form name="salaryItemList" id="saveSalaryItemForm">
+        <table id="salaryItemTable">
+            <thead>
+            <th>选择</th>
+            <th>序号</th>
+            <th>薪酬项目编码</th>
+            <th>薪酬项目名称</th>
+            <th>薪酬项目描述</th>
+            <th>是否启用</th>
+            </thead>
+            <tbody>
+            <tr th:each="salaryItem,status:${salaryItemList}">
+                <input type="hidden" th:name="id" th:value="${salaryItem.getId()}">
+                <input type="hidden" th:name="modelStatus" value="0">
+                <td align="center">
+                    <input type="radio" class="dr" name="dr" th:value="${salaryItem.getId()}">
+                </td>
+                <td th:text="${status.count}">
+                </td>
+                <td>
+                    <input type="text" th:name="itemCode" th:value="${salaryItem.getItemCode()}" class="si"
+                           placeholder="必填">
+                </td>
+                <td>
+                    <input type="text" th:name="itemName" th:value="${salaryItem.getItemName()}" class="si"
+                           placeholder="必填">
+                </td>
+                <td>
+                    <input type="text" th:name="introduction" th:value="${salaryItem.getIntroduction()}" class="si"
+                    >
+                </td>
+                <td th:if="${salaryItem.getEnable()}==3" align="center">
+                    <input type="checkbox" th:name="enable"
+                           checked="checked" value="3" class="si">
+                </td>
+                <td th:if="${salaryItem.getEnable()}==4" align="center">
+                    <input type="checkbox" th:name="enable" value="3" class="si">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>

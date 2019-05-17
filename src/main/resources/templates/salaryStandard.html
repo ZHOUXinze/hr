@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        table {
+            font-family: verdana, arial, sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+
+        th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
+        td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table id="salaryItemTable">
+        <thead>
+        <th>薪酬标准编码</th>
+        <th>薪酬标准编码</th>
+        <th>审核状态</th>
+        <th>登记时间</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="salaryStandard,status:${salaryStandardList}">
+            <td th:text="${salaryStandard.getStandardCode()}"></td>
+            <td th:text="${salaryStandard.getStandardName()}"></td>
+            <td th:text="${salaryStandard.getStatusName()}"></td>
+            <td th:text="${#dates.format(salaryStandard.getCreateDate(),'yyyy/MM/dd')}"></td>
+            <td th:if="${user.getUserRoleName()=='薪酬经理'}">
+                <a>修改</a>
+                <a>明细</a>
+                <a>删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

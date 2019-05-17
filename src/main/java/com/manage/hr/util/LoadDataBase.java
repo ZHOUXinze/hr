@@ -32,6 +32,7 @@ public class LoadDataBase {
 
     //此map用来缓存常用表
     public static Map<String, List> DATA_BASE = new HashMap<>();
+    public static Map<String, Map<Integer,String>> DICTIONARY = new HashMap<>();
 
     @Autowired
     DictionaryService dictionaryServiceAuto;
@@ -59,6 +60,37 @@ public class LoadDataBase {
     public static void loadDictionary() {
         List<Dictionary> dictionaryList = dictionaryService.listDictionary();
         DATA_BASE.put("dictionary", dictionaryList);
+        Map<Integer, String> revStatus = new HashMap<>();
+        Map<Integer, String> archStatus = new HashMap<>();
+        Map<Integer, String> education = new HashMap<>();
+        Map<Integer, String> political = new HashMap<>();
+        Map<Integer, String> userRole = new HashMap<>();
+        Map<Integer, String> posClass = new HashMap<>();
+        Map<Integer, String> gender = new HashMap<>();
+        for (Dictionary dictionary : dictionaryList) {
+            if (dictionary.getDataType().equals("revStatus")) {
+                revStatus.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("archStatus")) {
+                archStatus.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("education")) {
+                education.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("political")) {
+                political.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("userRole")) {
+                userRole.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("posClass")) {
+                posClass.put(dictionary.getId(), dictionary.getDataName());
+            } else if (dictionary.getDataType().equals("gender")) {
+                gender.put(dictionary.getId(), dictionary.getDataName());
+            }
+        }
+        DICTIONARY.put("revStatus", revStatus);
+        DICTIONARY.put("archStatus", archStatus);
+        DICTIONARY.put("education", education);
+        DICTIONARY.put("gender", gender);
+        DICTIONARY.put("political", political);
+        DICTIONARY.put("posClass", posClass);
+        DICTIONARY.put("userRole", userRole);
     }
 
     public static void loadDepartment() {

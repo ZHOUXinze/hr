@@ -3,7 +3,6 @@ package com.manage.hr.controller;
 import com.manage.hr.entity.SalaryItem;
 import com.manage.hr.service.SalaryItemService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
