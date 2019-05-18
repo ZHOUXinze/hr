@@ -1,7 +1,10 @@
 package com.manage.hr.controller;
 
 import com.manage.hr.entity.SalaryStandard;
+import com.manage.hr.entity.SalaryStandardDetail;
 import com.manage.hr.entity.User;
+import com.manage.hr.service.SalaryItemService;
+import com.manage.hr.service.SalaryStandardDetailService;
 import com.manage.hr.service.SalaryStandardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import java.util.List;
 
 @Controller
 public class SalaryStandardController {
+    @Resource
+    private SalaryStandardDetailService salaryStandardDetailService;
     @Resource
     private SalaryStandardService salaryStandardService;
 
@@ -27,7 +32,9 @@ public class SalaryStandardController {
 
     @RequestMapping(value = "/showSalaryStandard")
     public String showSalaryStandard(int id, Model model) {
-        model.addAttribute("salaryStandard", salaryStandardService.getSalaryStandardById(id));
+        SalaryStandard salaryStandard = salaryStandardService.getSalaryStandardById(id);
+        model.addAttribute("salaryStandard", salaryStandard);
+        model.addAttribute("salaryStandardDetailList", salaryStandardDetailService.listSalaryStandardDetailByCode(salaryStandard.getStandardCode()));
         return "salaryStandardDetail";
     }
 

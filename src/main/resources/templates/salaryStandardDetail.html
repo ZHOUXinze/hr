@@ -152,15 +152,15 @@
             </thead>
             <tbody>
 
-            <tr role="row" class="odd" th:each="">
+            <tr role="row" class="odd" th:each="salaryStandardDetail,status:${salaryStandardDetailList}">
                 <td class="sorting_1"><font style="vertical-align: inherit;">
                     <font style="vertical-align: inherit;">1</font></font>
                 </td>
                 <td>
-                    <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">基本工资</font></font>
+                    <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${salaryStandardDetail.getItemName()}"></span> </font></font>
                 </td>
                 <td>
-                    <input name="last-name" id="last-name" required="required" type="text">
+                    <input name="last-name" id="last-name" required="required" type="text" th:value="${salaryStandardDetail.getItemAmount()}" readonly>
                 </td>
             </tr>
             </tbody>
@@ -173,7 +173,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 
 
-                <button type="submit" class="btn btn-success">返回</button>
+                <a th:href="@{/showSalaryStandardList}"> <button type="submit" class="btn btn-success">返回</button></a>
             </div>
         </div>
         <div class="col-sm-7">
