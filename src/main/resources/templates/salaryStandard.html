@@ -47,8 +47,8 @@
             <td th:text="${salaryStandard.getStatusName()}"></td>
             <td th:text="${#dates.format(salaryStandard.getCreateDate(),'yyyy/MM/dd')}"></td>
             <td th:if="${user.getUserRoleName()=='薪酬经理'}">
-                <a>修改</a>
-                <a>明细</a>
+                <a th:href="@{/updateSalaryStandard(id=${salaryStandard.getId()})}">修改</a>
+                <a th:href="@{/showSalaryStandard(id=${salaryStandard.getId()})}">明细</a>
                 <a>删除</a>
             </td>
         </tr>

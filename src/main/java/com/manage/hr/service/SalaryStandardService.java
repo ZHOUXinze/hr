@@ -7,6 +7,8 @@ import java.util.List;
 public interface SalaryStandardService {
     List<SalaryStandard> listSalaryStandard();
 
+    SalaryStandard getSalaryStandardById(int id);
+
     int insertSalaryStandard(SalaryStandard salaryStandard);
 
     int updateSalaryStandard(SalaryStandard salaryStandard);

@@ -15,13 +15,21 @@ public class SalaryStandardController {
     @Resource
     private SalaryStandardService salaryStandardService;
 
-    @RequestMapping(value = "/showSalaryStandard")
-    public String showSalaryStandard(Model model) {
+    @RequestMapping(value = "/showSalaryStandardList")
+    public String showSalaryStandardList(Model model) {
         User user = new User();
         user.setUserRoleName("薪酬经理");
         List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandard();
         model.addAttribute("salaryStandardList", salaryStandardList);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "salaryStandard";
     }
+
+    @RequestMapping(value = "/showSalaryStandard")
+    public String showSalaryStandard(int id, Model model) {
+        model.addAttribute("salaryStandard", salaryStandardService.getSalaryStandardById(id));
+        return "salaryStandardDetail";
+    }
+
+
 }

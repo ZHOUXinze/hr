@@ -10,6 +10,16 @@
         `changeReason`, `status`,
         `enable`,`introduction`
         FROM
-        `salaryStandard`;
+        `salaryStandard`
+    </select>
+    <select id="getSalaryStandardById" parameterType="int" resultType="SalaryStandard">
+        SELECT `id`,`standardCode`,`standardName`,
+        `total`, `formulator`, `registerPerson`,
+        `createDate`, `reviewOpinion`,
+        `changeReason`, `status`,
+        `enable`,`introduction`
+        FROM
+        `salaryStandard`
+        WHERE `id` = #{id}
     </select>
 </mapper>

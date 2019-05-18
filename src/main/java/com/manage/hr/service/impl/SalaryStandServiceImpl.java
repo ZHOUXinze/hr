@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SalaryStandServiceImpl implements SalaryStandardService {
@@ -23,10 +22,15 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
         LoadDataBase.loadDictionary();
         for (SalaryStandard salaryStandard : salaryStandardDao.listSalaryStandard()) {
             salaryStandard.setStatusName(LoadDataBase.DICTIONARY.get("revStatus").get(salaryStandard.getStatus()));
-            System.out.println(LoadDataBase.DICTIONARY.get("revStatus").get(salaryStandard.getStatus()));
             salaryStandardList.add(salaryStandard);
         }
         return salaryStandardList;
+    }
+
+    @Override
+    public SalaryStandard getSalaryStandardById(int id) {
+        SalaryStandard salaryStandard = salaryStandardDao.getSalaryStandardById(id);
+        return salaryStandard;
     }
 
     @Override

@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +30,7 @@ public class LoadDataBase {
 
     //此map用来缓存常用表
     public static Map<String, List> DATA_BASE = new HashMap<>();
-    public static Map<String, Map<Integer,String>> DICTIONARY = new HashMap<>();
+    public static Map<String, Map<Integer, String>> DICTIONARY = new HashMap<>();
 
     @Autowired
     DictionaryService dictionaryServiceAuto;
