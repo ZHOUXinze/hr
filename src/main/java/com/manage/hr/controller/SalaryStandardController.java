@@ -5,6 +5,8 @@ import com.manage.hr.entity.SalaryStandardDetail;
 import com.manage.hr.entity.User;
 import com.manage.hr.service.SalaryStandardDetailService;
 import com.manage.hr.service.SalaryStandardService;
+import jdk.nashorn.internal.ir.RuntimeNode;
+import org.apache.catalina.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -22,13 +25,13 @@ public class SalaryStandardController {
     @Resource
     private SalaryStandardService salaryStandardService;
 
-    @RequestMapping(value = "/showSalaryStandardList")
-    public String showSalaryStandardList(Model model) {
+    @RequestMapping(value = "/salaryStandard")
+    public String showSalaryStandardList(Model model, HttpSession session) {
         User user = new User();
         user.setUserRoleName("薪酬经理");
         List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandard();
         model.addAttribute("salaryStandardList", salaryStandardList);
-        model.addAttribute("user", user);
+        session.setAttribute("user", user);
         return "salaryStandard";
     }
 
@@ -59,8 +62,10 @@ public class SalaryStandardController {
     }
 
     @RequestMapping(value = "/selectSalaryStandard",method = RequestMethod.POST)
-    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end) {
-
+    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end,Model model) {
+        System.out.println(salaryStandardCode+statusName+start+end);
+        List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandardByCondition(salaryStandardCode,statusName,start,end);
+        model.addAttribute("salaryStandardList", salaryStandardList);
         return "salaryStandard";
     }
 

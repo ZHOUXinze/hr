@@ -68,7 +68,20 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        String newStart = simpleDateFormat.format(start);
 //        String newEnd = simpleDateFormat.format(end);
-       return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, statusName, start, end);
+        //把statusName换成status
+        int status;
+        if (statusName.equals("通过")) {
+            status = 5;
+        } else if (statusName.equals("起草")) {
+            status = 6;
+        } else if (statusName.equals("审核中")) {
+            status = 7;
+        }else if (statusName.equals("驳回")) {
+            status = 8;
+        }else {
+            status = -1;
+        }
+        return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, start, end);
     }
 
 
