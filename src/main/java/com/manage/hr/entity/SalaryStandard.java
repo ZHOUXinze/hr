@@ -1,12 +1,13 @@
 package com.manage.hr.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class SalaryStandard {
     private Integer id;
     private String standardCode;
     private String standardName;
-    private Double total;
+    private BigDecimal total;
     private String formulator;
     private String registerPerson;
     private Date createDate;
@@ -49,11 +50,11 @@ public class SalaryStandard {
         this.standardName = standardName;
     }
 
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 

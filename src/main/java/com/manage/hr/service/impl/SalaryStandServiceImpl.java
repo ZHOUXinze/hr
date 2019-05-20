@@ -7,7 +7,9 @@ import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,15 +50,26 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
     }
 
     @Override
-    public int reviewSalaryStandard(int id,String review, String reviewOpinion) {
+    public int reviewSalaryStandard(int id, String review, String reviewOpinion) {
         SalaryStandard salaryStandard = new SalaryStandard();
         salaryStandard.setId(id);
         salaryStandard.setReviewOpinion(reviewOpinion);
-        if (review.equals("审核通过")){
+        //添加审核状态
+        if (review.equals("审核通过")) {
             salaryStandard.setStatus(5);
-        }else if (review.equals("驳回")){
+        } else if (review.equals("驳回")) {
             salaryStandard.setStatus(8);
         }
         return salaryStandardDao.reviewSalaryStandard(salaryStandard);
     }
+
+    @Override
+    public List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, Date start, Date end) {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String newStart = simpleDateFormat.format(start);
+//        String newEnd = simpleDateFormat.format(end);
+       return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, statusName, start, end);
+    }
+
+
 }

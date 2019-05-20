@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,16 +45,23 @@ public class SalaryStandardController {
             return "sidChange";
         } else if (operating.equals("update")) {
             return "sidUpdate";
-        } else if (operating.equals("show")){
+        } else if (operating.equals("show")) {
             return "sidShow";
         }
         return "salaryStandard";
     }
 
-    @RequestMapping(value = "/reviewSalaryStandard",method = RequestMethod.POST)
+    @RequestMapping(value = "/reviewSalaryStandard")
     @ResponseBody
-    public String reviewSalaryStandard(int review,String opinion){
-        return "";
+    public String reviewSalaryStandard(int id, String review, String reviewOpinion) {
+        int rel = salaryStandardService.reviewSalaryStandard(id, review, reviewOpinion);
+        return rel > 0 ? "success" : "error";
+    }
+
+    @RequestMapping(value = "/selectSalaryStandard",method = RequestMethod.POST)
+    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end) {
+
+        return "salaryStandard";
     }
 
 }

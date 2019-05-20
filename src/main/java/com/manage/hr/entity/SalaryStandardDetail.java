@@ -1,10 +1,12 @@
 package com.manage.hr.entity;
 
+import java.math.BigDecimal;
+
 public class SalaryStandardDetail {
     private Integer id;
     private String standardCode;
     private String itemName;
-    private double itemAmount;
+    private BigDecimal itemAmount;
 
     public Integer getId() {
         return id;
@@ -30,11 +32,11 @@ public class SalaryStandardDetail {
         this.itemName = itemName;
     }
 
-    public double getItemAmount() {
+    public BigDecimal getItemAmount() {
         return itemAmount;
     }
 
-    public void setItemAmount(double itemAmount) {
+    public void setItemAmount(BigDecimal itemAmount) {
         this.itemAmount = itemAmount;
     }
 }
