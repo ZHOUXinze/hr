@@ -33,5 +33,4 @@ public class SalaryItemController {
     public String updateSalaryItem(int id) {
         return salaryItemService.deleteSalaryItem(id) > 0 ? "success" : "error";
     }
-
 }

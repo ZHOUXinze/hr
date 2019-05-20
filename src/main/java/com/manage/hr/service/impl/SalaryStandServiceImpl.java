@@ -1,7 +1,6 @@
 package com.manage.hr.service.impl;
 
 import com.manage.hr.dao.SalaryStandardDao;
-import com.manage.hr.entity.Dictionary;
 import com.manage.hr.entity.SalaryStandard;
 import com.manage.hr.service.SalaryStandardService;
 import com.manage.hr.util.LoadDataBase;
@@ -46,5 +45,18 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
     @Override
     public int deleteSalaryStandard(int id) {
         return 0;
+    }
+
+    @Override
+    public int reviewSalaryStandard(int id,String review, String reviewOpinion) {
+        SalaryStandard salaryStandard = new SalaryStandard();
+        salaryStandard.setId(id);
+        salaryStandard.setReviewOpinion(reviewOpinion);
+        if (review.equals("审核通过")){
+            salaryStandard.setStatus(5);
+        }else if (review.equals("驳回")){
+            salaryStandard.setStatus(8);
+        }
+        return salaryStandardDao.reviewSalaryStandard(salaryStandard);
     }
 }

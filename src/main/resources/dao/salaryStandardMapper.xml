@@ -22,4 +22,7 @@
         `salaryStandard`
         WHERE `id` = #{id}
     </select>
+    <update id="reviewSalaryStandard" parameterType="SalaryStandard">
+        UPDATE `salaryStandard` SET `reviewOpinion` = #{reviewOpinion},`status` = #{status} WHERE `id` = #{id};
+    </update>
 </mapper>

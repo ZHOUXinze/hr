@@ -8,6 +8,8 @@ import com.manage.hr.service.SalaryStandardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -48,5 +50,10 @@ public class SalaryStandardController {
         return "salaryStandard";
     }
 
+    @RequestMapping(value = "/reviewSalaryStandard",method = RequestMethod.POST)
+    @ResponseBody
+    public String reviewSalaryStandard(int review,String opinion){
+        return "";
+    }
 
 }

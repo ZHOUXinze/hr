@@ -16,4 +16,6 @@ public interface SalaryStandardDao {
     int updateSalaryStandard(SalaryStandard salaryStandard);
 
     int deleteSalaryStandard(int id);
+
+    int reviewSalaryStandard(SalaryStandard salaryStandard);
 }

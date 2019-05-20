@@ -14,4 +14,6 @@ public interface SalaryStandardService {
     int updateSalaryStandard(SalaryStandard salaryStandard);
 
     int deleteSalaryStandard(int id);
+
+    int reviewSalaryStandard(int id,String review, String reviewOpinion);
 }
