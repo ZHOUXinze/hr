@@ -47,8 +47,21 @@
             <td th:text="${salaryStandard.getStatusName()}"></td>
             <td th:text="${#dates.format(salaryStandard.getCreateDate(),'yyyy/MM/dd')}"></td>
             <td th:if="${user.getUserRoleName()=='薪酬经理'}">
-                <a th:href="@{/updateSalaryStandard(id=${salaryStandard.getId()})}">修改</a>
-                <a th:href="@{/showSalaryStandard(id=${salaryStandard.getId()})}">明细</a>
+                <a th:if="${salaryStandard.getStatusName()}=='起草'"
+                   th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">修改</a>
+                <a th:if="${salaryStandard.getStatusName()}=='通过'"
+                   th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'change')}">变更</a>
+                <a th:if="${salaryStandard.getStatusName()}=='审核中'"
+                   th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'review')}">复核</a>
+                <a th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'show')}">明细</a>
+                <a>删除</a>
+            </td>
+            <td th:if="${user.getUserRoleName()=='薪酬专员'}">
+                <a th:if="${salaryStandard.getStatusName()}=='起草'"
+                   th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">修改</a>
+                <a th:if="${salaryStandard.getStatusName()}=='通过'"
+                   th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'change')}">变更</a>
+                <a th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'show')}">明细</a>
                 <a>删除</a>
             </td>
         </tr>

@@ -3,7 +3,6 @@ package com.manage.hr.controller;
 import com.manage.hr.entity.SalaryStandard;
 import com.manage.hr.entity.SalaryStandardDetail;
 import com.manage.hr.entity.User;
-import com.manage.hr.service.SalaryItemService;
 import com.manage.hr.service.SalaryStandardDetailService;
 import com.manage.hr.service.SalaryStandardService;
 import org.springframework.stereotype.Controller;
@@ -30,12 +29,23 @@ public class SalaryStandardController {
         return "salaryStandard";
     }
 
-    @RequestMapping(value = "/showSalaryStandard")
-    public String showSalaryStandard(int id, Model model) {
+    @RequestMapping(value = "/operatingSalaryStandard")
+    public String operatingSalaryStandard(int id, Model model, String operating) {
         SalaryStandard salaryStandard = salaryStandardService.getSalaryStandardById(id);
+        List<SalaryStandardDetail> salaryStandardDetailList = salaryStandardDetailService.listSalaryStandardDetailByCode(salaryStandard.getStandardCode());
         model.addAttribute("salaryStandard", salaryStandard);
-        model.addAttribute("salaryStandardDetailList", salaryStandardDetailService.listSalaryStandardDetailByCode(salaryStandard.getStandardCode()));
-        return "salaryStandardDetail";
+        model.addAttribute("salaryStandardDetailList", salaryStandardDetailList);
+        //根据operating跳转页面
+        if (operating.equals("review")) {
+            return "sidReview";
+        } else if (operating.equals("change")) {
+            return "sidChange";
+        } else if (operating.equals("update")) {
+            return "sidUpdate";
+        } else if (operating.equals("show")){
+            return "sidShow";
+        }
+        return "salaryStandard";
     }
 
 
