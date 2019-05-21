@@ -1,24 +1,29 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>人事档案列表</title>
 		<!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-wysiwyg -->
-    <link href="../vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="../vendors/select2/dist/css/select2.min.css" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-    <!-- starrr -->
-    <link href="../vendors/starrr/dist/starrr.css" rel="stylesheet">
+		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<!-- NProgress -->
+		<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+		<!-- Ion.RangeSlider -->
+		<link href="../vendors/normalize-css/normalize.css" rel="stylesheet">
+		<link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+		<link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+		<!-- Bootstrap Colorpicker -->
+		<link href="../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+		<link href="../vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+
+		<!-- Custom Theme Style -->
+		<link href="../build/css/custom.min.css" rel="stylesheet">
+		<!-- Bootstrap -->
+		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		ul li{
 			list-style: none;
@@ -28,18 +33,25 @@
 			line-height: 40px;
 			vertical-align: middle;
 		}
+		#span1{
+			display: inline-block;
+		}
+		#span2{
+			display: inline-block;
+		}
 	</style>
 	</head>
 	<body>
 	<div class="x_content">
 		<br>
-		<form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+		<form th:action="@{/registerList}" method="post" id="frm" name="frm" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+			<input type="hidden" name="pageIndex" id="pageIndex" value="1"/>
 			<ul>
 				<li>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="danganNum">档案编号:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="archCode">档案编号:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" id="danganNum" required="danganNum" class="form-control col-md-7 col-xs-12">
+							<input type="text" id="archCode" th:value="${archiveTools.archCode}" name="archCode" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 				</li>
@@ -47,12 +59,13 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">审核状态</label>
 						<div class="col-md-9 col-sm-9 col-xs-12">
-							<select class="form-control">
-								<option>起草</option>
-								<option>审核中</option>
-								<option>审核通过</option>
-								<option>变更/option>
-									<option>变更通过</option>
+							<select class="form-control" name="reviewStatus">
+								<option value="">请选择</option>
+								<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==revStatus"
+										 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archiveTools.reviewStatus})"
+										 th:value="${dictionary.id}">-- 请选择 --
+								</option>
+
 							</select>
 						</div>
 					</div>
@@ -61,28 +74,27 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">档案状态</label>
 						<div class="col-md-9 col-sm-9 col-xs-12">
-							<select class="form-control">
-								<option>试用期</option>
-								<option>实习</option>
-								<option>正式员工</option>
-								<option>离职</option>
-								<option>已删除</option>
+							<select class="form-control" name="archStatus">
+								<option value="">请选择</option>
+								<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
+										 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archiveTools.archStatus})"
+										 th:value="${dictionary.id}">-- 请选择 --
+								</option>
 							</select>
 						</div>
 					</div>
 				</li>
 				<li>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="creatTime">建档时间:</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">建档时间:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 
 							<fieldset>
 								<div class="control-group">
 									<div class="controls">
-										<div class="col-md-11 xdisplay_inputx form-group has-feedback">
-											<input type="text" class="form-control has-feedback-left" id="single_cal2" placeholder="建档时间" aria-describedby="inputSuccess2Status2">
-											<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-											<span id="inputSuccess2Status2" class="sr-only">(success)</span>
+										<div class="input-prepend input-group">
+											<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+											<input type="text" style="width:200px" name="createDate" id="reservation" class="form-control" value="">
 										</div>
 									</div>
 								</div>
@@ -91,7 +103,7 @@
 					</div>
 				</li>
 				<li>
-					<div class="ln_solid"></div>
+
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<button type="submit" class="btn btn-success">查询</button>
@@ -100,23 +112,26 @@
 				</li>
 			</ul>
 
-		</form>
-                    
-                     &nbsp&nbsp&nbsp;<a href="#">       <button type="button" class="btn btn-round btn-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">档案登记</font></font></button> </a>
+		</form> &nbsp;&nbsp;&nbsp;
+		<a th:href="@{/addArchive}">
+			<button type="button" class="btn btn-round btn-info">
+				<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">档案登记</font>
+				</font>
+			</button>
+		</a><br/><br/>
                     <div class="col-sm-12"><table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
                       <thead>
                         <tr role="row">
-                        	<th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="档案编码" style="width: 141px;">
+                        	<th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="档案编码" style="width: 104px;">
                         		<font style="vertical-align: inherit;">
                         			<font style="vertical-align: inherit;">档案编码</font>
                         		</font>
                         	</th>
-                        	<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="位置：激活以对列升序进行排序" style="width: 234px;">
+                        	<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 104px;">
                         		<font style="vertical-align: inherit;">
                         			<font style="vertical-align: inherit;">姓名</font>
                         		</font>
                         	</th>
-                        	
                         	<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Office：激活以对列升序进行排序" style="width: 104px;">
 								<font style="vertical-align: inherit;">
 									<font style="vertical-align: inherit;">性别</font>
@@ -142,17 +157,17 @@
 									<font style="vertical-align: inherit;">审核状态</font>
 								</font>
 							</th>
-							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 52px;">
+							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 80px;">
 								<font style="vertical-align: inherit;">
 									<font style="vertical-align: inherit;">档案状态</font>
 								</font>
 							</th>
-							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="开始日期：激活以对列升序进行排序" style="width: 102px;">
+							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 102px;">
 								<font style="vertical-align: inherit;">
 									<font style="vertical-align: inherit;">建档日期</font>
 								</font>
 							</th>
-							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="薪水：激活以升序排序列" style="width: 79px;">
+							<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 105px;">
 								<font style="vertical-align: inherit;">
 									<font style="vertical-align: inherit;">操作</font>
 								</font>
@@ -160,396 +175,792 @@
 							</tr>
                       				</thead>
                       <tbody>
-                        <tr role="row" class="odd">
-                          <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Airi Satou</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">会计</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">东京</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">33</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2008/11/28</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 162 700</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">33</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2008/11/28</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 162 700</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="#">修改</a>&nbsp&nbsp<a href="#">明细</a>&nbsp&nbsp<a href="#">删除</a></font></font></td>
-                        
+
+                        <tr th:each="archive:${pageSurport.dataList}" role="row" class="odd">
+                          <td class="sorting_1">
+							  <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+								  <span th:text="${archive.archCode}"></span></font></font>
+						  </td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.name}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.genders}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.depIds}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.posIds}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.titleIds}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.reviewStatuss}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.isdeletes}"></span></font></font></td>
+                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${#dates.format(archive.createDate,'yyyy-MM-dd')}"></span></font></font></td>
+							<td th:if="${user.getUserRoleName()}=='人事专员'">
+								<span th:if="${archive.isdeletes}!='已删除'">
+									<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+										<a th:if="${archive.reviewStatuss}=='起草' or ${archive.reviewStatuss}=='驳回'" th:href="@{/modifyArchive(id=${archive.id})}">修改</a>&nbsp;&nbsp;
+										<a th:if="${archive.reviewStatuss}=='通过' or ${archive.reviewStatuss}=='变更'" th:href="@{/changeArchive(id=${archive.id})}">变更</a>
+										<a th:href="@{/archiveView(id=${archive.id})}">明细</a>&nbsp;&nbsp;
+										<a th:if="${archive.reviewStatuss}=='起草' or ${archive.reviewStatuss}=='驳回'" th:href="@{/delReg(id=${archive.id})}">删除</a>
+									</font></font>
+								</span>
+								<span th:if="${archive.isdeletes}=='已删除'">
+									<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+										<a th:href="@{/archiveView(id=${archive.id})}">明细</a>&nbsp;&nbsp;
+										<a th:class="deleteReg" th:id="${archive.id}" href="#">永久删除</a>&nbsp;&nbsp;
+										<a th:class="recoverReg" th:id="${archive.id}" href="#">恢复</a>
+									</font></font>
+								</span>
+							</td>
+							<td th:if="${user.getUserRoleName()}=='人事经理'">
+								<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+									<!--<a th:if="${archive.reviewStatuss}=='起草' or ${archive.reviewStatuss}=='驳回'" th:href="@{/modifyArchive(id=${archive.id})}">修改</a>&nbsp;&nbsp;
+									<a th:if="${archive.reviewStatuss}=='通过' or ${archive.reviewStatuss}=='变更'" th:href="@{/changeArchive(id=${archive.id})}">变更</a>
+									-->
+									<span th:if="${archive.isdeletes}!='已删除'">
+										<a th:if="${archive.reviewStatuss}=='审核中'" th:href="@{/checkArchive(id=${archive.id})}">复核</a>
+										<a th:if="${archive.reviewStatuss}=='变更申请中'" th:href="@{/checkChangeArchive(id=${archive.id})}">变更复核</a>
+										<a th:href="@{/archiveView(id=${archive.id})}">明细</a>&nbsp;&nbsp;
+										<a th:if="${archive.reviewStatuss}!='审核中' and ${archive.reviewStatuss}!='变更申请中'" th:href="@{/delReg(id=${archive.id})}">删除</a>
+									</span>
+									<span th:if="${archive.isdeletes}=='已删除'">
+										<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+											<a th:href="@{/archiveView(id=${archive.id})}">明细</a>&nbsp;&nbsp;
+											<a th:class="deleteReg" th:id="${archive.id}" href="#">永久删除</a>&nbsp;&nbsp;
+											<a th:class="recoverReg" th:id="${archive.id}" href="#">恢复</a>
+										</font></font>
+									</span>
+								</font></font>
+							</td>
+
+
+
+							  </font></font>
+						  </td>
                         </tr>
-                        <tr role="row" class="even">
-                          <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当归拉莫斯</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">首席执行官（CEO）</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">伦敦</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">47</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2009/10/09</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 1,200,000</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">33</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2008/11/28</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 162 700</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="#">修改</a>&nbsp&nbsp<a href="#">明细</a>&nbsp&nbsp<a href="#">删除</a></font></font></td>
-                        
-                        </tr>
-                        <tr role="row" class="odd">
-                          <td class="sorting_1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阿什顿考克斯</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">初级技术作者</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">旧金山</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">66</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2009年1月12日</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 86,000</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">33</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2008/11/28</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$ 162 700</font></font></td>
-                          <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="#">修改</a>&nbsp&nbsp<a href="#">明细</a>&nbsp&nbsp<a href="#">删除</a></font></font></td>
-                        
+
+
                       </tbody>
                     </table>
         </div>
         <div class="row">
-        	<div class="col-sm-5">
-        		
-        	</div>
+
+				<div class="col-sm-5">
+					<div class="dataTables_info" id="datatable_info" role="status"
+						 aria-live="polite">当前页<span th:text="${pageSurport.pageIndex}"></span> /<span th:text="${pageSurport.totalPageCount }"></span>页 </div>
+				</div>
+
         	<div class="col-sm-7">
         		<div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
         			<ul class="pagination">
-        				<li class="paginate_button previous" id="datatable_previous">
-        					<a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">首页</font>
-        						</font>
-        					</a>
-        				</li>
-        				<li class="paginate_button active">
-        					<a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">1</font>
-        						</font>
-        					</a>
-        				</li>
-        				<li class="paginate_button ">
-        					<a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">2</font>
-        						</font>
-        					</a>
-        				</li>
-        				<li class="paginate_button ">
-        					<a href="#" aria-controls="datatable" data-dt-idx="3" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">3</font>
-        						</font>
-        					</a>
-        				
-        				</li>
-        				<li class="paginate_button ">
-        					<a href="#" aria-controls="datatable" data-dt-idx="6" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">6</font>
-        						</font>
-        					</a>
-        				</li>
-        				<li class="paginate_button next" id="datatable_next">
-        					<a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">
-        						<font style="vertical-align: inherit;">
-        							<font style="vertical-align: inherit;">末页</font>
-        						</font>
-        					</a>
-        				</li>
-        			</ul>
+					<span th:if="${pageSurport.pageIndex }>1" class="pagination" id="span1">
+							<li class="paginate_button" id="datatable_previous">
+								<a th:href="'javascript:page_nav(document.forms[0],1)'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									首页</a>
+							</li>
+							<li class="paginate_button">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.pageIndex }-1)+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									上一页</a>
+							</li>
+					</span>
+						<span th:if="${pageSurport.pageIndex }<${pageSurport.totalPageCount }" class="pagination" id="span2">
+							<li class="paginate_button ">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.pageIndex }+1)+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									下一页</a>
+							</li>
+							<li class="paginate_button" id="datatable_next">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.totalPageCount })+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									末页 </a>
+							</li>
+						</span>
+					</ul>
         		</div>
         	</div>
         </div>
          
                   </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <!-- jQuery -->
-         <script src="js/datepicker/daterangepicker.js"></script>
-        <script src="js/moment/moment.min.js"></script>
-        <script src="../vendors/jquery/dist/jquery.min.js"></script>
-        
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="js/moment/moment.min.js"></script>
-    <script src="js/datepicker/daterangepicker.js"></script>
-    <!-- bootstrap-wysiwyg -->
-    <script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-    <script src="../vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-    <script src="../vendors/google-code-prettify/src/prettify.js"></script>
-    <!-- jQuery Tags Input -->
-    <script src="../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-    <!-- Switchery -->
-    <script src="../vendors/switchery/dist/switchery.min.js"></script>
-    <!-- Select2 -->
-    <script src="../vendors/select2/dist/js/select2.full.min.js"></script>
-    <!-- Parsley -->
-    <script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
-    <!-- Autosize -->
-    <script src="../vendors/autosize/dist/autosize.min.js"></script>
-    <!-- jQuery autocomplete -->
-    <script src="../vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-    <!-- starrr -->
-    <script src="../vendors/starrr/dist/starrr.js"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+<!--分页-->
+	<script th:src="@{/js/jquery.js}"></script>
+	<script type="text/javascript">
+		function page_nav(frm, num) {
+			frm.pageIndex.value = num;
+			frm.submit();
+		}
+		$(function(){
+			$(".deleteReg").click(function(){
+				if(confirm("是否要删除？")) {
+					var athis = $(this);
+					var id = $(this).attr("id");
+					$.get("deleteReg", {"id": id}, function (data) {
+						if (data == "true") {
+							alert("删除成功！");
+							//删除当前行
+							athis.parent().parent().remove();
+						} else {
+							alert("删除失败!");
+						}
 
-    <!-- bootstrap-daterangepicker -->
-    <script>
-      $(document).ready(function() {
-        $('#birthday').daterangepicker({
-          singleDatePicker: true,
-          calender_style: "picker_4"
-        }, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-      });
-    </script>
-    <!-- /bootstrap-daterangepicker -->
+					})
+				}
+			});
+			$(".recoverReg").click(function(){
+				if(confirm("是否要恢复此档案？")) {
+					var athis = $(this);
+					var id = $(this).attr("id");
+					$.get("recoverReg", {"id": id}, function (data) {
+						if (data == "true") {
+							alert("恢复成功！");
+							window.location.reload();
+						} else {
+							alert("恢复档案失败!");
+						}
 
-    <!-- bootstrap-wysiwyg -->
-    <script>
-      $(document).ready(function() {
-        function initToolbarBootstrapBindings() {
-          var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-              'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-              'Times New Roman', 'Verdana'
-            ],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-          $.each(fonts, function(idx, fontName) {
-            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-          });
-          $('a[title]').tooltip({
-            container: 'body'
-          });
-          $('.dropdown-menu input').click(function() {
-              return false;
-            })
-            .change(function() {
-              $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-            })
-            .keydown('esc', function() {
-              this.value = '';
-              $(this).change();
-            });
+					})
+				}
+			})
+		})
+	</script>
 
-          $('[data-role=magic-overlay]').each(function() {
-            var overlay = $(this),
-              target = $(overlay.data('target'));
-            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-          });
 
-          if ("onwebkitspeechchange" in document.createElement("input")) {
-            var editorOffset = $('#editor').offset();
 
-            $('.voiceBtn').css('position', 'absolute').offset({
-              top: editorOffset.top,
-              left: editorOffset.left + $('#editor').innerWidth() - 35
-            });
-          } else {
-            $('.voiceBtn').hide();
-          }
-        }
 
-        function showErrorAlert(reason, detail) {
-          var msg = '';
-          if (reason === 'unsupported-file-type') {
-            msg = "Unsupported format " + detail;
-          } else {
-            console.log("error uploading file", reason, detail);
-          }
-          $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-        }
 
-        initToolbarBootstrapBindings();
 
-        $('#editor').wysiwyg({
-          fileUploadError: showErrorAlert
-        });
 
-        window.prettyPrint;
-        prettyPrint();
-      });
-    </script>
-    <!-- /bootstrap-wysiwyg -->
 
-    <!-- Select2 -->
-    <script>
-      $(document).ready(function() {
-        $(".select2_single").select2({
-          placeholder: "Select a state",
-          allowClear: true
-        });
-        $(".select2_group").select2({});
-        $(".select2_multiple").select2({
-          maximumSelectionLength: 4,
-          placeholder: "With Max Selection limit 4",
-          allowClear: true
-        });
-      });
-    </script>
-    <!-- /Select2 -->
 
-    <!-- jQuery Tags Input -->
-    <script>
-      function onAddTag(tag) {
-        alert("Added a tag: " + tag);
-      }
+	<!-- jQuery -->
+	<script src="../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="../vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="../vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="js/moment/moment.min.js"></script>
+	<script src="js/datepicker/daterangepicker.js"></script>
+	<!-- Ion.RangeSlider -->
+	<script src="../vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+	<!-- Bootstrap Colorpicker -->
+	<script src="../vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+	<!-- jquery.inputmask -->
+	<script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+	<!-- jQuery Knob -->
+	<script src="../vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+	<!-- Cropper -->
+	<script src="../vendors/cropper/dist/cropper.min.js"></script>
 
-      function onRemoveTag(tag) {
-        alert("Removed a tag: " + tag);
-      }
+	<!-- Custom Theme Scripts -->
+	<script src="../build/js/custom.min.js"></script>
 
-      function onChangeTag(input, tag) {
-        alert("Changed a tag: " + tag);
-      }
+	<!-- bootstrap-daterangepicker -->
+	<script>
+		$(document).ready(function() {
+			var cb = function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+				$('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+			};
 
-      $(document).ready(function() {
-        $('#tags_1').tagsInput({
-          width: 'auto'
-        });
-      });
-    </script>
-    <!-- /jQuery Tags Input -->
+			var optionSet1 = {
+				startDate: moment().subtract(29, 'days'),
+				endDate: moment(),
+				minDate: '01/01/2012',
+				maxDate: '12/31/2015',
+				dateLimit: {
+					days: 60
+				},
+				showDropdowns: true,
+				showWeekNumbers: true,
+				timePicker: false,
+				timePickerIncrement: 1,
+				timePicker12Hour: true,
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				},
+				opens: 'right',
+				buttonClasses: ['btn btn-default'],
+				applyClass: 'btn-small btn-primary',
+				cancelClass: 'btn-small',
+				format: 'MM/DD/YYYY',
+				separator: ' to ',
+				locale: {
+					applyLabel: 'Submit',
+					cancelLabel: 'Clear',
+					fromLabel: 'From',
+					toLabel: 'To',
+					customRangeLabel: 'Custom',
+					daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+					monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+					firstDay: 1
+				}
+			};
 
-    <!-- Parsley -->
-    <script>
-      $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-          validateFront();
-        });
-        $('#demo-form .btn').on('click', function() {
-          $('#demo-form').parsley().validate();
-          validateFront();
-        });
-        var validateFront = function() {
-          if (true === $('#demo-form').parsley().isValid()) {
-            $('.bs-callout-info').removeClass('hidden');
-            $('.bs-callout-warning').addClass('hidden');
-          } else {
-            $('.bs-callout-info').addClass('hidden');
-            $('.bs-callout-warning').removeClass('hidden');
-          }
-        };
-      });
+			$('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-      $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-          validateFront();
-        });
-        $('#demo-form2 .btn').on('click', function() {
-          $('#demo-form2').parsley().validate();
-          validateFront();
-        });
-        var validateFront = function() {
-          if (true === $('#demo-form2').parsley().isValid()) {
-            $('.bs-callout-info').removeClass('hidden');
-            $('.bs-callout-warning').addClass('hidden');
-          } else {
-            $('.bs-callout-info').addClass('hidden');
-            $('.bs-callout-warning').removeClass('hidden');
-          }
-        };
-      });
-      try {
-        hljs.initHighlightingOnLoad();
-      } catch (err) {}
-    </script>
-    <!-- /Parsley -->
+			$('#reportrange_right').daterangepicker(optionSet1, cb);
 
-    <!-- Autosize -->
-    <script>
-      $(document).ready(function() {
-        autosize($('.resizable_textarea'));
-      });
-    </script>
-    <!-- /Autosize -->
+			$('#reportrange_right').on('show.daterangepicker', function() {
+				console.log("show event fired");
+			});
+			$('#reportrange_right').on('hide.daterangepicker', function() {
+				console.log("hide event fired");
+			});
+			$('#reportrange_right').on('apply.daterangepicker', function(ev, picker) {
+				console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+			});
+			$('#reportrange_right').on('cancel.daterangepicker', function(ev, picker) {
+				console.log("cancel event fired");
+			});
 
-    <!-- jQuery autocomplete -->
-    <script>
-      $(document).ready(function() {
-        var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"Åland Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"Côte d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"São Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };
+			$('#options1').click(function() {
+				$('#reportrange_right').data('daterangepicker').setOptions(optionSet1, cb);
+			});
 
-        var countriesArray = $.map(countries, function(value, key) {
-          return {
-            value: value,
-            data: key
-          };
-        });
+			$('#options2').click(function() {
+				$('#reportrange_right').data('daterangepicker').setOptions(optionSet2, cb);
+			});
 
-        // initialize autocomplete with custom appendTo
-        $('#autocomplete-custom-append').autocomplete({
-          lookup: countriesArray
-        });
-      });
-    </script>
-    <!-- /jQuery autocomplete -->
+			$('#destroy').click(function() {
+				$('#reportrange_right').data('daterangepicker').remove();
+			});
 
-    <!-- Starrr -->
-    <script>
-      $(document).ready(function() {
-        $(".stars").starrr();
+		});
+	</script>
 
-        $('.stars-existing').starrr({
-          rating: 4
-        });
+	<script>
+		$(document).ready(function() {
+			var cb = function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+				$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+			};
 
-        $('.stars').on('starrr:change', function (e, value) {
-          $('.stars-count').html(value);
-        });
+			var optionSet1 = {
+				startDate: moment().subtract(29, 'days'),
+				endDate: moment(),
+				minDate: '01/01/2012',
+				maxDate: '12/31/2015',
+				dateLimit: {
+					days: 60
+				},
+				showDropdowns: true,
+				showWeekNumbers: true,
+				timePicker: false,
+				timePickerIncrement: 1,
+				timePicker12Hour: true,
+				ranges: {
+					'Today': [moment(), moment()],
+					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+					'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+					'This Month': [moment().startOf('month'), moment().endOf('month')],
+					'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				},
+				opens: 'left',
+				buttonClasses: ['btn btn-default'],
+				applyClass: 'btn-small btn-primary',
+				cancelClass: 'btn-small',
+				format: 'MM/DD/YYYY',
+				separator: ' to ',
+				locale: {
+					applyLabel: 'Submit',
+					cancelLabel: 'Clear',
+					fromLabel: 'From',
+					toLabel: 'To',
+					customRangeLabel: 'Custom',
+					daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+					monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+					firstDay: 1
+				}
+			};
+			$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+			$('#reportrange').daterangepicker(optionSet1, cb);
+			$('#reportrange').on('show.daterangepicker', function() {
+				console.log("show event fired");
+			});
+			$('#reportrange').on('hide.daterangepicker', function() {
+				console.log("hide event fired");
+			});
+			$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+				console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+			});
+			$('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+				console.log("cancel event fired");
+			});
+			$('#options1').click(function() {
+				$('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+			});
+			$('#options2').click(function() {
+				$('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+			});
+			$('#destroy').click(function() {
+				$('#reportrange').data('daterangepicker').remove();
+			});
+		});
+	</script>
 
-        $('.stars-existing').on('starrr:change', function (e, value) {
-          $('.stars-count-existing').html(value);
-        });
-      });
-    </script>
-    <!-- /Starrr -->
-    
-    <script>
-      $(document).ready(function() {
-        $('#single_cal1').daterangepicker({
-          singleDatePicker: true,
-          calender_style: "picker_1"
-        }, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-        $('#single_cal2').daterangepicker({
-          singleDatePicker: true,
-          calender_style: "picker_2"
-        }, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-        $('#single_cal3').daterangepicker({
-          singleDatePicker: true,
-          calender_style: "picker_3"
-        }, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-        $('#single_cal4').daterangepicker({
-          singleDatePicker: true,
-          calender_style: "picker_4"
-        }, function(start, end, label) {
-          console.log(start.toISOString(), end.toISOString(), label);
-        });
-      });
-    </script>
-    
+	<script>
+		$(document).ready(function() {
+			$('#single_cal1').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_1"
+			}, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+			$('#single_cal2').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_2"
+			}, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+			$('#single_cal3').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_3"
+			}, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+			$('#single_cal4').daterangepicker({
+				singleDatePicker: true,
+				calender_style: "picker_4"
+			}, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('#reservation').daterangepicker(null, function(start, end, label) {
+				console.log(start.toISOString(), end.toISOString(), label);
+			});
+		});
+	</script>
+	<!-- /bootstrap-daterangepicker -->
+
+	<!-- Ion.RangeSlider -->
+	<script>
+		$(document).ready(function() {
+			$("#range_27").ionRangeSlider({
+				type: "double",
+				min: 1000000,
+				max: 2000000,
+				grid: true,
+				force_edges: true
+			});
+			$("#range").ionRangeSlider({
+				hide_min_max: true,
+				keyboard: true,
+				min: 0,
+				max: 5000,
+				from: 1000,
+				to: 4000,
+				type: 'double',
+				step: 1,
+				prefix: "$",
+				grid: true
+			});
+			$("#range_25").ionRangeSlider({
+				type: "double",
+				min: 1000000,
+				max: 2000000,
+				grid: true
+			});
+			$("#range_26").ionRangeSlider({
+				type: "double",
+				min: 0,
+				max: 10000,
+				step: 500,
+				grid: true,
+				grid_snap: true
+			});
+			$("#range_31").ionRangeSlider({
+				type: "double",
+				min: 0,
+				max: 100,
+				from: 30,
+				to: 70,
+				from_fixed: true
+			});
+			$(".range_min_max").ionRangeSlider({
+				type: "double",
+				min: 0,
+				max: 100,
+				from: 30,
+				to: 70,
+				max_interval: 50
+			});
+			$(".range_time24").ionRangeSlider({
+				min: +moment().subtract(12, "hours").format("X"),
+				max: +moment().format("X"),
+				from: +moment().subtract(6, "hours").format("X"),
+				grid: true,
+				force_edges: true,
+				prettify: function(num) {
+					var m = moment(num, "X");
+					return m.format("Do MMMM, HH:mm");
+				}
+			});
+		});
+	</script>
+	<!-- /Ion.RangeSlider -->
+
+	<!-- Bootstrap Colorpicker -->
+	<script>
+		$(document).ready(function() {
+			$('.demo1').colorpicker();
+			$('.demo2').colorpicker();
+
+			$('#demo_forceformat').colorpicker({
+				format: 'rgba',
+				horizontal: true
+			});
+
+			$('#demo_forceformat3').colorpicker({
+				format: 'rgba',
+			});
+
+			$('.demo-auto').colorpicker();
+		});
+	</script>
+	<!-- /Bootstrap Colorpicker -->
+
+	<!-- jquery.inputmask -->
+	<script>
+		$(document).ready(function() {
+			$(":input").inputmask();
+		});
+	</script>
+	<!-- /jquery.inputmask -->
+
+	<!-- jQuery Knob -->
+	<script>
+		$(function($) {
+
+			$(".knob").knob({
+				change: function(value) {
+					//console.log("change : " + value);
+				},
+				release: function(value) {
+					//console.log(this.$.attr('value'));
+					console.log("release : " + value);
+				},
+				cancel: function() {
+					console.log("cancel : ", this);
+				},
+				/*format : function (value) {
+                 return value + '%';
+                 },*/
+				draw: function() {
+
+					// "tron" case
+					if (this.$.data('skin') == 'tron') {
+
+						this.cursorExt = 0.3;
+
+						var a = this.arc(this.cv) // Arc
+								,
+								pa // Previous arc
+								, r = 1;
+
+						this.g.lineWidth = this.lineWidth;
+
+						if (this.o.displayPrevious) {
+							pa = this.arc(this.v);
+							this.g.beginPath();
+							this.g.strokeStyle = this.pColor;
+							this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
+							this.g.stroke();
+						}
+
+						this.g.beginPath();
+						this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
+						this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
+						this.g.stroke();
+
+						this.g.lineWidth = 2;
+						this.g.beginPath();
+						this.g.strokeStyle = this.o.fgColor;
+						this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+						this.g.stroke();
+
+						return false;
+					}
+				}
+			});
+
+			// Example of infinite knob, iPod click wheel
+			var v, up = 0,
+					down = 0,
+					i = 0,
+					$idir = $("div.idir"),
+					$ival = $("div.ival"),
+					incr = function() {
+						i++;
+						$idir.show().html("+").fadeOut();
+						$ival.html(i);
+					},
+					decr = function() {
+						i--;
+						$idir.show().html("-").fadeOut();
+						$ival.html(i);
+					};
+			$("input.infinite").knob({
+				min: 0,
+				max: 20,
+				stopper: false,
+				change: function() {
+					if (v > this.cv) {
+						if (up) {
+							decr();
+							up = 0;
+						} else {
+							up = 1;
+							down = 0;
+						}
+					} else {
+						if (v < this.cv) {
+							if (down) {
+								incr();
+								down = 0;
+							} else {
+								down = 1;
+								up = 0;
+							}
+						}
+					}
+					v = this.cv;
+				}
+			});
+		});
+	</script>
+	<!-- /jQuery Knob -->
+
+	<!-- Cropper -->
+	<script>
+		$(document).ready(function() {
+			var $image = $('#image');
+			var $download = $('#download');
+			var $dataX = $('#dataX');
+			var $dataY = $('#dataY');
+			var $dataHeight = $('#dataHeight');
+			var $dataWidth = $('#dataWidth');
+			var $dataRotate = $('#dataRotate');
+			var $dataScaleX = $('#dataScaleX');
+			var $dataScaleY = $('#dataScaleY');
+			var options = {
+				aspectRatio: 16 / 9,
+				preview: '.img-preview',
+				crop: function (e) {
+					$dataX.val(Math.round(e.x));
+					$dataY.val(Math.round(e.y));
+					$dataHeight.val(Math.round(e.height));
+					$dataWidth.val(Math.round(e.width));
+					$dataRotate.val(e.rotate);
+					$dataScaleX.val(e.scaleX);
+					$dataScaleY.val(e.scaleY);
+				}
+			};
+
+
+			// Tooltip
+			$('[data-toggle="tooltip"]').tooltip();
+
+
+			// Cropper
+			$image.on({
+				'build.cropper': function (e) {
+					console.log(e.type);
+				},
+				'built.cropper': function (e) {
+					console.log(e.type);
+				},
+				'cropstart.cropper': function (e) {
+					console.log(e.type, e.action);
+				},
+				'cropmove.cropper': function (e) {
+					console.log(e.type, e.action);
+				},
+				'cropend.cropper': function (e) {
+					console.log(e.type, e.action);
+				},
+				'crop.cropper': function (e) {
+					console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+				},
+				'zoom.cropper': function (e) {
+					console.log(e.type, e.ratio);
+				}
+			}).cropper(options);
+
+
+			// Buttons
+			if (!$.isFunction(document.createElement('canvas').getContext)) {
+				$('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+			}
+
+			if (typeof document.createElement('cropper').style.transition === 'undefined') {
+				$('button[data-method="rotate"]').prop('disabled', true);
+				$('button[data-method="scale"]').prop('disabled', true);
+			}
+
+
+			// Download
+			if (typeof $download[0].download === 'undefined') {
+				$download.addClass('disabled');
+			}
+
+
+			// Options
+			$('.docs-toggles').on('change', 'input', function () {
+				var $this = $(this);
+				var name = $this.attr('name');
+				var type = $this.prop('type');
+				var cropBoxData;
+				var canvasData;
+
+				if (!$image.data('cropper')) {
+					return;
+				}
+
+				if (type === 'checkbox') {
+					options[name] = $this.prop('checked');
+					cropBoxData = $image.cropper('getCropBoxData');
+					canvasData = $image.cropper('getCanvasData');
+
+					options.built = function () {
+						$image.cropper('setCropBoxData', cropBoxData);
+						$image.cropper('setCanvasData', canvasData);
+					};
+				} else if (type === 'radio') {
+					options[name] = $this.val();
+				}
+
+				$image.cropper('destroy').cropper(options);
+			});
+
+
+			// Methods
+			$('.docs-buttons').on('click', '[data-method]', function () {
+				var $this = $(this);
+				var data = $this.data();
+				var $target;
+				var result;
+
+				if ($this.prop('disabled') || $this.hasClass('disabled')) {
+					return;
+				}
+
+				if ($image.data('cropper') && data.method) {
+					data = $.extend({}, data); // Clone a new one
+
+					if (typeof data.target !== 'undefined') {
+						$target = $(data.target);
+
+						if (typeof data.option === 'undefined') {
+							try {
+								data.option = JSON.parse($target.val());
+							} catch (e) {
+								console.log(e.message);
+							}
+						}
+					}
+
+					result = $image.cropper(data.method, data.option, data.secondOption);
+
+					switch (data.method) {
+						case 'scaleX':
+						case 'scaleY':
+							$(this).data('option', -data.option);
+							break;
+
+						case 'getCroppedCanvas':
+							if (result) {
+
+								// Bootstrap's Modal
+								$('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
+
+								if (!$download.hasClass('disabled')) {
+									$download.attr('href', result.toDataURL());
+								}
+							}
+
+							break;
+					}
+
+					if ($.isPlainObject(result) && $target) {
+						try {
+							$target.val(JSON.stringify(result));
+						} catch (e) {
+							console.log(e.message);
+						}
+					}
+
+				}
+			});
+
+			// Keyboard
+			$(document.body).on('keydown', function (e) {
+				if (!$image.data('cropper') || this.scrollTop > 300) {
+					return;
+				}
+
+				switch (e.which) {
+					case 37:
+						e.preventDefault();
+						$image.cropper('move', -1, 0);
+						break;
+
+					case 38:
+						e.preventDefault();
+						$image.cropper('move', 0, -1);
+						break;
+
+					case 39:
+						e.preventDefault();
+						$image.cropper('move', 1, 0);
+						break;
+
+					case 40:
+						e.preventDefault();
+						$image.cropper('move', 0, 1);
+						break;
+				}
+			});
+
+			// Import image
+			var $inputImage = $('#inputImage');
+			var URL = window.URL || window.webkitURL;
+			var blobURL;
+
+			if (URL) {
+				$inputImage.change(function () {
+					var files = this.files;
+					var file;
+
+					if (!$image.data('cropper')) {
+						return;
+					}
+
+					if (files && files.length) {
+						file = files[0];
+
+						if (/^image\/\w+$/.test(file.type)) {
+							blobURL = URL.createObjectURL(file);
+							$image.one('built.cropper', function () {
+
+								// Revoke when load complete
+								URL.revokeObjectURL(blobURL);
+							}).cropper('reset').cropper('replace', blobURL);
+							$inputImage.val('');
+						} else {
+							window.alert('Please choose an image file.');
+						}
+					}
+				});
+			} else {
+				$inputImage.prop('disabled', true).parent().addClass('disabled');
+			}
+		});
+	</script>
+
 	</body>
 </html>

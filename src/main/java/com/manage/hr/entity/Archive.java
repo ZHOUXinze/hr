@@ -35,6 +35,85 @@ public class Archive {
     private String depCode;
     private String depName;
     private String titleName;
+    private String phoneNumber;
+    private String genders;
+    private String reviewStatuss;
+    private String archStatuss;
+    private Integer isdelete;
+    private String depIds;
+    private String titleIds;
+    private String posIds;
+    private String posCode;
+    private String phone;
+    private String politicals;
+    private String educations;
+    private String salaryStandards;
+    private String isdeletes;
+
+
+    public String getIsdeletes() {
+        return isdeletes;
+    }
+
+    public void setIsdeletes(String isdeletes) {
+        this.isdeletes = isdeletes;
+    }
+
+    public Integer getIsdelete() {
+        return isdelete;
+    }
+
+    public void setIsdelete(Integer isdelete) {
+        this.isdelete = isdelete;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPoliticals() {
+        return politicals;
+    }
+
+    public void setPoliticals(String politicals) {
+        this.politicals = politicals;
+    }
+
+    public String getEducations() {
+        return educations;
+    }
+
+    public void setEducations(String educations) {
+        this.educations = educations;
+    }
+
+    public String getSalaryStandards() {
+        return salaryStandards;
+    }
+
+    public void setSalaryStandards(String salaryStandards) {
+        this.salaryStandards = salaryStandards;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPosCode() {
+        return posCode;
+    }
+
+    public void setPosCode(String posCode) {
+        this.posCode = posCode;
+    }
 
     public String getDepCode() {
         return depCode;
@@ -290,5 +369,54 @@ public class Archive {
 
     public void setArchStatus(Integer archStatus) {
         this.archStatus = archStatus;
+    }
+
+
+    public String getGenders() {
+        return genders;
+    }
+
+    public void setGenders(String genders) {
+        this.genders = genders;
+    }
+
+    public String getReviewStatuss() {
+        return reviewStatuss;
+    }
+
+    public void setReviewStatuss(String reviewStatuss) {
+        this.reviewStatuss = reviewStatuss;
+    }
+
+    public String getArchStatuss() {
+        return archStatuss;
+    }
+
+    public void setArchStatuss(String archStatuss) {
+        this.archStatuss = archStatuss;
+    }
+
+    public String getDepIds() {
+        return depIds;
+    }
+
+    public void setDepIds(String depIds) {
+        this.depIds = depIds;
+    }
+
+    public String getTitleIds() {
+        return titleIds;
+    }
+
+    public void setTitleIds(String titleIds) {
+        this.titleIds = titleIds;
+    }
+
+    public String getPosIds() {
+        return posIds;
+    }
+
+    public void setPosIds(String posIds) {
+        this.posIds = posIds;
     }
 }

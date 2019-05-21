@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.hr.dao.ArchiveDao">
+    <insert id="addArchive" parameterType="Archive">
+        insert into archive (archCode,depId,posId,`name`,gender,photoPath,email,address,idNumber,account,political,school,major,education,salaryStandard,bank,bankCard,sscNumber,registerPerson,createDate,resumePath,family,remark,annex,reviewStatus,changeStatus,archStatus,phoneNumber,isdelete)
+         values (#{archCode},#{depId},#{posId},#{name},#{gender},#{photoPath},#{email},#{address},#{idNumber},#{account},#{political},#{school},#{major},#{education},#{salaryStandard},#{bank},#{bankCard},#{sscNumber},#{registerPerson},#{createDate},#{resumePath},#{family},#{remark},#{annex},#{reviewStatus},#{changeStatus},#{archStatus},#{phoneNumber},#{archStatus})
+    </insert>
+    <select id="findMaxId" resultType="int">
+        select MAX(id) from archive
+    </select>
+
+    <select id="findArchiveCount" resultType="int">
+        select COUNT(1) from archive
+        <where>
+            <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
+                and archCode=#{archiveTools.archCode}
+            </if>
+            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
+                and reviewStatus=#{archiveTools.reviewStatus}
+            </if>
+            <if test="archiveTools.archStatus!=null and archiveTools.archStatus!=''">
+                and archStatus=#{archiveTools.archStatus}
+            </if>
+            <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
+                and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
+            </if>
+        </where>
+    </select>
+    <select id="findArchiveList" resultType="Archive">
+        SELECT a.id,a.name,a.archCode,a.createDate,a.reviewStatus,a.archStatus,
+        (SELECT dataName FROM dictionary d WHERE id=a.gender) genders,
+        (SELECT dataName FROM dictionary d WHERE id=a.reviewStatus) reviewStatuss,
+        (SELECT dataName FROM dictionary d WHERE id=a.archStatus) archStatuss,
+        (SELECT dataName FROM dictionary d WHERE id=a.isdelete) isdeletes,
+        (SELECT depName FROM department dpt WHERE id=a.depId) depIds,
+        (SELECT titleName FROM title t WHERE id=a.titleId) titleIds,
+        (SELECT posName FROM `position` p WHERE id=a.posId) posIds
+        FROM `archive` a
+            <where>
+                <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
+                    and archCode=#{archiveTools.archCode}
+                </if>
+                <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
+                    and reviewStatus=#{archiveTools.reviewStatus}
+                </if>
+                <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
+                    and archStatus=#{archiveTools.archStatus}
+                </if>
+                <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
+                    and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
+                </if>
+
+            </where>
+        ORDER BY createDate DESC LIMIT  #{from},#{pageSize}
+    </select>
+    <update id="updateArchive" parameterType="Archive">
+        update archive
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+            <if test="depId != null and depId != ''">depId=#{depId},</if>
+            <if test="posId != null and posId != ''">posId=#{posId},</if>
+            <if test="titleId != null and titleId != ''">titleId=#{titleId},</if>
+            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="gender != null and gender != ''">gender=#{gender},</if>
+            <if test="photoPath != null and photoPath != ''">photoPath=#{photoPath},</if>
+            <if test="email != null and email != ''">email=#{email},</if>
+            <if test="address != null and address != ''">address=#{address},</if>
+            <if test="idNumber != null and idNumber != ''">idNumber=#{idNumber},</if>
+            <if test="account != null and account != ''">account=#{account},</if>
+            <if test="political != null and political != ''">political=#{political},</if>
+            <if test="school != null and school != ''">school=#{school},</if>
+            <if test="major != null and major != ''">major=#{major},</if>
+            <if test="education != null and education != ''">education=#{education},</if>
+            <if test="salaryStandard != null and salaryStandard != ''">salaryStandard=#{salaryStandard},</if>
+            <if test="bank != null and bank != ''">bank=#{bank},</if>
+            <if test="bankCard != null and bankCard != ''">bankCard=#{bankCard},</if>
+            <if test="sscNumber != null and sscNumber != ''">sscNumber=#{sscNumber},</if>
+            <if test="registerPerson != null and registerPerson != ''">registerPerson=#{registerPerson},</if>
+            <if test="createDate != null and createDate != ''">createDate=#{createDate},</if>
+            <if test="resumePath != null and resumePath != ''">resumePath=#{resumePath},</if>
+            <if test="family != null and family != ''">family=#{family},</if>
+            <if test="remark != null and remark != ''">remark=#{remark},</if>
+            <if test="annex != null and annex != ''">annex=#{annex},</if>
+            <if test="reviewStatus != null and reviewStatus != ''">reviewStatus=#{reviewStatus},</if>
+            <if test="changeStatus != null and changeStatus != ''">changeStatus=#{changeStatus},</if>
+            <if test="archStatus != null and archStatus != ''">archStatus=#{archStatus},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phoneNumber=#{phoneNumber},</if>
+
+        </trim>
+    </update>
+    <delete id="deleteArchive" parameterType="int">
+        delete from archive where id=#{id}
+    </delete>
+    <update id="delUpdateArchiveStatus" parameterType="int">
+        update archive set isdelete=33 where id=#{id}
+    </update>
+    <select id="findArchiveById" parameterType="int" resultType="Archive">
+         SELECT a.id,a.archCode,a.depId,a.posId,a.titleId,a.`name`,a.gender,a.photoPath,a.email,a.address,a.idNumber,a.account,a.political,a.school,a.major,a.education,a.salaryStandard,a.bank,a.bankCard,a.sscNumber,a.registerPerson,a.createDate,a.resumePath,a.family,a.remark,a.annex,a.reviewStatus,a.changeStatus,a.archStatus,a.phoneNumber,a.isdelete,
+        (SELECT dataName FROM dictionary d WHERE id=a.political) politicals,
+        (SELECT dataName FROM dictionary d WHERE id=a.education) educations,
+        (SELECT dataName FROM dictionary d WHERE id=a.salaryStandard) salaryStandards,
+        (SELECT dataName FROM dictionary d WHERE id=a.gender) genders,
+        (SELECT dataName FROM dictionary d WHERE id=a.reviewStatus) reviewStatuss,
+        (SELECT dataName FROM dictionary d WHERE id=a.archStatus) archStatuss,
+        (SELECT depName FROM department dpt WHERE id=a.depId) depIds,
+        (SELECT titleName FROM title t WHERE id=a.titleId) titleIds,
+        (SELECT posName FROM `position` p WHERE id=a.posId) posIds,
+        (SELECT posCode FROM `position` p WHERE id=a.posId) posCode
+        FROM `archive` a
+        where id=#{id};
+    </select>
+    <select id="findPosCode" resultType="String" parameterType="int">
+        select posCode from `position` where id=#{id}
+    </select>
+    <update id="recoverReg">
+         update archive set isdelete=#{isdelete} where id=#{id}
+    </update>
+    <update id="deleteAnnex" parameterType="int">
+             update archive set annex='' where id=#{id}
+    </update>
+</mapper>
