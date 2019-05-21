@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>人事档案明细</title>
+		<title>人事档案变更</title>
 		<!-- Bootstrap -->
 		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -61,8 +61,42 @@
 	<body>
 		<div class="x_content">
 			<br>
-			<form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+			<form th:action="@{/doChangeArchive}" method="post" enctype="multipart/form-data" id="frm" name="frm" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+				<input type="hidden" id="id" name="id" th:value="${archive.id}" required="required" class="form-control col-md-7 col-xs-12">
+				<input type="hidden" id="reviewStatus" name="reviewStatus" value="" required="required" class="form-control col-md-7 col-xs-12">
+
 				<ul>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="deptment">档案编码:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="archCode" readonly th:value="${archive.archCode}" required="required" class="form-control col-md-7 col-xs-12">
+							</div>
+						</div>
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12 ">变更状态</label>
+							<div class="col-md-6 col-sm-6 col-xs-12" >
+								<select class="form-control" name="changeStatus">
+									<option value="">请选择</option>
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==chanStatus"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.changeStatus})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
+							</div>
+						</div>
+					</li>
+					<li class="lefttop">
+						<!--<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
+							</div>-->
+						<div class="image view view-first">
+							<img style="width:180px;height:180px; display:block;" th:src="${archive.photoPath}"  alt="">
+
+						</div>
+					</li>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="deptment">所属部门:</label>
@@ -80,19 +114,18 @@
 						</div>
 					</li>
 					<li class="lefttop">
-						<!--<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
-							</div>-->
-						<div class="image view view-first">
-                            <img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
-							<!--<input type="text" th:value="${archive.photoPath}" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">-->
-						</div>
+
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12 ">档案状态</label>
 							<div class="col-md-6 col-sm-6 col-xs-12" >
-								<input type="text" id="archStatuss" name="archStatuss" th:value="${archive.archStatuss}" required="required" class="form-control col-md-7 col-xs-12">
+								<select class="form-control" name="archStatus">
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.archStatus})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
 							</div>
 						</div>
 					</li>
@@ -105,7 +138,7 @@
 						</div>
 					</li>
 					<li class="lefttop">
-						
+
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
@@ -119,12 +152,17 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">性别:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="genders" name="genders" th:value="${archive.genders}" required="required" class="form-control col-md-7 col-xs-12">
+								<select class="form-control" name="gender">
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==gender"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.gender})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
 							</div>
 						</div>
 					</li>
 					<li class="lefttop">
-						
+
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
@@ -143,9 +181,8 @@
 						</div>
 					</li>
 					<li class="lefttop">
-						
+
 					</li>
-					
 					<li class="leftmiddle">
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="IdCard">身份证号:</label>
@@ -164,9 +201,14 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="political">政治面貌:</label>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">政治面貌:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" th:value="${archive.politicals}" id="political" name="political" required="required" class="form-control col-md-7 col-xs-12">
+								<select class="form-control" name="political">
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==political"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.political})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
 							</div>
 						</div>
 					</li>
@@ -190,8 +232,12 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">学历</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" th:value="${archive.educations}" id="education" name="education" required="required" class="form-control col-md-7 col-xs-12">
-
+								<select class="form-control" name="education">
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==education"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.education})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
 							</div>
 						</div>
 					</li>
@@ -199,7 +245,12 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">薪酬标准</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" th:value="${archive.salaryStandards}" id="salaryStandard" name="salaryStandard" required="required" class="form-control col-md-7 col-xs-12">
+								<select class="form-control" name="salaryStandard">
+									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==salaryStd"
+											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.salaryStandard})"
+											 th:value="${dictionary.id}">-- 请选择 --
+									</option>
+								</select>
 							</div>
 						</div>
 					</li>
@@ -239,7 +290,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12">建档时间:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" th:value="${#dates.format(archive.createDate,'yyyy-MM-dd')}" class="form-control has-feedback-left" id="single_cal2" placeholder="时间" aria-describedby="inputSuccess2Status2">
+								<input type="text" th:value="${#dates.format(archive.createDate,'yyyy-MM-dd')}" class="form-control has-feedback-left" id="single_cal2" placeholder="时间" aria-describedby="inputSuccess2Status2">
 
 							</div>
 						</div>
@@ -278,24 +329,42 @@
 						</div>
 						
 					</li><br/>
-					<!--<li class="leftfooter1">下载附件&nbsp;
-					
-					</li>-->
+					<li class="leftfooter1"> 下载附件&nbsp;
+					</li>
 
 				</ul>
 
-				<div class="ln_solid"></div>
 				<div class="form-group">
 					
 					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-						
-						<button type="submit" class="btn btn-success">返回</button>
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<input type="button" id="saveA" name="saveA" value="保存"
+								   th:onclick="submitClaimVoucher('保存')"
+								   class="btn btn-primary"></input>
+							<input type="button" id="submitA" name="submitA" value="变更审请"
+								   th:onclick="submitClaimVoucher('变更审请')"
+								   class="btn btn-primary"></input>
+							<button type="submit" class="btn btn-success">返回</button>
+						</div>
 					</div>
 				</div>
 
 			</form>
 		</div>
+		<script>
+			function submitClaimVoucher(action){
+				if(!confirm("确定"+action+"档案吗")) return;
+				if (action == '保存'){
+					document.getElementById("reviewStatus").setAttribute("value",5);
+				}else{
+					document.getElementById("reviewStatus").setAttribute("value",36);
+				}
+				/*alert(document.frm.revStatus.value);*/
+				document.frm.submit();
 
+
+			}
+		</script>
 		<!-- jQuery -->
 		<script src="js/datepicker/daterangepicker.js"></script>
 		<script src="js/moment/moment.min.js"></script>

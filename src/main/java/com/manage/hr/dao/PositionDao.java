@@ -8,4 +8,5 @@ import java.util.List;
 public interface PositionDao {
     List<Position> listPosition();
     List<Position> cachePosition();
+
 }
