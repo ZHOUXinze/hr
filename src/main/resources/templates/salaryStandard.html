@@ -88,6 +88,10 @@
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">
                         <button type="button" class="btn btn-outline-primary">修改</button>
                     </a>
+                    <a th:if="${salaryStandard.getStatusName()}=='驳回'"
+                       th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">
+                        <button type="button" class="btn btn-outline-primary">修改</button>
+                    </a>
                     <a th:if="${salaryStandard.getStatusName()}=='通过'"
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'change')}">
                         <button type="button" class="btn btn-outline-primary">变更</button>
@@ -106,6 +110,10 @@
                 </td>
                 <td th:if="${session.user.getUserRoleName()=='薪酬专员'}">
                     <a th:if="${salaryStandard.getStatusName()}=='起草'"
+                       th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">
+                        <button type="button" class="btn btn-outline-primary">修改</button>
+                    </a>
+                    <a th:if="${salaryStandard.getStatusName()}=='驳回'"
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">
                         <button type="button" class="btn btn-outline-primary">修改</button>
                     </a>

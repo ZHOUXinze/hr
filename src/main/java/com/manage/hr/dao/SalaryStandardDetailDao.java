@@ -10,6 +10,7 @@ import java.util.List;
 public interface SalaryStandardDetailDao {
     //根据标准编号查询所有小项
     List<SalaryStandardDetail> listSalaryStandardDetailByCode(String standardCode);
+
     //根据itemName查询
     List<SalaryStandardDetail> listSalaryStandardDetailByName(String itemName);
 
@@ -24,5 +25,8 @@ public interface SalaryStandardDetailDao {
 
 
     //删除
-    int deleteSalaryStandardDetail(String itemName);
+    int deleteSsdByItemName(String itemName);
+
+    int deleteSsdByStandardCode(String standardCode);
+
 }

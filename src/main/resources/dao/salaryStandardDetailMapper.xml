@@ -25,12 +25,15 @@
     <update id="updateSsdByItemName">
         update `salaryStandardDetail` set  `itemName` = #{newItemName} where `itemName` = #{oldItemName}
     </update>
-    <delete id="deleteSalaryStandardDetail" parameterType="String">
-        delete `salaryStandardDetail` where `itemName` = #{itemName}
+    <delete id="deleteSsdByItemName" parameterType="String">
+        delete from`salaryStandardDetail` where `itemName` = #{itemName}
     </delete>
     <select id="listSalaryStandardDetailByName" parameterType="String" resultType="SalaryStandardDetail">
         SELECT `id`,`standardCode`,`itemName`,`itemAmount`
         FROM `salaryStandardDetail`
         WHERE `itemName` = #{itemName}
     </select>
+    <delete id="deleteSsdByStandardCode" parameterType="String">
+        delete from`salaryStandardDetail` where `standardCode` = #{standardCode}
+    </delete>
 </mapper>

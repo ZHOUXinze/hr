@@ -65,13 +65,13 @@
                 }
             });
             //保存
-            $('#save').click(function () {
-                let url = "/saveSalaryStandard";
+            $('#insert').click(function () {
+                let url = "/insertSalaryStandard";
                 sub(url);
             });
-            //修改
-            $('#update').click(function () {
-                let url = "/updateSalaryStandard";
+            //提交
+            $('#submit').click(function () {
+                let url = "/submitSalaryStandard";
                 sub(url);
             });
         });
@@ -86,18 +86,19 @@
                 success: function (data) {
                     //如果标准修改成功，修改标准详细
                     if (data == "success") {
+                        $(".codeHidden").val($('#staCode').val());
                         let jsonStr = $('#salaryDetailForm').serializeJson();
                         $.ajax({
                             type: "POST",
-                            url: "/updateSalaryStandardDetail",
+                            url: "/insertSalaryStandardDetail",
                             contentType: "application/json;charset=utf-8",
                             data: jsonStr,
                             success: function (data) {
                                 if (data == "success") {
                                     window.location.replace("/salaryStandard");
-                                    alert("保存成功");
+                                    alert("成功");
                                 } else if (data == "error") {
-                                    alert("保存失败");
+                                    alert("失败");
                                 }
                             }
                         });
@@ -183,8 +184,10 @@
                 <tbody>
                 <tr th:each="salaryItem,status:${salaryItemList}">
                     <th scope="row" th:text="${status.count}"></th>
-                    <input type="hidden" name="isChange" value="0">
-                    <td th:text="${salaryItem.getItemName()}">
+                    <input type="hidden" name="standardCode" class="codeHidden" value="">
+                    <td>
+                        <input type="text" class="form-control"
+                               name="itemName" th:value="${salaryItem.getItemName()}" readonly>
                     </td>
                     <td th:if="${salaryItem.getEnable()}==4">
                         <input type="text" value="已停用" readonly>
@@ -199,8 +202,8 @@
         </form>
     </div>
     <div>
-        <button type="button" class="btn btn-outline-primary" id="save">保存</button>
-        <button type="button" class="btn btn-outline-primary" id="update">修改</button>
+        <button type="button" class="btn btn-outline-primary" id="insert">保存</button>
+        <button type="button" class="btn btn-outline-primary" id="submit">提交审核</button>
         <a th:href="@{/salaryStandard}">
             <button type="button" class="btn btn-outline-primary">返回</button>
         </a>

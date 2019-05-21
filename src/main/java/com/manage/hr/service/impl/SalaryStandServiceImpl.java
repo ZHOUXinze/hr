@@ -1,7 +1,9 @@
 package com.manage.hr.service.impl;
 
 import com.manage.hr.dao.SalaryStandardDao;
+import com.manage.hr.dao.SalaryStandardDetailDao;
 import com.manage.hr.entity.SalaryStandard;
+import com.manage.hr.entity.SalaryStandardDetail;
 import com.manage.hr.service.SalaryStandardService;
 import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.List;
 public class SalaryStandServiceImpl implements SalaryStandardService {
     @Resource
     private SalaryStandardDao salaryStandardDao;
+    @Resource
+    private SalaryStandardDetailDao salaryStandardDetailDao;
 
     @Override
     public List<SalaryStandard> listSalaryStandard() {
@@ -56,7 +60,12 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
 
     @Override
     public int deleteSalaryStandard(int id) {
-        return 0;
+        SalaryStandard salaryStandard = salaryStandardDao.getSalaryStandardById(id);
+        List<SalaryStandardDetail> salaryStandardDetails = salaryStandardDetailDao.listSalaryStandardDetailByCode(salaryStandard.getStandardCode());
+        for(SalaryStandardDetail salaryStandardDetail: salaryStandardDetails){
+            salaryStandardDetailDao.deleteSsdByStandardCode(salaryStandard.getStandardCode());
+        }
+        return salaryStandardDao.deleteSalaryStandard(id);
     }
 
     @Override

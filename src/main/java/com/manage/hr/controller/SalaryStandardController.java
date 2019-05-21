@@ -38,7 +38,7 @@ public class SalaryStandardController {
 
     @RequestMapping(value = "/operatingSalaryStandard")
     public String operatingSalaryStandard(int id, Model model, String operating) {
-        if (id == 0){
+        if (id == 0) {
             List<SalaryItem> salaryItemList = salaryItemService.listSalaryItem();
             model.addAttribute("salaryItemList", salaryItemList);
             return "sidInsert";
@@ -56,6 +56,9 @@ public class SalaryStandardController {
             return "sidUpdate";
         } else if (operating.equals("show")) {
             return "sidShow";
+        } else if (operating.equals("delete")) {
+            salaryStandardService.deleteSalaryStandard(id);
+            return "salaryStandard";
         }
         return "salaryStandard";
     }
@@ -79,7 +82,7 @@ public class SalaryStandardController {
     @ResponseBody
     public String updateSalaryStandard(SalaryStandard salaryStandard) {
         //修改
-        int type = 0;
+        int type = 1;
         return salaryStandardService.updateSalaryStandard(salaryStandard, type) > 0 ? "success" : "error";
     }
 
@@ -87,8 +90,31 @@ public class SalaryStandardController {
     @ResponseBody
     public String saveSalaryStandard(SalaryStandard salaryStandard) {
         //保存
-        int type = 1;
+        int type = 0;
         return salaryStandardService.updateSalaryStandard(salaryStandard, type) > 0 ? "success" : "error";
+    }
+
+
+    @RequestMapping(value = "/insertSalaryStandard", method = RequestMethod.POST)
+    @ResponseBody
+    public String insertSalaryStandard(SalaryStandard salaryStandard) {
+        //保存
+        int type = 0;
+        return salaryStandardService.insertSalaryStandard(salaryStandard, type) > 0 ? "success" : "error";
+    }
+
+    @RequestMapping(value = "/submitSalaryStandard", method = RequestMethod.POST)
+    @ResponseBody
+    public String submitSalaryStandard(SalaryStandard salaryStandard) {
+        //提交
+        int type = 1;
+        return salaryStandardService.insertSalaryStandard(salaryStandard, type) > 0 ? "success" : "error";
+    }
+
+    @RequestMapping(value = "/insertSalaryStandardDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String insertSalaryStandardDetail(@RequestBody List<SalaryStandardDetail> salaryStandardDetails) {
+        return salaryStandardDetailService.insertSalaryStandardDetail(salaryStandardDetails) > 0 ? "success" : "error";
     }
 
     @RequestMapping(value = "/updateSalaryStandardDetail", method = RequestMethod.POST)
@@ -98,9 +124,4 @@ public class SalaryStandardController {
     }
 
 
-    @RequestMapping(value = "/insertSalaryStandardDetail")
-    @ResponseBody
-    public String insertSalaryStandardDetail(@RequestBody List<SalaryStandardDetail> salaryStandardDetails) {
-        return salaryStandardDetailService.insertSalaryStandardDetail(salaryStandardDetails) > 0 ? "success" : "error";
-    }
 }

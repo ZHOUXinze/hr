@@ -73,13 +73,16 @@
       `status`,
       `enable`
       ) VALUES (
-        `standardCode` = #{standardCode},
-      `standardName` = #{standardName} ,
-      `formulator` = #{formulator} ,
-      `registerPerson` = #{registerPerson},
-      `createDate` = #{createDate},
-      `status` = #{status},
-      `enable` = 3
+      #{standardCode},
+      #{standardName} ,
+      #{formulator} ,
+      #{registerPerson},
+      #{createDate},
+      #{status},
+      3
       )
     </insert>
+    <delete id="deleteSalaryStandard" parameterType="int">
+        delete from`salaryStandard` where `id` = #{id}
+    </delete>
 </mapper>

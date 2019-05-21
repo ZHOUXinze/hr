@@ -70,8 +70,8 @@
                 let url = "/saveSalaryStandard";
                 sub(url);
             });
-            //修改
-            $('#update').click(function () {
+            //提交
+            $('#submit').click(function () {
                 let url = "/updateSalaryStandard";
                 sub(url);
             });
@@ -161,11 +161,11 @@
                            th:value="${salaryStandard.getRegisterPerson()}" name="registerPerson">
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="datepicker4">登记时间</label>
-                    <input id="datepicker4" name="createDate"
+                    <label for="datepicker6">登记时间</label>
+                    <input id="datepicker6" name="createDate"
                            th:value="${#dates.format(salaryStandard.getCreateDate(),'dd/MM/yyyy')}">
                     <script>
-                        $('#datepicker4').datepicker({
+                        $('#datepicker6').datepicker({
                             uiLibrary: 'bootstrap4'
                         });
                     </script>
@@ -202,7 +202,7 @@
     </div>
     <div>
         <button type="button" class="btn btn-outline-primary" id="save">保存</button>
-        <button type="button" class="btn btn-outline-primary" id="update">修改</button>
+        <button type="button" class="btn btn-outline-primary" id="submit">提交审核</button>
         <a th:href="@{/salaryStandard}">
             <button type="button" class="btn btn-outline-primary">返回</button>
         </a>

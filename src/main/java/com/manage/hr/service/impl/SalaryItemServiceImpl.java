@@ -87,8 +87,9 @@ public class SalaryItemServiceImpl implements SalaryItemService {
         SalaryItem salaryItem = salaryItemDao.getSalaryItemById(id);
         List<SalaryStandardDetail> salaryStandardDetailList = salaryStandardDetailDao.listSalaryStandardDetailByName(salaryItem.getItemName());
         for (SalaryStandardDetail salaryStandardDetail : salaryStandardDetailList) {
+            System.out.println(salaryStandardDetail.getItemName());
             //删除标准详情
-            salaryStandardDetailDao.deleteSalaryStandardDetail(salaryStandardDetail.getItemName());
+            salaryStandardDetailDao.deleteSsdByItemName(salaryStandardDetail.getItemName());
         }
         return salaryItemDao.deleteSalaryItem(id);
     }
