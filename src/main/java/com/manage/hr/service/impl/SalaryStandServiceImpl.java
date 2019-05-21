@@ -7,7 +7,6 @@ import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,13 +34,24 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
     }
 
     @Override
-    public int insertSalaryStandard(SalaryStandard salaryStandard) {
-        return 0;
+    public int insertSalaryStandard(SalaryStandard salaryStandard, int type) {
+        SalaryStandard newSalaryStandard = salaryStandard;
+        newSalaryStandard.setStatus(type == 1 ? 7 : 6);
+        return salaryStandardDao.insertSalaryStandard(salaryStandard);
     }
 
+
     @Override
-    public int updateSalaryStandard(SalaryStandard salaryStandard) {
-        return 0;
+    public int updateSalaryStandard(SalaryStandard salaryStandard, int type) {
+        SalaryStandard newSalaryStandard = salaryStandard;
+        newSalaryStandard.setStatus(type == 1 ? 7 : 6);
+        if (newSalaryStandard.getChangeReason() == null || newSalaryStandard.getChangeReason().isEmpty()) {
+            newSalaryStandard.setChangeReason("");
+        }
+        if (newSalaryStandard.getReviewOpinion() == null || newSalaryStandard.getReviewOpinion().isEmpty()) {
+            newSalaryStandard.setReviewOpinion("");
+        }
+        return salaryStandardDao.updateSalaryStandard(newSalaryStandard);
     }
 
     @Override
@@ -65,9 +75,6 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
 
     @Override
     public List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, Date start, Date end) {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        String newStart = simpleDateFormat.format(start);
-//        String newEnd = simpleDateFormat.format(end);
         //把statusName换成status
         int status;
         if (statusName.equals("通过")) {
@@ -76,9 +83,9 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
             status = 6;
         } else if (statusName.equals("审核中")) {
             status = 7;
-        }else if (statusName.equals("驳回")) {
+        } else if (statusName.equals("驳回")) {
             status = 8;
-        }else {
+        } else {
             status = -1;
         }
         return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, start, end);

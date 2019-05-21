@@ -7,6 +7,15 @@ public class SalaryStandardDetail {
     private String standardCode;
     private String itemName;
     private BigDecimal itemAmount;
+    private int isChange;
+
+    public int getIsChange() {
+        return isChange;
+    }
+
+    public void setIsChange(int isChange) {
+        this.isChange = isChange;
+    }
 
     public Integer getId() {
         return id;

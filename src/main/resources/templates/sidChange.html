@@ -19,23 +19,84 @@
     <script>
         $(function () {
             calculateSum();
-            $("#change").click(function () {
-                // var id = $("#idHidden").val();
-                // var reviewOpinion = $("#reviewOpinion").val();
-                // alert(id);
-                // $.post("reviewSalaryStandard", {
-                //     "id": id,
-                //     "review": "审核通过",
-                //     "reviewOpinion": reviewOpinion
-                // }, function (data) {
-                //     if (data == "success") {
-                //         alert("success");
-                //     }
-                // });
-            });
-            //动态计算总额
+            //保存，保存修改和添加的数据
+            $.fn.serializeJson = function () {
+                var jsonData1 = {};
+                var serializeArray = this.serializeArray();
+                // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
+                $(serializeArray).each(function () {
+                    if (jsonData1[this.name]) {
+                        if ($.isArray(jsonData1[this.name])) {
+                            jsonData1[this.name].push(this.value);
+                        } else {
+                            jsonData1[this.name] = [jsonData1[this.name], this.value];
+                        }
+                    } else {
+                        jsonData1[this.name] = this.value;
+                    }
+                });
+                // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
+                var vCount = 0;
+                // 计算json内部的数组最大长度
+                for (var item in jsonData1) {
+                    var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
+                    vCount = (tmp > vCount) ? tmp : vCount;
+                }
+                if (vCount > 1) {
+                    var jsonData2 = new Array();
+                    for (var i = 0; i < vCount; i++) {
+                        var jsonObj = {};
+                        for (var item in jsonData1) {
+                            jsonObj[item] = jsonData1[item][i];
+                        }
+                        jsonData2.push(jsonObj);
+                    }
+                    return JSON.stringify(jsonData2);
+                } else {
+                    return "[" + JSON.stringify(jsonData1) + "]";
+                }
+            };
+            //获取表格的修改状态
             $(".itemAmount").change(function () {
+                //动态计算总额
                 calculateSum();
+                let hidden = $(this).parent().parent().children("input:last");
+                if (hidden.val() == 0) {
+                    hidden.val(1);
+                }
+            });
+            //执行变更
+            $('#change').click(function () {
+                let jsonArr = $('#salaryStandardForm').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    url: "/updateSalaryStandard",
+                    dataType: "html",
+                    data: jsonArr,
+                    success: function (data) {
+
+                        //如果标准修改成功，修改标准详细
+                        if (data == "success") {
+                            let jsonStr = $('#salaryDetailForm').serializeJson();
+                            $.ajax({
+                                type: "POST",
+                                url: "/updateSalaryStandardDetail",
+                                contentType: "application/json;charset=utf-8",
+                                data: jsonStr,
+                                success: function (data) {
+                                    if (data == "success") {
+                                        window.location.replace("/salaryStandard");
+                                        alert("保存成功");
+                                    } else if (data == "error") {
+                                        alert("保存失败");
+                                    }
+                                }
+                            });
+                        } else {
+                            alert("error");
+                        }
+                    }
+                });
             });
         });
 
@@ -59,19 +120,20 @@
     </script>
 </head>
 <body>
-<div style="width: 960px;margin:auto">
+<div>
     <div>
-        <form>
-            <input type="hidden" th:value="${salaryStandard.getId()}" id="idHidden">
+        <form id="salaryStandardForm">
+            <input type="hidden" th:value="${salaryStandard.getId()}" id="idHidden" name="id">
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="staCode">薪酬标准编号</label>
                     <input type="text" class="form-control" id="staCode" th:value="${salaryStandard.getStandardCode()}"
-                    >
+                           name="standardCode">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="staName">薪酬标准名称</label>
-                    <input type="text" class="form-control" id="staName" th:value="${salaryStandard.getStandardName()}">
+                    <input type="text" class="form-control" id="staName" th:value="${salaryStandard.getStandardName()}"
+                           name="standardName">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="staTotal">薪酬总额</label>
@@ -82,42 +144,56 @@
                 <div class="col-md-4 mb-3">
                     <label for="formulator">制定人</label>
                     <input type="text" class="form-control" id="formulator"
-                           th:value="${salaryStandard.getFormulator()}">
+                           th:value="${salaryStandard.getFormulator()}" name="formulator">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="register">登记人</label>
                     <input type="text" class="form-control" id="register"
-                           th:value="${salaryStandard.getRegisterPerson()}">
+                           th:value="${salaryStandard.getRegisterPerson()}" name="registerPerson">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="datepicker3">登记时间</label>
+                    <input id="datepicker3" name="createDate" th:value="${#dates.format(salaryStandard.getCreateDate(),'dd/MM/yyyy')}">
+                    <script>
+                        $('#datepicker3').datepicker({
+                            uiLibrary: 'bootstrap4'
+                        });
+                    </script>
                 </div>
             </div>
             <div class="form-group">
                 <label for="changeReason">变更原因</label>
-                <textarea class="form-control" id="changeReason" rows="3"></textarea>
+                <textarea class="form-control" id="changeReason" rows="3" name="changeReason"></textarea>
             </div>
+
         </form>
     </div>
     <div>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th scope="col">序号</th>
-                <th scope="col">薪酬项目名称</th>
-                <th scope="col">金额</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="salaryStandardDetail,status:${salaryStandardDetailList}">
-                <th scope="row" th:text="${status.count}"></th>
-                <td>
-                    <input type="text" class="form-control" th:value="${salaryStandardDetail.getItemName()}">
-                </td>
-                <td>
-                    <input type="text" class="form-control itemAmount"
-                           th:value="${#numbers.formatDecimal(salaryStandardDetail.getItemAmount(), 1, 2)}">
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <form id="salaryDetailForm">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">薪酬项目名称</th>
+                    <th scope="col">金额</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="salaryStandardDetail,status:${salaryStandardDetailList}">
+                    <th scope="row" th:text="${status.count}"></th>
+                    <input type="hidden" th:value="${salaryStandardDetail.getId()}" name="id">
+                    <input type="hidden" name="isChange" value="0">
+                    <td th:text="${salaryStandardDetail.getItemName()}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control itemAmount"
+                               th:value="${#numbers.formatDecimal(salaryStandardDetail.getItemAmount(), 1, 2)}"
+                               name="itemAmount">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
     <div>
 

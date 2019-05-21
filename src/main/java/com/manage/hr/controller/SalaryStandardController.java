@@ -5,13 +5,9 @@ import com.manage.hr.entity.SalaryStandardDetail;
 import com.manage.hr.entity.User;
 import com.manage.hr.service.SalaryStandardDetailService;
 import com.manage.hr.service.SalaryStandardService;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import org.apache.catalina.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -61,12 +57,33 @@ public class SalaryStandardController {
         return rel > 0 ? "success" : "error";
     }
 
-    @RequestMapping(value = "/selectSalaryStandard",method = RequestMethod.POST)
-    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end,Model model) {
-        System.out.println(salaryStandardCode+statusName+start+end);
-        List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandardByCondition(salaryStandardCode,statusName,start,end);
+    @RequestMapping(value = "/selectSalaryStandard", method = RequestMethod.POST)
+    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end, Model model) {
+        System.out.println(salaryStandardCode + statusName + start + end);
+        List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandardByCondition(salaryStandardCode, statusName, start, end);
         model.addAttribute("salaryStandardList", salaryStandardList);
         return "salaryStandard";
     }
 
+    @RequestMapping(value = "/updateSalaryStandard", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateSalaryStandard(SalaryStandard salaryStandard) {
+        //修改
+        int type = 0;
+        return salaryStandardService.updateSalaryStandard(salaryStandard,type) > 0 ? "success":"error";
+    }
+
+    @RequestMapping(value = "/saveSalaryStandard", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveSalaryStandard(SalaryStandard salaryStandard) {
+        //保存
+        int type = 1;
+        return salaryStandardService.updateSalaryStandard(salaryStandard,type) > 0 ? "success":"error";
+    }
+
+    @RequestMapping(value = "/updateSalaryStandardDetail", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateSalaryStandardDetail(@RequestBody List<SalaryStandardDetail> salaryStandardDetails) {
+        return salaryStandardDetailService.updateSalaryStandardDetail(salaryStandardDetails) > 0 ? "success" :"error";
+    }
 }

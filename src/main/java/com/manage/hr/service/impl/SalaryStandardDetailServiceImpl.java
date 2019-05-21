@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 @Service
 public class SalaryStandardDetailServiceImpl implements SalaryStandardDetailService {
 
@@ -14,7 +15,20 @@ public class SalaryStandardDetailServiceImpl implements SalaryStandardDetailServ
     private SalaryStandardDetailDao salaryStandardDetailDao;
 
     @Override
-    public List<SalaryStandardDetail> listSalaryStandardDetailByCode(String  standardCode) {
+    public List<SalaryStandardDetail> listSalaryStandardDetailByCode(String standardCode) {
         return salaryStandardDetailDao.listSalaryStandardDetailByCode(standardCode);
     }
+
+    @Override
+    public int updateSalaryStandardDetail(List<SalaryStandardDetail> salaryStandardDetails) {
+        for (SalaryStandardDetail salaryStandardDetail : salaryStandardDetails) {
+            if (salaryStandardDetail.getIsChange() == 1) {
+                salaryStandardDetailDao.updateSalaryStandardDetail(salaryStandardDetail);
+            }
+        }
+        return 1;
+    }
+
+
+
 }

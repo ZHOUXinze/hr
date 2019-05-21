@@ -8,4 +8,7 @@
         FROM `salaryStandardDetail`
         WHERE standardCode = #{standardCode}
     </select>
+    <update id="updateSalaryStandardDetail" parameterType="SalaryStandardDetail">
+        update `salaryStandardDetail` set  `itemAmount` = #{itemAmount} where id = #{id}
+    </update>
 </mapper>

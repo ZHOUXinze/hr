@@ -5,19 +5,19 @@
 <mapper namespace="com.manage.hr.dao.SalaryStandardDao">
     <select id="listSalaryStandard" parameterType="int" resultType="SalaryStandard">
         SELECT `id`,`standardCode`,`standardName`,
-        `total`, `formulator`, `registerPerson`,
+        `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
         `changeReason`, `status`,
-        `enable`,`introduction`
+        `enable`
         FROM
         `salaryStandard`
     </select>
     <select id="getSalaryStandardById" parameterType="int" resultType="SalaryStandard">
         SELECT `id`,`standardCode`,`standardName`,
-        `total`, `formulator`, `registerPerson`,
+       `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
         `changeReason`, `status`,
-        `enable`,`introduction`
+        `enable`
         FROM
         `salaryStandard`
         WHERE `id` = #{id}
@@ -27,10 +27,10 @@
     </update>
     <select id="listSalaryStandardByCondition" resultType="SalaryStandard">
         SELECT `id`,`standardCode`,`standardName`,
-        `total`, `formulator`, `registerPerson`,
+        `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
         `changeReason`, `status`,
-        `enable`,`introduction`
+        `enable`
         FROM
         `salaryStandard`
         WHERE
@@ -51,4 +51,35 @@
             AND createDate BETWEEN #{start} AND #{end}
         </if>
     </select>
+    <update id="updateSalaryStandard" parameterType="SalaryStandard">
+         UPDATE `salaryStandard` SET
+         `standardCode` = #{standardCode},
+        `standardName` = #{standardName},
+        `formulator` = #{formulator},
+        `registerPerson` = #{registerPerson},
+        `createDate` = #{createDate},
+        `changeReason` = #{changeReason},
+        `reviewOpinion` = #{reviewOpinion},
+        `status` = #{status}
+         WHERE `id` = #{id}
+    </update>
+    <insert id="insertSalaryStandard" parameterType="SalaryStandard">
+      INSERT INTO salaryStandard (
+      `standardCode`,
+      `standardName`,
+      `formulator`,
+      `registerPerson`,
+      `createDate`,
+      `status`,
+      `enable`
+      ) VALUES (
+        `standardCode` = #{standardCode},
+      `standardName` = #{standardName} ,
+      `formulator` = #{formulator} ,
+      `registerPerson` = #{registerPerson},
+      `createDate` = #{createDate},
+      `status` = #{status},
+      `enable` = 3
+      )
+    </insert>
 </mapper>

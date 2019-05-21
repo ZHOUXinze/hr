@@ -11,9 +11,9 @@ public interface SalaryStandardService {
 
     SalaryStandard getSalaryStandardById(int id);
 
-    int insertSalaryStandard(SalaryStandard salaryStandard);
+    int insertSalaryStandard(SalaryStandard salaryStandard,int type);
 
-    int updateSalaryStandard(SalaryStandard salaryStandard);
+    int updateSalaryStandard(SalaryStandard salaryStandard,int type);
 
     int deleteSalaryStandard(int id);
 
