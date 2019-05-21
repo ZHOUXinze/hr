@@ -25,4 +25,9 @@
     <delete id="deleteSalaryItem" parameterType="int">
         delete from `salaryItem` where `id` = #{id}
     </delete>
+
+    <select id="getSalaryItemById" parameterType="int" resultType="SalaryItem">
+        select `id`,`itemCode`,`itemName`,`introduction`,`enable`
+        from salaryitem where id = #{id}
+    </select>
 </mapper>

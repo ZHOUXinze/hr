@@ -14,20 +14,22 @@ public class SalaryItemController {
     @Resource
     private SalaryItemService salaryItemService;
 
-    @RequestMapping(value = "/salaryItem2")
+    //显示薪资项目
+    @RequestMapping(value = "/salaryItem")
     public String showSalaryItem(Model model) {
         List<SalaryItem> salaryItemList = salaryItemService.listSalaryItem();
         model.addAttribute("salaryItemList", salaryItemList);
-        return "salaryItem2";
+        return "salaryItem";
     }
 
+    //保存新增和修改
     @RequestMapping(value = "/saveSalaryItem", method = RequestMethod.POST)
     @ResponseBody
     public String saveSalaryItem(@RequestBody List<SalaryItem> salaryItemList) {
         return salaryItemService.saveSalaryItem(salaryItemList) == 1 ? "success" : "error";
     }
 
-
+    //删除
     @RequestMapping(value = "/deleteSalaryItem", method = RequestMethod.GET)
     @ResponseBody
     public String updateSalaryItem(int id) {

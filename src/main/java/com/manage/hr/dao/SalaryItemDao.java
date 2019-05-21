@@ -14,4 +14,6 @@ public interface SalaryItemDao {
     int updateSalaryItem(SalaryItem salaryItem);
 
     int deleteSalaryItem(int id);
+
+    SalaryItem getSalaryItemById(int id);
 }

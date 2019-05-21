@@ -11,4 +11,26 @@
     <update id="updateSalaryStandardDetail" parameterType="SalaryStandardDetail">
         update `salaryStandardDetail` set  `itemAmount` = #{itemAmount} where id = #{id}
     </update>
+    <insert id="insertSalaryStandardDetail" parameterType="SalaryStandardDetail">
+        INSERT INTO `salaryStandardDetail` (
+        `standardCode`,
+        `itemName`,
+        `itemAmount`
+        )VALUES(
+        #{standardCode},
+        #{itemName},
+        #{itemAmount}
+        )
+    </insert>
+    <update id="updateSsdByItemName">
+        update `salaryStandardDetail` set  `itemName` = #{newItemName} where `itemName` = #{oldItemName}
+    </update>
+    <delete id="deleteSalaryStandardDetail" parameterType="String">
+        delete `salaryStandardDetail` where `itemName` = #{itemName}
+    </delete>
+    <select id="listSalaryStandardDetailByName" parameterType="String" resultType="SalaryStandardDetail">
+        SELECT `id`,`standardCode`,`itemName`,`itemAmount`
+        FROM `salaryStandardDetail`
+        WHERE `itemName` = #{itemName}
+    </select>
 </mapper>
