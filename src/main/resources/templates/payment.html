@@ -1,153 +1,219 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>薪酬标准</title>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-			crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-			crossorigin="anonymous"></script>
-	<script>
-		$(document).ready(function () {
-			var idNum = 200;
-			//添加，页面增加新的空行
-			$('#insert').click(function () {
-				let tr = '';
-				$(" table").append(tr);
-				$("#r").attr("id", 'r' + idNum + '');
-				$("#l1").attr("for", 'r' + idNum + '');
-				$("#l1").attr("id", 'l1' + idNum + '');
-				$("#c").attr("id", 'c' + idNum + '');
-				$("#l2").attr("for", 'c' + idNum + '');
-				$("#l2").attr("id", 'l2' + idNum + '');
-				idNum++;
-			});
-			//获取表格的修改状态
-			$(".si").change(function () {
-				var hidden = $(this).parent().parent().parent().children("input:last");
-				if (hidden.val() == 0) {
-					hidden.val(1);
-				}
-			});
-			//保存，保存修改和添加的数据
-			$.fn.serializeJson = function () {
-				var jsonData1 = {};
-				var serializeArray = this.serializeArray();
-				// 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
-				$(serializeArray).each(function () {
-					if (jsonData1[this.name]) {
-						if ($.isArray(jsonData1[this.name])) {
-							jsonData1[this.name].push(this.value);
-						} else {
-							jsonData1[this.name] = [jsonData1[this.name], this.value];
-						}
-					} else {
-						jsonData1[this.name] = this.value;
-					}
-				});
-				// 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
-				var vCount = 0;
-				// 计算json内部的数组最大长度
-				for (var item in jsonData1) {
-					var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
-					vCount = (tmp > vCount) ? tmp : vCount;
-				}
-				if (vCount > 1) {
-					var jsonData2 = new Array();
-					for (var i = 0; i < vCount; i++) {
-						var jsonObj = {};
-						for (var item in jsonData1) {
-							jsonObj[item] = jsonData1[item][i];
-						}
-						jsonData2.push(jsonObj);
-					}
-					return JSON.stringify(jsonData2);
-				} else {
-					return "[" + JSON.stringify(jsonData1) + "]";
-				}
-			};
-			$('#save').click(function () {
-				$('#saveSalaryItemForm :radio').removeAttr("name");
-				let jsonStr = $('#saveSalaryItemForm').serializeJson();
-				$.ajax({
-					type: "POST",
-					url: "/saveSalaryItem",
-					contentType: "application/json;charset=utf-8",
-					data: jsonStr,
-					success: function (data) {
-						if (data == "success") {
-							window.location.reload();
-							alert("保存成功");
-						} else if (data == "error") {
-							alert("保存失败");
-						}
-					}
-				});
-			});
-			//删除，异步删除，并remove元素
-			$('#delete').click(function () {
-				let radio = $('#saveSalaryItemForm :radio:checked');
-				let id = radio.val();
-				if (id == -1) {
-					radio.parent().parent().parent().remove();
-					return;
-				}
-				if (confirm("确认删除吗?")) {
-					$.get("deleteSalaryItem", {"id": id}, function (data) {
-						if (data == "success") {
-							radio.parent().parent().parent().remove();
-							alert("删除成功!");
-						} else {
-							alert("出现了一点小错误");
-						}
-					});
-				}
-			});
-			//撤销
-			$('#cancel').click(function () {
-				if (confirm("此操作将取消所有未保存的操作（修改、新增），确定取消这些操作吗？")) {
-					window.location.reload();
-				}
-			});
-		});
-	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>薪酬标准</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var idNum = 200;
+            //添加，页面增加新的空行
+            $('#insert').click(function () {
+                let tr = '';
+                $(" table").append(tr);
+                $("#r").attr("id", 'r' + idNum + '');
+                $("#l1").attr("for", 'r' + idNum + '');
+                $("#l1").attr("id", 'l1' + idNum + '');
+                $("#c").attr("id", 'c' + idNum + '');
+                $("#l2").attr("for", 'c' + idNum + '');
+                $("#l2").attr("id", 'l2' + idNum + '');
+                idNum++;
+            });
+            //获取表格的修改状态
+            $(".si").change(function () {
+                var hidden = $(this).parent().parent().parent().children("input:last");
+                if (hidden.val() == 0) {
+                    hidden.val(1);
+                }
+            });
+            //保存，保存修改和添加的数据
+            $.fn.serializeJson = function () {
+                var jsonData1 = {};
+                var serializeArray = this.serializeArray();
+                // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
+                $(serializeArray).each(function () {
+                    if (jsonData1[this.name]) {
+                        if ($.isArray(jsonData1[this.name])) {
+                            jsonData1[this.name].push(this.value);
+                        } else {
+                            jsonData1[this.name] = [jsonData1[this.name], this.value];
+                        }
+                    } else {
+                        jsonData1[this.name] = this.value;
+                    }
+                });
+                // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
+                var vCount = 0;
+                // 计算json内部的数组最大长度
+                for (var item in jsonData1) {
+                    var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
+                    vCount = (tmp > vCount) ? tmp : vCount;
+                }
+                if (vCount > 1) {
+                    var jsonData2 = new Array();
+                    for (var i = 0; i < vCount; i++) {
+                        var jsonObj = {};
+                        for (var item in jsonData1) {
+                            jsonObj[item] = jsonData1[item][i];
+                        }
+                        jsonData2.push(jsonObj);
+                    }
+                    return JSON.stringify(jsonData2);
+                } else {
+                    return "[" + JSON.stringify(jsonData1) + "]";
+                }
+            };
+            $('#save').click(function () {
+                $('#saveSalaryItemForm :radio').removeAttr("name");
+                let jsonStr = $('#saveSalaryItemForm').serializeJson();
+                $.ajax({
+                    type: "POST",
+                    url: "/saveSalaryItem",
+                    contentType: "application/json;charset=utf-8",
+                    data: jsonStr,
+                    success: function (data) {
+                        if (data == "success") {
+                            window.location.reload();
+                            alert("保存成功");
+                        } else if (data == "error") {
+                            alert("保存失败");
+                        }
+                    }
+                });
+            });
+            //删除，异步删除，并remove元素
+            $('#delete').click(function () {
+                let radio = $('#saveSalaryItemForm :radio:checked');
+                let id = radio.val();
+                if (id == -1) {
+                    radio.parent().parent().parent().remove();
+                    return;
+                }
+                if (confirm("确认删除吗?")) {
+                    $.get("deleteSalaryItem", {"id": id}, function (data) {
+                        if (data == "success") {
+                            radio.parent().parent().parent().remove();
+                            alert("删除成功!");
+                        } else {
+                            alert("出现了一点小错误");
+                        }
+                    });
+                }
+            });
+            //撤销
+            $('#cancel').click(function () {
+                if (confirm("此操作将取消所有未保存的操作（修改、新增），确定取消这些操作吗？")) {
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
 
 </head>
 <body>
-<div style="margin: 10px">
-	<button type="button" class="btn btn-outline-primary" id="insert">新增</button>
-	<button type="button" class="btn btn-outline-success" id="save">保存</button>
-	<button type="button" class="btn btn-outline-secondary" id="cancel">取消</button>
-	<button type="button" class="btn btn-outline-danger" id="delete">删除</button>
+<div>
+    <div style="margin: 10px">
+        <button type="button" class="btn btn-outline-primary" id="insert">新增</button>
+        <button type="button" class="btn btn-outline-success" id="save">保存</button>
+        <button type="button" class="btn btn-outline-secondary" id="cancel">取消</button>
+        <button type="button" class="btn btn-outline-danger" id="delete">删除</button>
+    </div>
+    <div>
+        <form name="salaryItemList" id="paymentForm">
+            <table class="table table-bordered" id="paymentTable">
+                <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>薪酬单编号</th>
+                    <th>薪酬次数</th>
+                    <th>总人数</th>
+                    <th>基本薪酬总额</th>
+                    <th>实发金额</th>
+                    <th>发放时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment,status:${paymentList}">
+                    <td>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" name="dr"
+                                   class="custom-control-input dr" th:value="${payment.getId()}"
+                                   th:id="customRadio+${status.count}">
+                            <label class="custom-control-label" th:for="customRadio+${status.count}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                                   th:value="${payment.getPaymentCode()}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                                   th:value="${payment.getPaymentCount()}">
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                                   th:value="${payment.getSalaryTotal()}">
+                        </div>
+                    </td>
+                    <td >
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                                   th:value="${payment.getActualTotal()}">
+                        </div>
+                    </td>
+                    <td >
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                                   th:value="${#dates.format(payment.getLastTime(),'yyyy/MM/dd')}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
 <div>
-	<form name="salaryItemList" id="saveSalaryItemForm">
-		<table class="table table-small" id="paymentTable">
-			<thead>
-			<tr>
-				<th>选择</th>
-				<th>薪酬单编号</th>
-				<th>薪酬次数</th>
-				<th>总人数</th>
-				<th>基本薪酬总额</th>
-				<th>实发金额</th>
-				<th>发放时间</th>
-			</tr>
-			</thead>
-			<tbody>
+    <div>
 
-			</tbody>
-		</table>
-	</form>
+    </div>
+    <div>
+        <form name="salaryItemList">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>I级机构名称</th>
+                    <th> II级机构名称</th>
+                    <th>人数</th>
+                    <th>基本薪酬金额（元）</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
 </body>
 </html>

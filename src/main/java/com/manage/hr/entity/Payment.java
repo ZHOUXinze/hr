@@ -12,6 +12,16 @@ public class Payment {
     private Date thisTime;
     private Integer status;
 
+    private int modelStatus;
+
+    public int getModelStatus() {
+        return modelStatus;
+    }
+
+    public void setModelStatus(int modelStatus) {
+        this.modelStatus = modelStatus;
+    }
+
     public Integer getId() {
         return id;
     }
