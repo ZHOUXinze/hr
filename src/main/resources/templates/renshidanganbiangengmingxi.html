@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>人事档案变更</title>
+		<title>人事档案变更明细</title>
 		<!-- Bootstrap -->
 		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -82,7 +82,7 @@
 									<option value="">请选择</option>
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==chanStatus"
 											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.changeStatus})"
-											 th:value="${dictionary.id}">-- 请选择 --
+											 th:value="${dictionary.id}">
 									</option>
 								</select>
 							</div>
@@ -348,12 +348,7 @@
 					
 					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<input type="button" id="saveA" name="saveA" value="保存"
-								   th:onclick="submitClaimVoucher('保存')"
-								   class="btn btn-round btn-info"></input>
-							<input type="button" id="submitA" name="submitA" value="变更审请"
-								   th:onclick="submitClaimVoucher('变更审请')"
-								   class="btn btn-primary"></input>
+
 							<input type="button" id="backA" name="backA" value="返回"
 								   th:onclick="back()"
 								   class="btn btn-success"></input>
@@ -404,7 +399,7 @@
 					$("#uploadfile").show();//如果连接等于空，upload上传文件显示
 				}else{
 					$("#docFile").append("<p>"+annexhidden+
-							"&nbsp;&nbsp;<a href=\""+annexhidden+"\" >下载</a> &nbsp;&nbsp;" +
+							"&nbsp;&nbsp;<a href=\""+annexhidden+"?m="+Math.random()+"\" >下载</a> &nbsp;&nbsp;" +
 							"<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a></p>");
 				}
 

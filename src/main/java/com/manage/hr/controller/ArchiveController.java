@@ -32,6 +32,22 @@ public class ArchiveController {
     private ArchiveService archiveService;
     @Value("${web.upload-path}")
     private String fileUpload;
+
+
+
+    @RequestMapping("main")
+    public String sh(){
+        return "main";
+    }
+    @RequestMapping("org")
+    public String org(){
+        return "org";
+    }
+    @RequestMapping("/gaimima")
+    public String daibanliebiao(){
+        return "gaimima";
+    }
+
     //处理变更复核
 
     @RequestMapping(value = "/doCheckChangeArchive",method = RequestMethod.POST)
@@ -48,20 +64,9 @@ public class ArchiveController {
     //显示变更复核的页面
     @RequestMapping(value = "/checkChangeArchive",method = RequestMethod.GET)
     public  String checkChangeArchive(@RequestParam int id,Model model){
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
 
         Archive archive=archiveService.findArchiveById(id);
-        model.addAttribute("dictionaryList",dictionaryList);
-        model.addAttribute("departmentList",departmentList);
-        model.addAttribute("positionList",positionList);
-        model.addAttribute("titleList",titleList);
+       init(model);
         model.addAttribute("archive",archive);
 
         return "renshidanganbiangengfuhe";
@@ -81,20 +86,10 @@ public class ArchiveController {
     //显示复核的页面
     @RequestMapping(value = "/checkArchive",method = RequestMethod.GET)
     public  String checkArchive(@RequestParam int id,Model model){
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
+
 
         Archive archive=archiveService.findArchiveById(id);
-        model.addAttribute("dictionaryList",dictionaryList);
-        model.addAttribute("departmentList",departmentList);
-        model.addAttribute("positionList",positionList);
-        model.addAttribute("titleList",titleList);
+        init(model);
         model.addAttribute("archive",archive);
 
         return "renshidanganfuhe";
@@ -115,20 +110,9 @@ public class ArchiveController {
     //显示变更的页面
     @RequestMapping(value = "/changeArchive",method = RequestMethod.GET)
     public  String changeArchive(@RequestParam int id,Model model){
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
 
         Archive archive=archiveService.findArchiveById(id);
-        model.addAttribute("dictionaryList",dictionaryList);
-        model.addAttribute("departmentList",departmentList);
-        model.addAttribute("positionList",positionList);
-        model.addAttribute("titleList",titleList);
+        init(model);
         model.addAttribute("archive",archive);
 
         return "renshidanganbiangeng";
@@ -142,7 +126,7 @@ public class ArchiveController {
         MultipartFile doc=docFile;
         if(!doc.isEmpty()){
             docName=doc.getOriginalFilename();
-            path=path+"/doc/";
+          /*  path=path+"/doc/";*/
             File docfile =new File(path+"/"+docName);
             if(!docfile.getParentFile().exists()){
                 docfile.getParentFile().mkdirs();
@@ -154,7 +138,8 @@ public class ArchiveController {
             }
         }
 
-        archive.setAnnex("doc/"+docName);
+        /*archive.setAnnex("doc/"+docName);*/
+        archive.setAnnex(docName);
         int rel=archiveService.updateArchive(archive);
         if(rel>0){
             return "redirect:/registerList";//进入列表页面
@@ -166,20 +151,10 @@ public class ArchiveController {
     //显示修改的页面
     @RequestMapping(value = "/modifyArchive",method = RequestMethod.GET)
     public  String modifyArchive(@RequestParam int id,Model model){
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
+
 
         Archive archive=archiveService.findArchiveById(id);
-        model.addAttribute("dictionaryList",dictionaryList);
-        model.addAttribute("departmentList",departmentList);
-        model.addAttribute("positionList",positionList);
-        model.addAttribute("titleList",titleList);
+        init(model);
         model.addAttribute("archive",archive);
 
         return "renshidanganxiugai";
@@ -208,7 +183,7 @@ public class ArchiveController {
            }
            if(!doc.isEmpty()){
                docName=doc.getOriginalFilename();
-               path=path+"/doc/";
+               /*path=path+"/doc/";*/
             File docfile =new File(path+"/"+docName);
             if(!docfile.getParentFile().exists()){
                 docfile.getParentFile().mkdirs();
@@ -219,11 +194,12 @@ public class ArchiveController {
                 ex.printStackTrace();
             }
         }
-       Integer i=0;
-        i=archiveService.findMaxId();
-       if(i!=0){
-           i=archiveService.findMaxId();
-       }
+        Integer i=null;
+        if(archiveService.findMaxId()==null){
+            i=0;
+        }else{
+            i=archiveService.findMaxId();
+        }
        /* archive.setReviewStatus(7);*/
         archive.setChangeStatus(0);
         archive.setArchCode("BDQN"+(i+1));
@@ -241,18 +217,7 @@ public class ArchiveController {
     //显示登记页面
     @RequestMapping(value = "/addArchive",method = RequestMethod.GET)
     public String addArchive(Model model){
-        LoadDataBase.loadDictionary();
-        LoadDataBase.loadDepartment();
-        LoadDataBase.loadPosition();
-        LoadDataBase.loadTitle();
-        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
-        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
-        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
-        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
-        model.addAttribute("dictionaryList",dictionaryList);
-        model.addAttribute("departmentList",departmentList);
-        model.addAttribute("positionList",positionList);
-        model.addAttribute("titleList",titleList);
+        init(model);
 
         return "/register";
     }
@@ -262,6 +227,7 @@ public class ArchiveController {
     public String show(ArchiveTools archiveTools,@RequestParam(required=false) Integer pageIndex,HttpSession session,Model model){
         User user =new User();
         user.setUserRoleName("人事专员");
+
        /* 人事专员    人事经理*/
         LoadDataBase.loadDictionary();
         List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
@@ -273,6 +239,7 @@ public class ArchiveController {
             curIndex=Integer.valueOf(pageIndex);
         }
         //查询Archive的信息
+
         PageSurport<Archive> pageSurport=archiveService.findArchiveList(archiveTools, curIndex, pageSize);
         pageSurport.setPageIndex(curIndex);
         pageSurport.setPageSize(pageSize);
@@ -288,12 +255,14 @@ public class ArchiveController {
     @RequestMapping("/archiveView")
     public String archiveView(@RequestParam String id,Model model){
         int i=Integer.parseInt(id);
+
         Archive archive=archiveService.findArchiveById(i);
+        init(model);
         model.addAttribute("archive",archive);
         if(archive.getReviewStatus()==6||archive.getReviewStatus()==7||archive.getReviewStatus()==8){
             return "renshidanganmixi";
         }else{
-            return "renshidanganbiangeng";
+            return "renshidanganbiangengmingxi";
         }
 
     }
@@ -365,5 +334,19 @@ public class ArchiveController {
             }
         }
         return map;
+    }
+    public void  init(Model model){
+        LoadDataBase.loadDictionary();
+        LoadDataBase.loadDepartment();
+        LoadDataBase.loadPosition();
+        LoadDataBase.loadTitle();
+        List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+        List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
+        List<Position> positionList = LoadDataBase.DATA_BASE.get("position");
+        List<Title> titleList = LoadDataBase.DATA_BASE.get("title");
+        model.addAttribute("dictionaryList",dictionaryList);
+        model.addAttribute("departmentList",departmentList);
+        model.addAttribute("positionList",positionList);
+        model.addAttribute("titleList",titleList);
     }
 }

@@ -8,6 +8,16 @@ public class ArchiveTools {
     private Integer archStatus;
     private Date beginTime;
     private Date endTime;
+    private String name;
+    private String registerPerson;
+
+    public String getRegisterPerson() {
+        return registerPerson;
+    }
+
+    public void setRegisterPerson(String registerPerson) {
+        this.registerPerson = registerPerson;
+    }
 
     public String getArchCode() {
         return archCode;
@@ -47,5 +57,13 @@ public class ArchiveTools {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

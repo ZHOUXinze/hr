@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Meta, title, CSS, favicons, etc. -->
@@ -57,17 +58,17 @@
 
 
 
-              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 我的工作平台 </font></font><span class="fa fa-chevron-down"></span></a>
+              <li  class="active"><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 我的工作平台 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a href=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
+                  <li><a  th:href="daibanliebiao"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
 
-                  <li><a href="xiugaimima.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修改密码</font></font></a></li>
+                  <li><a target="fr" th:href="gaimima"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修改密码</font></font></a></li>
 
                 </ul>
               </li>
               <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">系统设置 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a href="form.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">组织结构设置</font></font></a></li>
+                  <li><a target="fr" th:href="org"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">组织结构设置</font></font></a></li>
                   <li><a href="form_advanced.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用户管理</font></font></a></li>
                   <li><a href="form_validation.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">职位设置</font></font></a></li>
                   <li><a href="form_wizards.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">职称设置</font></font></a></li>
@@ -75,7 +76,7 @@
 
                 </ul>
               </li>
-              <li class="active"><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
+              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: block;">
                   <li class="current-page"><a href="general_elements.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪标准管理</font></font></a></li>
                   <li><a href="media_gallery.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪发放管理</font></font></a></li>
@@ -120,7 +121,7 @@
           </div>
           <ul class="nav navbar-nav navbar-right">
             <li role="presentation" class="dropdown">
-              欢迎：  部门 ：        职责：      退出&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              欢迎：  部门 ：        职责：      退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </li>
           </ul>
         </nav>
@@ -130,8 +131,8 @@
 
     <!-- page content -->
     <div class="right_col" role="main">
-      <iframe name="content_frame" frameborder="" marginwidth="" marginheight=""  width="1029px" height="1029" src="org.html"
-              scrolling="no"></iframe>
+        <iframe name="fr" frameborder="" marginwidth="" marginheight=""  width="1029px" height="1029" src="org"
+                scrolling="no"></iframe>
     </div>
     <!-- /page content -->
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ArchiveDao {
     int addArchive(Archive archive);
-    int findMaxId();
+    Integer findMaxId();
     int findArchiveCount(@Param("archiveTools") ArchiveTools archiveTools);
     List<Archive> findArchiveList(@Param("archiveTools") ArchiveTools archiveTools,@Param("from") int from,@Param("pageSize") int pageSize);
     int updateArchive(Archive archive);
@@ -20,4 +20,9 @@ public interface ArchiveDao {
     int  delUpdateArchiveStatus(@Param("id") int id);
     int recoverReg(@Param("id") int id,@Param("isdelete") int isdelete);
     int deleteAnnex(@Param("id") int id);
+
+    int findArchiveWaitCount(@Param("archiveTools") ArchiveTools archiveTools);
+    List<Archive> findArchiveWaitList(@Param("archiveTools") ArchiveTools archiveTools,@Param("from") int from,@Param("pageSize") int pageSize);
+    String findArchiveByName(@Param("userName") String  userName);
+
 }

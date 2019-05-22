@@ -329,7 +329,17 @@
 						</div>
 						
 					</li><br/>
-					<li class="leftfooter1"> 下载附件&nbsp;
+					<li class="leftfooter1">
+						<div class="form-group">
+							<label class="control-label col-md-1 col-sm-1 col-xs-12" >附件:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12" id="uploadfile" style="display: none">
+								<input type="hidden" th:value="${archive.annex}" id="annexhidden" name="annex" required="required" class="form-control col-md-7 col-xs-12">
+								<input id="annex" type="file" th:value="${archive.annex}" class="form-control col-md-6 col-sm-6 col-xs-12" name="docFile">
+								<span style="color:red;display: inline-block; font-weight: bold;">*注：1、大小不得超过500m.2、文件类型：doc</span>
+							</div>
+							<div class="col-md-11 col-sm-11 col-xs-12" id="docFile"></div>
+						</div>
+
 					</li>
 
 				</ul>
@@ -340,11 +350,14 @@
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<input type="button" id="saveA" name="saveA" value="变更"
 								   th:onclick="submitClaimVoucher('变更')"
-								   class="btn btn-primary"></input>
+								   class="btn btn-round btn-info"></input>
 							<input type="button" id="submitA" name="submitA" value="驳回"
 								   th:onclick="submitClaimVoucher('驳回')"
 								   class="btn btn-primary"></input>
-							<button type="submit" class="btn btn-success">返回</button>
+							<input type="button" id="backA" name="backA" value="返回"
+								   th:onclick="back()"
+								   class="btn btn-success"></input>
+
 						</div>
 					</div>
 				</div>
@@ -364,6 +377,40 @@
 
 
 			}
+		</script>
+		<script th:src="@{/js/jquery.js}"></script>
+		<script>
+			function back(){
+				window.history.back();
+			}
+			function delDocFile(id){
+				$.get("delDocFile",{"id":id},function(data){
+					if(data.rst == "success"){
+						$("#uploadfile").show();
+						$("#docFile").html('');
+					}else if(data== "failed"){
+						alert("删除失败！");
+					}else if(data== "noexist"){
+						alert("操作异常！");
+					}
+				},"json");
+
+			}
+			$(document).ready(function() {
+				//显示下载与删除
+				var annexhidden=$("#annexhidden").val();
+				var id = $("#id").val();//通过表单隐藏域的获得档案id
+				if(annexhidden == null || annexhidden == "" ){
+					$("#uploadfile").show();//如果连接等于空，upload上传文件显示
+				}else{
+					$("#docFile").append("<p>"+annexhidden+
+							"&nbsp;&nbsp;<a href=\""+annexhidden+"?m="+Math.random()+"\" >下载</a> &nbsp;&nbsp;" +
+							"<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a></p>");
+				}
+
+
+
+			});
 		</script>
 		<!-- jQuery -->
 		<script src="js/datepicker/daterangepicker.js"></script>

@@ -18,7 +18,7 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
 
     @Override
-    public int findMaxId() {
+    public Integer findMaxId() {
         return archiveDao.findMaxId();
     }
     //分页查询
@@ -65,4 +65,18 @@ public class ArchiveServiceImpl implements ArchiveService {
     public int deleteAnnex(int id) {
         return archiveDao.deleteAnnex(id);
     }
+
+    @Override
+    public PageSurport<Archive> findArchiveWaitList(ArchiveTools archiveTools, int pageIndex, int pageSize) {
+        PageSurport<Archive> pageSurport=new PageSurport<Archive>();
+        int from=(pageIndex-1)*pageSize;
+        pageSurport.setDataList(archiveDao.findArchiveWaitList(archiveTools,from,pageSize));
+        pageSurport.setTotalCount(archiveDao.findArchiveWaitCount(archiveTools));
+        return pageSurport;
+    }
+    @Override
+    public  String findArchiveByName(String userName){
+        return archiveDao.findArchiveByName(userName);
+    }
+
 }

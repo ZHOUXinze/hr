@@ -66,8 +66,6 @@
 				<input type="hidden" id="id" name="id" th:value="${archive.id}" required="required" class="form-control col-md-7 col-xs-12">
 
 				<ul>
-					<input type="hidden" id="revStatus" name="revStatus" value="6" class="form-control col-md-7 col-xs-12">
-
 					<li class="lefttop">
 						<div class="item form-group">
 							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="depName">所属部门 <span class="required">*</span>
@@ -348,11 +346,13 @@
 					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 						<input type="button" id="modA" name="modA" value="修改"
 							   th:onclick="submitClaimVoucher('修改')"
-							   class="btn btn-primary"></input>
+							   class="btn btn-round btn-info"></input>
 						<input type="button" id="submitA" name="submitA" value="提交"
 							   th:onclick="submitClaimVoucher('提交')"
 							   class="btn btn-primary"></input>
-						<button type="submit" class="btn btn-success">返回</button>
+						<input type="button" id="backA" name="backA" value="返回"
+							   th:onclick="back()"
+							   class="btn btn-success"></input>
 					</div>
 				</div>
 
@@ -366,6 +366,9 @@
 		<script src="js/datepicker/daterangepicker.js"></script><script src="js/moment/moment.min.js"></script><script src="../vendors/jquery/dist/jquery.min.js"></script><script src="../vendors/jquery/dist/jquery.min.js"></script><!-- Bootstrap --><script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script><!-- FastClick --><script src="../vendors/fastclick/lib/fastclick.js"></script><!-- NProgress --><script src="../vendors/nprogress/nprogress.js"></script><!-- bootstrap-progressbar --><script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 		<!-- iCheck --><script src="../vendors/iCheck/icheck.min.js"></script><!-- bootstrap-daterangepicker --><script src="js/moment/moment.min.js"></script><script src="js/datepicker/daterangepicker.js"></script><!-- bootstrap-wysiwyg --><script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script><script src="../vendors/jquery.hotkeys/jquery.hotkeys.js"></script><script src="../vendors/google-code-prettify/src/prettify.js"></script><!-- jQuery Tags Input --><script src="../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script><!-- Switchery --><script src="../vendors/switchery/dist/switchery.min.js"></script><!-- Select2 --><script src="../vendors/select2/dist/js/select2.full.min.js"></script><!-- Parsley --><script src="../vendors/parsleyjs/dist/parsley.min.js"></script><!-- Autosize --><script src="../vendors/autosize/dist/autosize.min.js"></script><!-- jQuery autocomplete --><script src="../vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script><!-- starrr --><script src="../vendors/starrr/dist/starrr.js"></script><!-- Custom Theme Scripts --><script src="../build/js/custom.min.js"></script>
 		<script>
+			function back(){
+				window.history.back();
+			}
 			function submitClaimVoucher(action){
 				if(!confirm("确定"+action+"档案吗")) return;
 				if (action == '修改'){
@@ -384,7 +387,7 @@
 				//显示下载与删除
 				var annexhidden=$("#annexhidden").val();
 				var id = $("#id").val();//通过表单隐藏域的获得档案id
-				if(annexhidden == null || annexhidden == "" ){
+				if(annexhidden == null || annexhidden == ""){
 					$("#uploadfile").show();//如果连接等于空，upload上传文件显示
 				}else{
 					$("#docFile").append("<p>"+annexhidden+
