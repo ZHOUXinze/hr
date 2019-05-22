@@ -36,15 +36,15 @@
         WHERE
         1=1
         <if test="standardCode!=null and standardCode != ''">
-            AND `standardCode` = #{standardCode}
+            AND `standardCode` like CONCAT('%',#{standardCode},'%')
         </if>
         <if test="status!= -1">
             AND `status` = #{status}
         </if>
-        <if test="start == null">
+        <if test="start == null and end != null">
             AND createDate BETWEEN '0000-0-0' AND #{end}
         </if>
-        <if test="end == null">
+        <if test="end == null and start !=null">
             AND createDate BETWEEN #{start} AND (SELECT NOW())
         </if>
         <if test="start != null and end != null">

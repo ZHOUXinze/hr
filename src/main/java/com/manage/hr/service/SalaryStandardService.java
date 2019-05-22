@@ -1,9 +1,6 @@
 package com.manage.hr.service;
 
 import com.manage.hr.entity.SalaryStandard;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.Date;
 import java.util.List;
 
 public interface SalaryStandardService {
@@ -19,5 +16,5 @@ public interface SalaryStandardService {
 
     int reviewSalaryStandard(int id, String review, String reviewOpinion);
 
-    List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, Date start, Date end);
+    List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, String start, String end);
 }

@@ -40,9 +40,8 @@ public class SalaryItemServiceImpl implements SalaryItemService {
         //2：必填字段未填
         for (SalaryItem salaryItem : salaryItemList) {
             int modelStatus = salaryItem.getModelStatus();//获取页面的操作状态
-            if (modelStatus == 0) { //0：没有操作
-                continue;
-            } else {    // 存在操作
+            if (modelStatus != 0) { //0：没有操作
+                // 存在操作
                 String itemCode = salaryItem.getItemCode();
                 String itemName = salaryItem.getItemName();
                 //验证数据。如果必填项为空，返回错误码

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -48,19 +47,15 @@ public class SalaryStandardController {
         model.addAttribute("salaryStandard", salaryStandard);
         model.addAttribute("salaryStandardDetailList", salaryStandardDetailList);
         //根据operating跳转页面
-        if (operating.equals("review")) {
-            return "sidReview";
-        } else if (operating.equals("change")) {
-            return "sidChange";
-        } else if (operating.equals("update")) {
-            return "sidUpdate";
-        } else if (operating.equals("show")) {
-            return "sidShow";
-        } else if (operating.equals("delete")) {
+        if (operating.equals("review")) return "sidReview";
+        if (operating.equals("change")) return "sidChange";
+        if (operating.equals("update")) return "sidUpdate";
+        if (operating.equals("show")) return "sidShow";
+        if (operating.equals("delete")) {
             salaryStandardService.deleteSalaryStandard(id);
             return "salaryStandard";
         }
-        return "salaryStandard";
+        return "/salaryStandard";
     }
 
     @RequestMapping(value = "/reviewSalaryStandard")
@@ -71,8 +66,7 @@ public class SalaryStandardController {
     }
 
     @RequestMapping(value = "/selectSalaryStandard", method = RequestMethod.POST)
-    public String selectSalaryStandard(String salaryStandardCode, String statusName, Date start, Date end, Model model) {
-        System.out.println(salaryStandardCode + statusName + start + end);
+    public String selectSalaryStandard(String salaryStandardCode, String statusName, String start, String end, Model model) {
         List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandardByCondition(salaryStandardCode, statusName, start, end);
         model.addAttribute("salaryStandardList", salaryStandardList);
         return "salaryStandard";

@@ -9,6 +9,8 @@ import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,36 +35,33 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
 
     @Override
     public SalaryStandard getSalaryStandardById(int id) {
-        SalaryStandard salaryStandard = salaryStandardDao.getSalaryStandardById(id);
-        return salaryStandard;
+        return salaryStandardDao.getSalaryStandardById(id);
     }
 
     @Override
     public int insertSalaryStandard(SalaryStandard salaryStandard, int type) {
-        SalaryStandard newSalaryStandard = salaryStandard;
-        newSalaryStandard.setStatus(type == 1 ? 7 : 6);
+        salaryStandard.setStatus(type == 1 ? 7 : 6);
         return salaryStandardDao.insertSalaryStandard(salaryStandard);
     }
 
 
     @Override
     public int updateSalaryStandard(SalaryStandard salaryStandard, int type) {
-        SalaryStandard newSalaryStandard = salaryStandard;
-        newSalaryStandard.setStatus(type == 1 ? 7 : 6);
-        if (newSalaryStandard.getChangeReason() == null || newSalaryStandard.getChangeReason().isEmpty()) {
-            newSalaryStandard.setChangeReason("");
+        salaryStandard.setStatus(type == 1 ? 7 : 6);
+        if (salaryStandard.getChangeReason() == null || salaryStandard.getChangeReason().isEmpty()) {
+            salaryStandard.setChangeReason("");
         }
-        if (newSalaryStandard.getReviewOpinion() == null || newSalaryStandard.getReviewOpinion().isEmpty()) {
-            newSalaryStandard.setReviewOpinion("");
+        if (salaryStandard.getReviewOpinion() == null || salaryStandard.getReviewOpinion().isEmpty()) {
+            salaryStandard.setReviewOpinion("");
         }
-        return salaryStandardDao.updateSalaryStandard(newSalaryStandard);
+        return salaryStandardDao.updateSalaryStandard(salaryStandard);
     }
 
     @Override
     public int deleteSalaryStandard(int id) {
         SalaryStandard salaryStandard = salaryStandardDao.getSalaryStandardById(id);
         List<SalaryStandardDetail> salaryStandardDetails = salaryStandardDetailDao.listSalaryStandardDetailByCode(salaryStandard.getStandardCode());
-        for(SalaryStandardDetail salaryStandardDetail: salaryStandardDetails){
+        for (int i = 0; i < salaryStandardDetails.size(); i++) {
             salaryStandardDetailDao.deleteSsdByStandardCode(salaryStandard.getStandardCode());
         }
         return salaryStandardDao.deleteSalaryStandard(id);
@@ -83,21 +82,49 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
     }
 
     @Override
-    public List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, Date start, Date end) {
+    public List<SalaryStandard> listSalaryStandardByCondition(String salaryStandardCode, String statusName, String start, String end) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date startTime = null;
+        Date endTime = null;
+        if (!start.isEmpty()) {
+            try {
+                startTime = simpleDateFormat.parse(start);
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+        }
+        if (!end.isEmpty()) {
+            try {
+                endTime = simpleDateFormat.parse(end);
+                if (endTime.before(startTime)) {
+                    startTime = null;
+                    endTime = null;
+                }
+            } catch (ParseException pe) {
+                pe.printStackTrace();
+            }
+        }
+        System.out.println(startTime);
         //把statusName换成status
         int status;
-        if (statusName.equals("通过")) {
-            status = 5;
-        } else if (statusName.equals("起草")) {
-            status = 6;
-        } else if (statusName.equals("审核中")) {
-            status = 7;
-        } else if (statusName.equals("驳回")) {
-            status = 8;
-        } else {
-            status = -1;
+        switch (statusName) {
+            case "通过":
+                status = 5;
+                break;
+            case "起草":
+                status = 6;
+                break;
+            case "审核中":
+                status = 7;
+                break;
+            case "驳回":
+                status = 8;
+                break;
+            default:
+                status = -1;
+                break;
         }
-        return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, start, end);
+        return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, startTime, endTime);
     }
 
 

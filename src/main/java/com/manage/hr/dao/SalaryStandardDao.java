@@ -21,8 +21,8 @@ public interface SalaryStandardDao {
 
     int reviewSalaryStandard(SalaryStandard salaryStandard);
 
-    List<SalaryStandard> listSalaryStandardByCondition(@Param("salaryStandardCode") String salaryStandardCode,
-                                                       @Param("statusName") int status,
+    List<SalaryStandard> listSalaryStandardByCondition(@Param("standardCode") String salaryStandardCode,
+                                                       @Param("status") int status,
                                                        @Param("start") Date start,
                                                        @Param("end") Date end);
 }
