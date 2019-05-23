@@ -22,8 +22,11 @@
             <if test="archiveTools.archStatus!=null and archiveTools.archStatus!=''">
                 and archStatus=#{archiveTools.archStatus}
             </if>
-            <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
-                and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
+            <if test="archiveTools.bt!=null">
+                and createDate &gt;= #{archiveTools.bt}
+            </if>
+            <if test="archiveTools.et!=null">
+                and createDate &lt;= #{archiveTools.et}
             </if>
             <if test="archiveTools.name!=null and archiveTools.name!=''">
                 and `name`=#{archiveTools.name}
@@ -43,26 +46,29 @@
         (SELECT titleName FROM title t WHERE id=a.titleId) titleIds,
         (SELECT posName FROM `position` p WHERE id=a.posId) posIds
         FROM `archive` a
-            <where>
-                <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
-                    and archCode=#{archiveTools.archCode}
-                </if>
-                <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
-                    and reviewStatus=#{archiveTools.reviewStatus}
-                </if>
-                <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
-                    and archStatus=#{archiveTools.archStatus}
-                </if>
-                <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
-                    and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
-                </if>
-                <if test="archiveTools.name!=null and archiveTools.name!=''">
-                    and `name`=#{archiveTools.name}
-                </if>
-                <if test="archiveTools.registerPerson!=null and archiveTools.registerPerson!=''">
-                    and registerPerson=#{archiveTools.registerPerson}
-                </if>
-            </where>
+        <where>
+            <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
+                and archCode=#{archiveTools.archCode}
+            </if>
+            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
+                and reviewStatus=#{archiveTools.reviewStatus}
+            </if>
+            <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
+                and archStatus=#{archiveTools.archStatus}
+            </if>
+            <if test="archiveTools.bt!=null">
+                and createDate &gt;= #{archiveTools.bt}
+            </if>
+            <if test="archiveTools.et!=null">
+                and createDate &lt;= #{archiveTools.et}
+            </if>
+            <if test="archiveTools.name!=null and archiveTools.name!=''">
+                and `name`=#{archiveTools.name}
+            </if>
+            <if test="archiveTools.registerPerson!=null and archiveTools.registerPerson!=''">
+                and registerPerson=#{archiveTools.registerPerson}
+            </if>
+        </where>
         ORDER BY createDate DESC LIMIT  #{from},#{pageSize}
     </select>
     <select id="findArchiveWaitCount" resultType="int">
@@ -75,8 +81,8 @@
             <if test="archiveTools.archStatus!=null and archiveTools.archStatus!=''">
                 and archStatus=#{archiveTools.archStatus}
             </if>
-            <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
-                and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
+            <if test="archiveTools.bt!=null and archiveTools.et!=null">
+                and createDate BETWEEN #{archiveTools.bt} AND #{archiveTools.et}
             </if>
             <if test="archiveTools.name!=null and archiveTools.name!=''">
                 and `name`=#{archiveTools.name}
@@ -104,8 +110,8 @@
             <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
                 and archStatus=#{archiveTools.archStatus}
             </if>
-            <if test="archiveTools.beginTime!=null and archiveTools.endTime!=null">
-                and createDate BETWEEN #{archiveTools.beginTime} AND #{archiveTools.endTime}
+            <if test="archiveTools.bt!=null and archiveTools.et!=null">
+                and createDate BETWEEN #{archiveTools.bt} AND #{archiveTools.et}
             </if>
             <if test="archiveTools.name!=null and archiveTools.name!=''">
                 and `name`=#{archiveTools.name}

@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +37,7 @@ public class ArchiveController {
 
 
 
-    @RequestMapping("main")
-    public String sh(){
-        return "main";
-    }
-    @RequestMapping("org")
-    public String org(){
-        return "org";
-    }
-    @RequestMapping("/gaimima")
-    public String daibanliebiao(){
-        return "gaimima";
-    }
+
 
     //处理变更复核
 
@@ -66,7 +57,7 @@ public class ArchiveController {
     public  String checkChangeArchive(@RequestParam int id,Model model){
 
         Archive archive=archiveService.findArchiveById(id);
-       init(model);
+        init(model);
         model.addAttribute("archive",archive);
 
         return "renshidanganbiangengfuhe";
@@ -126,7 +117,7 @@ public class ArchiveController {
         MultipartFile doc=docFile;
         if(!doc.isEmpty()){
             docName=doc.getOriginalFilename();
-          /*  path=path+"/doc/";*/
+            /*  path=path+"/doc/";*/
             File docfile =new File(path+"/"+docName);
             if(!docfile.getParentFile().exists()){
                 docfile.getParentFile().mkdirs();
@@ -166,24 +157,24 @@ public class ArchiveController {
         String path=fileUpload;
         String photoName=null;
         String docName=null;
-           MultipartFile photo=photos;
-            MultipartFile doc=docFile;
+        MultipartFile photo=photos;
+        MultipartFile doc=docFile;
 
-           if(!photo.isEmpty()){
-               photoName=photo.getOriginalFilename();
-               File photofile =new File(path+"/"+photoName);
-               if(!photofile.getParentFile().exists()){
-                   photofile.getParentFile().mkdirs();
-               }
-               try{
-                   photo.transferTo(photofile);
-               }catch(Exception ex){
-                   ex.printStackTrace();
-               }
-           }
-           if(!doc.isEmpty()){
-               docName=doc.getOriginalFilename();
-               /*path=path+"/doc/";*/
+        if(!photo.isEmpty()){
+            photoName=photo.getOriginalFilename();
+            File photofile =new File(path+"/"+photoName);
+            if(!photofile.getParentFile().exists()){
+                photofile.getParentFile().mkdirs();
+            }
+            try{
+                photo.transferTo(photofile);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        if(!doc.isEmpty()){
+            docName=doc.getOriginalFilename();
+            /*path=path+"/doc/";*/
             File docfile =new File(path+"/"+docName);
             if(!docfile.getParentFile().exists()){
                 docfile.getParentFile().mkdirs();
@@ -200,7 +191,7 @@ public class ArchiveController {
         }else{
             i=archiveService.findMaxId();
         }
-       /* archive.setReviewStatus(7);*/
+        /* archive.setReviewStatus(7);*/
         archive.setChangeStatus(0);
         archive.setArchCode("BDQN"+(i+1));
         archive.setPhotoPath(photoName);
@@ -225,10 +216,10 @@ public class ArchiveController {
     //显示登记列表
     @RequestMapping("/registerList")
     public String show(ArchiveTools archiveTools,@RequestParam(required=false) Integer pageIndex,HttpSession session,Model model){
-        User user =new User();
-        user.setUserRoleName("人事专员");
+     /*   User user =new User();
+        user.setUserRoleName("人事经理");*/
 
-       /* 人事专员    人事经理*/
+        /* 人事专员    人事经理*/
         LoadDataBase.loadDictionary();
         List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
         //分页
@@ -240,6 +231,7 @@ public class ArchiveController {
         }
         //查询Archive的信息
 
+
         PageSurport<Archive> pageSurport=archiveService.findArchiveList(archiveTools, curIndex, pageSize);
         pageSurport.setPageIndex(curIndex);
         pageSurport.setPageSize(pageSize);
@@ -247,7 +239,7 @@ public class ArchiveController {
         model.addAttribute("pageSurport", pageSurport);
         model.addAttribute("dictionaryList",dictionaryList);
         model.addAttribute("archiveTools",archiveTools);
-        model.addAttribute("user",user);
+        /*model.addAttribute("user",user);*/
         return "registerList";
     }
 
@@ -270,7 +262,7 @@ public class ArchiveController {
     @RequestMapping(value = "/findPosCode",method = RequestMethod.GET)
     @ResponseBody
     public String findPosCode(int id) {
-       String str=  archiveService.findPosCode(id);
+        String str=  archiveService.findPosCode(id);
         return str;
     }
     //永久删除
@@ -300,7 +292,7 @@ public class ArchiveController {
     @ResponseBody
     public String recoverReg(int id){
         Archive archive=archiveService.findArchiveById(id);
-       int isdelete= archive.getArchStatus();
+        int isdelete= archive.getArchStatus();
         int rel =archiveService.recoverReg(id,isdelete);
         if(rel>0){
             return "true";
@@ -315,7 +307,7 @@ public class ArchiveController {
         Map<String,Object> map=new HashMap<String,Object>();
         //获得文件路径直接用 fileUpload
         String path=fileUpload;
-       Archive archive= archiveService.findArchiveById(Integer.parseInt(id));
+        Archive archive= archiveService.findArchiveById(Integer.parseInt(id));
         String fileName=archive.getAnnex();
         if(id==null&&("").equals(id)){
             map.put("result","failed");

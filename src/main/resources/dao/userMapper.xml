@@ -64,5 +64,9 @@ WHERE id=u.userRole )AS dataName,(SELECT p.depName FROM department AS p
 WHERE p.id=u.depId)AS depName
 FROM `user` AS u where userCode=#{userCode}
    </select>
+   <delete id="delUserById" parameterType="int">
+delete from  `user` where id=#{userId}
+
+   </delete>
 
 </mapper>
