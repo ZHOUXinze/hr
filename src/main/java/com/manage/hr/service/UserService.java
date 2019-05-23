@@ -13,5 +13,5 @@ public interface UserService {
     int updateUser(User user);
     User findUserByID(  int userId);
     int login(String userCode,String password,User user);
-
+    int delUserById( int userId);
 }

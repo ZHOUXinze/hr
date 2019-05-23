@@ -36,6 +36,12 @@ if(users!=null){
 
         return rel;
     }
+
+    @Override
+    public int delUserById(int userId) {
+        return userDao.delUserById(userId);
+    }
+
     @Override
     public int addUser(User user) {
         return userDao.addUser(user);

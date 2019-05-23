@@ -15,4 +15,5 @@ public interface UserDao {
     int updateUser(User user);
    User findUserByID( @Param("userId") int userId);
    User userLogin(@Param("userCode") String userCode);
+   int delUserById( int userId);
 }
