@@ -53,14 +53,14 @@ return "trainUser";
 
 
     }
-    //显示用户管理
+/*    //显示用户管理
     @RequestMapping("/yonghuguanli")
 public String findAllUser(Model model){
 
 List<User> userList  =userDao.findAllUser();
 model.addAttribute("userList",userList);
 return "yonghuguanli";
-}
+}*/
 
 //显示修改页面
     @RequestMapping(value = "yonghuguanlixiugai",method = RequestMethod.GET)

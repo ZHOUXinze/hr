@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +37,7 @@ public class ArchiveController {
 
 
 
-    @RequestMapping("main")
-    public String sh(){
-        return "main";
-    }
-    @RequestMapping("org")
-    public String org(){
-        return "org";
-    }
-    @RequestMapping("/gaimima")
-    public String daibanliebiao(){
-        return "gaimima";
-    }
+
 
     //处理变更复核
 
@@ -225,8 +216,8 @@ public class ArchiveController {
     //显示登记列表
     @RequestMapping("/registerList")
     public String show(ArchiveTools archiveTools,@RequestParam(required=false) Integer pageIndex,HttpSession session,Model model){
-        User user =new User();
-        user.setUserRoleName("人事专员");
+     /*   User user =new User();
+        user.setUserRoleName("人事经理");*/
 
        /* 人事专员    人事经理*/
         LoadDataBase.loadDictionary();
@@ -240,6 +231,7 @@ public class ArchiveController {
         }
         //查询Archive的信息
 
+
         PageSurport<Archive> pageSurport=archiveService.findArchiveList(archiveTools, curIndex, pageSize);
         pageSurport.setPageIndex(curIndex);
         pageSurport.setPageSize(pageSize);
@@ -247,7 +239,7 @@ public class ArchiveController {
         model.addAttribute("pageSurport", pageSurport);
         model.addAttribute("dictionaryList",dictionaryList);
         model.addAttribute("archiveTools",archiveTools);
-        model.addAttribute("user",user);
+        /*model.addAttribute("user",user);*/
         return "registerList";
     }
 

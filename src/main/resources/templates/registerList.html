@@ -32,6 +32,7 @@
 			height:40px;
 			line-height: 40px;
 			vertical-align: middle;
+			margin:1px;
 		}
 		#span1{
 			display: inline-block;
@@ -57,8 +58,8 @@
 				</li>
 				<li>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">审核状态</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">审核状态:</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control" name="reviewStatus">
 								<option value="">请选择</option>
 								<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==revStatus"
@@ -72,8 +73,8 @@
 				</li>
 				<li>
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">档案状态</label>
-						<div class="col-md-9 col-sm-9 col-xs-12">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">档案状态:</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control" name="archStatus">
 								<option value="">请选择</option>
 								<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
@@ -84,27 +85,46 @@
 						</div>
 					</div>
 				</li>
-				<li style="width: 700px;">
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">建档时间:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<fieldset>
+				<li>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12">建档时间:</label>
+					<div class="col-md-8 col-sm-8 col-xs-12">
+					<!--	<fieldset>-->
+							<!--<div class="control-group">-->
+								<div class="controls">
+									<div class="col-md-12 xdisplay_inputx form-group has-feedback">
+										<input type="text"
+											   th:value="${#dates.format(archiveTools.bt,'MM/dd/yyyy')}"
+											   class="form-control has-feedback" id="single_cal2" name="beginTime" aria-describedby="inputSuccess2Status2">
+										<!--至
+										<input type="text"
+											   class="form-control has-feedback" id="single_cal3"  name="endTime" aria-describedby="inputSuccess3Status3">
+-->
+									</div>
+								</div>
+							<!--</div>-->
+				<!--		</fieldset>-->
+
+					</div>
+				</div>
+			</li>到
+				<li>
+					<!--<div class="form-group">-->
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<!--<fieldset>-->
 								<div class="control-group">
 									<div class="controls">
-										<div class="col-md-11 xdisplay_inputx form-group has-feedback">
+										<div class="col-md-12 xdisplay_inputx form-group has-feedback">
 											<input type="text"
-												   class="form-control has-feedback" id="single_cal2" name="beginTime" aria-describedby="inputSuccess2Status2">
-												至
-											<input type="text"
+												   th:value="${#dates.format(archiveTools.et,'MM/dd/yyyy')}"
 												   class="form-control has-feedback" id="single_cal3"  name="endTime" aria-describedby="inputSuccess3Status3">
-
 										</div>
 									</div>
 								</div>
-							</fieldset>
+							<!--</fieldset>-->
 
 						</div>
-					</div>
+			<!--		</div>-->
 				</li>
 				<li>
 
@@ -196,7 +216,7 @@
                           <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.reviewStatuss}"></span></font></font></td>
                           <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${archive.isdeletes}"></span></font></font></td>
                           <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span th:text="${#dates.format(archive.createDate,'yyyy-MM-dd')}"></span></font></font></td>
-							<td th:if="${user.getUserRoleName()}=='人事专员'">
+							<td th:if="${session.userSession.dataName}=='人事专员'">
 								<span th:if="${archive.isdeletes}!='已删除'">
 									<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 										<a th:if="${archive.reviewStatuss}=='起草' or ${archive.reviewStatuss}=='驳回'" th:href="@{/modifyArchive(id=${archive.id})}">修改</a>&nbsp;&nbsp;
@@ -213,7 +233,7 @@
 									</font></font>
 								</span>
 							</td>
-							<td th:if="${user.getUserRoleName()}=='人事经理'">
+							<td th:if="${session.userSession.dataName}=='人事经理'">
 								<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 									<span th:if="${archive.isdeletes}!='已删除'">
                                         <!--<a th:if="${archive.reviewStatuss}=='起草' or ${archive.reviewStatuss}=='驳回'" th:href="@{/modifyArchive(id=${archive.id})}">修改</a>&nbsp;&nbsp;

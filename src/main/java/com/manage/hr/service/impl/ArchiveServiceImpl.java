@@ -7,6 +7,9 @@ import com.manage.hr.util.ArchiveTools;
 import com.manage.hr.util.PageSurport;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class ArchiveServiceImpl implements ArchiveService {
@@ -24,8 +27,29 @@ public class ArchiveServiceImpl implements ArchiveService {
     //分页查询
     @Override
     public PageSurport<Archive> findArchiveList(ArchiveTools archiveTools, int pageIndex, int pageSize) {
+        Date bt=null;
+        Date et=null;
         PageSurport<Archive> pageSurport=new PageSurport<Archive>();
         int from=(pageIndex-1)*pageSize;
+            SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy");
+        if(archiveTools.getBeginTime()!=null&& !archiveTools.getBeginTime().equals("")){
+                try {
+                    bt=simpleDateFormat.parse(archiveTools.getBeginTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        if (archiveTools.getEndTime()!=null && !archiveTools.getEndTime().equals("")){
+            try {
+               et=simpleDateFormat.parse(archiveTools.getEndTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        archiveTools.setEt(et);
+        archiveTools.setBt(bt);
+
         pageSurport.setDataList(archiveDao.findArchiveList(archiveTools,from,pageSize));
         pageSurport.setTotalCount(archiveDao.findArchiveCount(archiveTools));
         return pageSurport;
@@ -68,8 +92,34 @@ public class ArchiveServiceImpl implements ArchiveService {
 
     @Override
     public PageSurport<Archive> findArchiveWaitList(ArchiveTools archiveTools, int pageIndex, int pageSize) {
+        Date bt=null;
+        Date et=null;
         PageSurport<Archive> pageSurport=new PageSurport<Archive>();
         int from=(pageIndex-1)*pageSize;
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy");
+        if(archiveTools.getBeginTime()!=null&& !archiveTools.getBeginTime().equals("")){
+            try {
+                bt=simpleDateFormat.parse(archiveTools.getBeginTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            archiveTools.setBt(bt);
+        }
+        if (archiveTools.getEndTime()!=null && !archiveTools.getEndTime().equals("")){
+            try {
+                et=simpleDateFormat.parse(archiveTools.getEndTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            archiveTools.setEt(et);
+            /*if(bt.after(et)){
+                archiveTools.setEt(null);
+                archiveTools.setBt(null);
+            }*/
+        }
+
+
+
         pageSurport.setDataList(archiveDao.findArchiveWaitList(archiveTools,from,pageSize));
         pageSurport.setTotalCount(archiveDao.findArchiveWaitCount(archiveTools));
         return pageSurport;
