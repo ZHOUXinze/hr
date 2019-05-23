@@ -31,17 +31,17 @@ public class ArchiveServiceImpl implements ArchiveService {
         Date et=null;
         PageSurport<Archive> pageSurport=new PageSurport<Archive>();
         int from=(pageIndex-1)*pageSize;
-            SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy");
         if(archiveTools.getBeginTime()!=null&& !archiveTools.getBeginTime().equals("")){
-                try {
-                    bt=simpleDateFormat.parse(archiveTools.getBeginTime());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            try {
+                bt=simpleDateFormat.parse(archiveTools.getBeginTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+        }
         if (archiveTools.getEndTime()!=null && !archiveTools.getEndTime().equals("")){
             try {
-               et=simpleDateFormat.parse(archiveTools.getEndTime());
+                et=simpleDateFormat.parse(archiveTools.getEndTime());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
