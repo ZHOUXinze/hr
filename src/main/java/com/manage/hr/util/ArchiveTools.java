@@ -6,8 +6,20 @@ public class ArchiveTools {
     private String  archCode;
     private Integer reviewStatus;
     private Integer archStatus;
-    private Date beginTime;
-    private Date endTime;
+    private String beginTime;
+    private String endTime;
+    private Date bt;
+    private Date et;
+    private String name;
+    private String registerPerson;
+
+    public String getRegisterPerson() {
+        return registerPerson;
+    }
+
+    public void setRegisterPerson(String registerPerson) {
+        this.registerPerson = registerPerson;
+    }
 
     public String getArchCode() {
         return archCode;
@@ -33,19 +45,44 @@ public class ArchiveTools {
         this.archStatus = archStatus;
     }
 
-    public Date getBeginTime() {
+
+
+    public Date getBt() {
+        return bt;
+    }
+
+    public void setBt(Date bt) {
+        this.bt = bt;
+    }
+
+    public Date getEt() {
+        return et;
+    }
+
+    public void setEt(Date et) {
+        this.et = et;
+    }
+
+    public String getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Date beginTime) {
+    public void setBeginTime(String beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

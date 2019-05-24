@@ -25,7 +25,9 @@ public class User {
     private String password;
     @NotEmpty(message = "电话号码名称不能为空")
     private String phoneNumber;
+    @NotEmpty(message = "不能为空")
     private String depName;
+    @NotEmpty(message = "不能为空")
     private String dataName;
 
     public String getDataName() {

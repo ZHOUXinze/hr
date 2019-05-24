@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>人事档案变更复核</title>
+		<title>人事档案变更明细</title>
 		<!-- Bootstrap -->
 		<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Font Awesome -->
@@ -65,7 +65,7 @@
 				<input type="hidden" id="id" name="id" th:value="${archive.id}" required="required" class="form-control col-md-7 col-xs-12">
 				<input type="hidden" id="reviewStatus" name="reviewStatus" value="" required="required" class="form-control col-md-7 col-xs-12">
 
-                <ul>
+				<ul>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="deptment">档案编码:</label>
@@ -82,7 +82,7 @@
 									<option value="">请选择</option>
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==chanStatus"
 											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.changeStatus})"
-											 th:value="${dictionary.id}">-- 请选择 --
+											 th:value="${dictionary.id}">
 									</option>
 								</select>
 							</div>
@@ -93,7 +93,7 @@
 								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
 							</div>-->
 						<div class="image view view-first">
-							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
+							<img style="width:180px;height:180px; display:block;" th:src="${archive.photoPath}"  alt="">
 
 						</div>
 					</li>
@@ -348,12 +348,7 @@
 					
 					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<input type="button" id="saveA" name="saveA" value="变更"
-								   th:onclick="submitClaimVoucher('变更')"
-								   class="btn btn-round btn-info"></input>
-							<input type="button" id="submitA" name="submitA" value="驳回"
-								   th:onclick="submitClaimVoucher('驳回')"
-								   class="btn btn-primary"></input>
+
 							<input type="button" id="backA" name="backA" value="返回"
 								   th:onclick="back()"
 								   class="btn btn-success"></input>
@@ -367,10 +362,10 @@
 		<script>
 			function submitClaimVoucher(action){
 				if(!confirm("确定"+action+"档案吗")) return;
-				if (action == '变更'){
-					document.getElementById("reviewStatus").setAttribute("value",37);
-				}else{
+				if (action == '保存'){
 					document.getElementById("reviewStatus").setAttribute("value",5);
+				}else{
+					document.getElementById("reviewStatus").setAttribute("value",36);
 				}
 				/*alert(document.frm.revStatus.value);*/
 				document.frm.submit();

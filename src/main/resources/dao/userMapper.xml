@@ -7,11 +7,39 @@
 INSERT INTO `user`(`userCode`,`userName`,`userRole`,`depId`,`password`,`phoneNumber`)
 VALUES(#{userCode},#{userName},#{userRole},#{depId},#{password},#{phoneNumber})
    </insert>
-   <select id="findAllUser" parameterType="int"  resultType="User" >
-   SELECT u.id, u.userCode,u.userName,(SELECT dataName FROM dictionary AS d
+   <select id="findAlluserCount" resultType="int">
+      select  count(1) from `user`
+      <where>
+         <if test="user.userName!=null and user.userName!=''">
+            and  userName=#{user.userName}
+         </if>
+         <if test="user.dataName!=null and user.dataName!=''">
+            and dataName=#{user.dataName}
+         </if>
+         <if test="user.depName!=null and user.depName!=''">
+            and depName=#{user.depName}
+         </if>
+
+      </where>
+   </select>
+   
+   <select id="findAllUser"   resultType="User" >
+   SELECT u.id, u.userCode,u.userName,u.userRole,u.depId,(SELECT dataName FROM dictionary AS d
 WHERE id=u.userRole )AS dataName,(SELECT p.depName FROM department AS p
 WHERE p.id=u.depId)AS depName ,u.password,u.phoneNumber
 FROM `user` AS u
+<where>
+   <if test="user.userName!=null and user.userName!=''">
+      and  userName=#{user.userName}
+   </if>
+   <if test="user.userRole!=null">
+      and userRole=#{user.userRole}
+   </if>
+   <if test="user.depId!=null">
+      and depId=#{user.depId}
+   </if>
+</where>
+      ORDER BY id DESC LIMIT  #{from},#{pageSize}
 
    </select>
 <update id="updateUser" parameterType="User">
@@ -30,5 +58,15 @@ WHERE p.id=u.depId)AS depName ,u.password,u.phoneNumber
 FROM `user` AS u where id=#{userId}
 
 </select>
+   <select id="userLogin" resultType="User">
+     SELECT u.id,  u.userCode,u.depId,u.userRole, u.userName,u.password,u.phoneNumber,(SELECT dataName FROM dictionary AS d
+WHERE id=u.userRole )AS dataName,(SELECT p.depName FROM department AS p
+WHERE p.id=u.depId)AS depName
+FROM `user` AS u where userCode=#{userCode}
+   </select>
+   <delete id="delUserById" parameterType="int">
+delete from  `user` where id=#{userId}
+
+   </delete>
 
 </mapper>

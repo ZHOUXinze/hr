@@ -26,28 +26,28 @@
 				list-style: none;
 			}
 			ul .lefttop{
-				width: 380px;
+				width: 30%;
 				display: inline-block;
 				height: 40px;
 				line-height: 40px;
 				vertical-align: middle;
 			}
 			ul .leftmiddle{
-				width: 400px;
+				width: 30%;
 				display: inline-block;
 				height: 45px;
 				line-height: 45px;
 				vertical-align: middle;
 			}
 			ul .leftfooter1{
-				width: 1100px;
+				width: 85%;
 				display: inline-block;
 				height: 40px;
 				line-height: 40px;
 				vertical-align: middle;
 			}
 			ul .leftfooter{
-				width: 1100px;
+				width: 85%;
 				display: inline-block;
 				height: 80px;
 				line-height: 80px;
@@ -65,10 +65,10 @@
 				<input type="hidden" id="id" name="id" th:value="${archive.id}" required="required" class="form-control col-md-7 col-xs-12">
 				<input type="hidden" id="reviewStatus" name="reviewStatus" value="" required="required" class="form-control col-md-7 col-xs-12">
 
-				<ul>
+                <ul>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="deptment">档案编码:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="deptment">档案编码:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="archCode" readonly th:value="${archive.archCode}" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -76,7 +76,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12 ">变更状态</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12 ">变更状态</label>
 							<div class="col-md-6 col-sm-6 col-xs-12" >
 								<select class="form-control" name="changeStatus">
 									<option value="">请选择</option>
@@ -99,7 +99,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="deptment">所属部门:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="deptment">所属部门:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="deptment" th:value="${archive.depIds}" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -107,7 +107,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="positionName">职位名称:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="positionName">职位名称:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.posIds}" id="positionName" name="positionName" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -118,7 +118,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12 ">档案状态</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12 ">档案状态</label>
 							<div class="col-md-6 col-sm-6 col-xs-12" >
 								<select class="form-control" name="archStatus">
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
@@ -131,7 +131,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="posCode">职位编码:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="posCode">职位编码:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="posCode" th:value="${archive.posCode}" name="posCode" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -142,7 +142,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">姓名:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="name" name="name" th:value="${archive.name}" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -150,7 +150,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">性别:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">性别:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select class="form-control" name="gender">
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==gender"
@@ -166,7 +166,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">EMAIL:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="email">EMAIL:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.email}" id="email" name="email"  required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -174,7 +174,7 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">联系电话:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="phoneNumber">联系电话:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.phoneNumber}" id="phoneNumber" name="phoneNumber" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -185,7 +185,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="IdCard">身份证号:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="IdCard">身份证号:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.idNumber}" id="IdCard" name="IdCard" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -193,7 +193,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="account">户口所在地:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="account">户口所在地:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.account}" id="account" name="account" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -201,7 +201,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">政治面貌:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">政治面貌:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select class="form-control" name="political">
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==political"
@@ -214,7 +214,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">毕业院校:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="school">毕业院校:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.school}" id="school" name="school" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -222,7 +222,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="major">专业:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="major">专业:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.major}" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -230,7 +230,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">学历</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">学历</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select class="form-control" name="education">
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==education"
@@ -243,7 +243,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">薪酬标准</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">薪酬标准</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select class="form-control" name="salaryStandard">
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==salaryStd"
@@ -256,7 +256,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="bank">开户行:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="bank">开户行:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.bank}" id="bank" name="bank" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -264,7 +264,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="bankCard">银行卡号:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="bankCard">银行卡号:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.bankCard}" id="bankCard" name="bankCard" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -272,7 +272,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="sscNumber">社保卡号:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="sscNumber">社保卡号:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.sscNumber}" id="sscNumber" name="sscNumber" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -280,7 +280,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="registerPerson">登记人:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="registerPerson">登记人:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${archive.registerPerson}" id="registerPerson" name="registerPerson" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -288,7 +288,7 @@
 					</li>
 					<li class="leftmiddle">
 						<div class="form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12">建档时间:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">建档时间:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" th:value="${#dates.format(archive.createDate,'yyyy-MM-dd')}" class="form-control has-feedback-left" id="single_cal2" placeholder="时间" aria-describedby="inputSuccess2Status2">
 
@@ -297,16 +297,16 @@
 					</li>
 					<li class="leftfooter1">
 						<div class="form-group">
-							<label class="control-label col-md-1 col-sm-1 col-xs-12" for="address">住址:</label>
-							<div class="col-md-11 col-sm-11 col-xs-12">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
+							<div class="col-md-10 col-sm-10 col-xs-12">
 								<input type="text" th:value="${archive.address}" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
 						</div>
 					</li>
 					<li class="leftfooter">
 						<div class="form-group">
-							<label class="control-label col-md-1 col-sm-1 col-xs-12">个人履历:</label>
-							<div class="col-md-11 col-sm-11 col-xs-12">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">个人履历:</label>
+							<div class="col-md-10 col-sm-10 col-xs-12">
 								<textarea class="form-control" th:text="${archive.resumePath}" ></textarea>
 							</div>
 						</div>
@@ -314,22 +314,32 @@
 					</li><br/>
 					<li class="leftfooter">
 						<div class="form-group">
-							<label class="control-label col-md-1 col-sm-1 col-xs-12" >家庭关系:</label>
-							<div class="col-md-11 col-sm-11 col-xs-12">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" >家庭关系:</label>
+							<div class="col-md-10 col-sm-10 col-xs-12">
 								<textarea class="form-control"  th:text="${archive.family}" ></textarea>
 							</div>
 						</div>
 					</li><br/>
 					<li class="leftfooter">
 						<div class="form-group">
-							<label class="control-label col-md-1 col-sm-1 col-xs-12" >备注:</label>
-							<div class="col-md-11 col-sm-11 col-xs-12">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" >备注:</label>
+							<div class="col-md-10 col-sm-10 col-xs-12">
 								<textarea class="form-control"  th:text="${archive.remark}" ></textarea>
 							</div>
 						</div>
 						
 					</li><br/>
-					<li class="leftfooter1"> 下载附件&nbsp;
+					<li class="leftfooter1">
+						<div class="form-group">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" >附件:</label>
+							<div class="col-md-10 col-sm-10 col-xs-12" id="uploadfile" style="display: none">
+								<input type="hidden" th:value="${archive.annex}" id="annexhidden" name="annex" required="required" class="form-control col-md-7 col-xs-12">
+								<input id="annex" type="file" th:value="${archive.annex}" class="form-control col-md-6 col-sm-6 col-xs-12" name="docFile">
+								<span style="color:red;display: inline-block; font-weight: bold;">*注：1、大小不得超过500m.2、文件类型：doc</span>
+							</div>
+							<div class="col-md-8 col-sm-8 col-xs-12" id="docFile"></div>
+						</div>
+
 					</li>
 
 				</ul>
@@ -340,11 +350,14 @@
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<input type="button" id="saveA" name="saveA" value="保存"
 								   th:onclick="submitClaimVoucher('保存')"
-								   class="btn btn-primary"></input>
+								   class="btn btn-round btn-info"></input>
 							<input type="button" id="submitA" name="submitA" value="变更审请"
 								   th:onclick="submitClaimVoucher('变更审请')"
 								   class="btn btn-primary"></input>
-							<button type="submit" class="btn btn-success">返回</button>
+							<input type="button" id="backA" name="backA" value="返回"
+								   th:onclick="back()"
+								   class="btn btn-success"></input>
+
 						</div>
 					</div>
 				</div>
@@ -364,6 +377,40 @@
 
 
 			}
+		</script>
+		<script th:src="@{/js/jquery.js}"></script>
+		<script>
+			function back(){
+				window.history.back();
+			}
+			function delDocFile(id){
+				$.get("delDocFile",{"id":id},function(data){
+					if(data.rst == "success"){
+						$("#uploadfile").show();
+						$("#docFile").html('');
+					}else if(data== "failed"){
+						alert("删除失败！");
+					}else if(data== "noexist"){
+						alert("操作异常！");
+					}
+				},"json");
+
+			}
+			$(document).ready(function() {
+				//显示下载与删除
+				var annexhidden=$("#annexhidden").val();
+				var id = $("#id").val();//通过表单隐藏域的获得档案id
+				if(annexhidden == null || annexhidden == "" ){
+					$("#uploadfile").show();//如果连接等于空，upload上传文件显示
+				}else{
+					$("#docFile").append("<p>"+annexhidden+
+							"&nbsp;&nbsp;<a href=\""+annexhidden+"\" >下载</a> &nbsp;&nbsp;" +
+							"<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a></p>");
+				}
+
+
+
+			});
 		</script>
 		<!-- jQuery -->
 		<script src="js/datepicker/daterangepicker.js"></script>
