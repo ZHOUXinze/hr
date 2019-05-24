@@ -7,8 +7,7 @@
         SELECT `id`,`standardCode`,`standardName`,
         `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
-        `changeReason`, `status`,
-        `enable`
+        `changeReason`, `status`
         FROM
         `salaryStandard`
     </select>
@@ -16,8 +15,7 @@
         SELECT `id`,`standardCode`,`standardName`,
        `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
-        `changeReason`, `status`,
-        `enable`
+        `changeReason`, `status`
         FROM
         `salaryStandard`
         WHERE `id` = #{id}
@@ -29,8 +27,7 @@
         SELECT `id`,`standardCode`,`standardName`,
         `formulator`, `registerPerson`,
         `createDate`, `reviewOpinion`,
-        `changeReason`, `status`,
-        `enable`
+        `changeReason`, `status`
         FROM
         `salaryStandard`
         WHERE
@@ -70,16 +67,15 @@
       `formulator`,
       `registerPerson`,
       `createDate`,
-      `status`,
-      `enable`
+      `status`
+
       ) VALUES (
       #{standardCode},
       #{standardName} ,
       #{formulator} ,
       #{registerPerson},
       #{createDate},
-      #{status},
-      3
+      #{status}
       )
     </insert>
     <delete id="deleteSalaryStandard" parameterType="int">

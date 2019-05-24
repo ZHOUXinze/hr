@@ -1,10 +1,12 @@
 package com.manage.hr.dao;
 
 import com.manage.hr.entity.SalaryStandardDetail;
+import com.manage.hr.entity.Ssd;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface SalaryStandardDetailDao {
@@ -28,5 +30,7 @@ public interface SalaryStandardDetailDao {
     int deleteSsdByItemName(String itemName);
 
     int deleteSsdByStandardCode(String standardCode);
+
+    List<Map<String,Object>> listSsdView();
 
 }

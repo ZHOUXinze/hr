@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>薪酬标准</title>
+    <title>薪酬发放</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -21,23 +21,62 @@
             var idNum = 200;
             //添加，页面增加新的空行
             $('#insert').click(function () {
-                let tr = '';
-                $(" table").append(tr);
-                $("#r").attr("id", 'r' + idNum + '');
-                $("#l1").attr("for", 'r' + idNum + '');
-                $("#l1").attr("id", 'l1' + idNum + '');
-                $("#c").attr("id", 'c' + idNum + '');
-                $("#l2").attr("for", 'c' + idNum + '');
-                $("#l2").attr("id", 'l2' + idNum + '');
-                idNum++;
+
+
+                // let tr = '<tr >\n' +
+                //     '                    <td>\n' +
+                //     '                        <div class="custom-control custom-radio">\n' +
+                //     '                            <input type="radio" name="dr"\n' +
+                //     '                                   class="custom-control-input dr" \n' +
+                //     '                                   id="r" value="-1">\n' +
+                //     '                            <label class="custom-control-label" id="l1"></label>\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                    <td>\n' +
+                //     '                        <div class="col-sm-10">\n' +
+                //     '                            <input type="text" class="form-control si" name="paymentCode"\n' +
+                //     '                                   >\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                    <td>\n' +
+                //     '                        <div class="col-sm-10">\n' +
+                //     '                            <input type="text" class="form-control si" name="paymentCount"\n' +
+                //     '                                   >\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                    <td></td>\n' +
+                //     '                    <td>\n' +
+                //     '                        <div class="col-sm-10">\n' +
+                //     '                            <input type="text" class="form-control si" name="salaryTotal"\n' +
+                //     '                                  >\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                    <td >\n' +
+                //     '                        <div class="col-sm-10">\n' +
+                //     '                            <input type="text" class="form-control si" name="ActualTotal"\n' +
+                //     '                                   >\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                    <td >\n' +
+                //     '                        <div class="col-sm-10">\n' +
+                //     '                            <input type="text" class="form-control si" name="lastTime"\n' +
+                //     '                                   >\n' +
+                //     '                        </div>\n' +
+                //     '                    </td>\n' +
+                //     '                </tr >';
+                // $("#paymentTable").append(tr);
+                // $("#r").attr("id", 'r' + idNum + '');
+                // $("#l1").attr("for", 'r' + idNum + '');
+                // $("#l1").attr("id", 'l1' + idNum + '');
+                // idNum++;
             });
-            //获取表格的修改状态
-            $(".si").change(function () {
-                var hidden = $(this).parent().parent().parent().children("input:last");
-                if (hidden.val() == 0) {
-                    hidden.val(1);
-                }
-            });
+            // //获取表格的修改状态
+            // $(".si").change(function () {
+            //     var hidden = $(this).parent().parent().parent().children("input:last");
+            //     if (hidden.val() == 0) {
+            //         hidden.val(1);
+            //     }
+            // });
             //保存，保存修改和添加的数据
             $.fn.serializeJson = function () {
                 var jsonData1 = {};
@@ -95,7 +134,7 @@
             });
             //删除，异步删除，并remove元素
             $('#delete').click(function () {
-                let radio = $('#saveSalaryItemForm :radio:checked');
+                let radio = $('#paymentForm :radio:checked');
                 let id = radio.val();
                 if (id == -1) {
                     radio.parent().parent().parent().remove();
@@ -156,32 +195,32 @@
                     </td>
                     <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                            <input type="text" class="form-control si" placeholder="必填" name="paymentCode"
                                    th:value="${payment.getPaymentCode()}">
                         </div>
                     </td>
                     <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                            <input type="text" class="form-control si" placeholder="必填" name="paymentCount"
                                    th:value="${payment.getPaymentCount()}">
                         </div>
                     </td>
                     <td></td>
                     <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                            <input type="text" class="form-control si" placeholder="必填" name="salaryTotal"
                                    th:value="${payment.getSalaryTotal()}">
                         </div>
                     </td>
-                    <td >
+                    <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                            <input type="text" class="form-control si" placeholder="必填" name="ActualTotal"
                                    th:value="${payment.getActualTotal()}">
                         </div>
                     </td>
-                    <td >
+                    <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si" placeholder="必填" th:name="paymentCode"
+                            <input type="text" class="form-control si" placeholder="必填" name="lastTime"
                                    th:value="${#dates.format(payment.getLastTime(),'yyyy/MM/dd')}">
                         </div>
                     </td>
@@ -191,29 +230,6 @@
         </form>
     </div>
 </div>
-<div>
-    <div>
 
-    </div>
-    <div>
-        <form name="salaryItemList">
-            <table class="table table-sm">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>I级机构名称</th>
-                    <th> II级机构名称</th>
-                    <th>人数</th>
-                    <th>基本薪酬金额（元）</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </form>
-    </div>
-</div>
 </body>
 </html>

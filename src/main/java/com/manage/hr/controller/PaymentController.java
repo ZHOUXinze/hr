@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-public class paymentController {
+public class PaymentController {
 
     @Resource
     PaymentService paymentService;

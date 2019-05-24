@@ -1,6 +1,7 @@
 package com.manage.hr.service;
 
 import com.manage.hr.entity.SalaryStandardDetail;
+import com.manage.hr.entity.Ssd;
 
 import java.util.List;
 

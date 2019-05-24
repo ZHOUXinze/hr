@@ -1,16 +1,34 @@
 package com.manage.hr.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Payment {
     private Integer id;
     private String paymentCode;
-    private Double salaryTotal;
+    private BigDecimal salaryTotal;
     private Integer paymentCount;
-    private Double actualTotal;
+    private BigDecimal actualTotal;
     private Date lastTime;
-    private Date thisTime;
     private Integer status;
+    private int peopleNumber;
+    private int depId;
+
+    public Integer getDepId() {
+        return depId;
+    }
+
+    public void setDepId(Integer depId) {
+        this.depId = depId;
+    }
+
+    public int getPeopleNumber() {
+        return peopleNumber;
+    }
+
+    public void setPeopleNumber(int peopleNumber) {
+        this.peopleNumber = peopleNumber;
+    }
 
     private int modelStatus;
 
@@ -38,11 +56,11 @@ public class Payment {
         this.paymentCode = paymentCode;
     }
 
-    public Double getSalaryTotal() {
+    public BigDecimal getSalaryTotal() {
         return salaryTotal;
     }
 
-    public void setSalaryTotal(Double salaryTotal) {
+    public void setSalaryTotal(BigDecimal salaryTotal) {
         this.salaryTotal = salaryTotal;
     }
 
@@ -54,11 +72,11 @@ public class Payment {
         this.paymentCount = paymentCount;
     }
 
-    public Double getActualTotal() {
+    public BigDecimal getActualTotal() {
         return actualTotal;
     }
 
-    public void setActualTotal(Double actualTotal) {
+    public void setActualTotal(BigDecimal actualTotal) {
         this.actualTotal = actualTotal;
     }
 
@@ -68,14 +86,6 @@ public class Payment {
 
     public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
-    }
-
-    public Date getThisTime() {
-        return thisTime;
-    }
-
-    public void setThisTime(Date thisTime) {
-        this.thisTime = thisTime;
     }
 
     public Integer getStatus() {

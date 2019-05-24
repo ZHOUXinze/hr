@@ -6,14 +6,12 @@
     <select id="listPayment" resultType="Payment">
         SELECT
         `id`,
-  `paymentCode`,
-  `salaryTotal`,
-  `paymentCount`,
-  `actualTotal`,
-  `lastTime`,
-  `thisTime`,
-  `status`
-FROM
-  payment
+        `paymentCode`,
+        `paymentCount`,
+        `lastTime`,
+        `status`,
+        `depId`
+        FROM
+        payment
     </select>
 </mapper>

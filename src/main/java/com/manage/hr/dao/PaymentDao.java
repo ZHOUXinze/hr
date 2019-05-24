@@ -12,3 +12,4 @@ public interface PaymentDao {
 
     int savePayment(Payment payment);
 }
+

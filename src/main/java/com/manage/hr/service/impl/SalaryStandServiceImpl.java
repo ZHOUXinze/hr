@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SalaryStandServiceImpl implements SalaryStandardService {
@@ -29,6 +30,12 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
         for (SalaryStandard salaryStandard : salaryStandardDao.listSalaryStandard()) {
             salaryStandard.setStatusName(LoadDataBase.DICTIONARY.get("revStatus").get(salaryStandard.getStatus()));
             salaryStandardList.add(salaryStandard);
+        }
+        List<Map<String, Object>> mapList = salaryStandardDetailDao.listSsdView();
+        for (Map<String, Object> map : mapList) {
+            for (String key : map.keySet()) {
+                System.out.println(key);
+            }
         }
         return salaryStandardList;
     }
