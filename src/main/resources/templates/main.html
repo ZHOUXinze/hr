@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Gentellela Alela! | </title>
+  <title>企业人事管理系统</title>
 
   <!-- Bootstrap -->
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -60,8 +60,10 @@
 
               <li  class="active"><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 我的工作平台 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a th:target="fr" th:href="waitList"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
-
+                  <li><a th:target="fr" th:href="waitList" id="wait" th:if="${session.userSession.userRole}==19"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
+                  <li><a th:target="fr" href="" id="waitpay" th:if="${session.userSession.userRole}==21"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
+                  <!--<li><a th:target="fr" th:href="addArchive" id="waitzhuangyuan" th:if="${session.userSession.userRole}==18"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
+-->
                   <li><a target="fr" th:href="gaimima"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修改密码</font></font></a></li>
 
                 </ul>
@@ -85,7 +87,7 @@
               </li>
               <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 人事管理</font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a th:target="fr" href="registerList"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">人事档案管理</font></font></a></li>
+                  <li><a th:target="fr" th:href="@{/registerList}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">人事档案管理</font></font></a></li>
 
                 </ul>
               </li>
@@ -123,7 +125,7 @@
             <li role="presentation" class="dropdown">
               欢迎：<span th:text="${session.userSession.userName}" ></span> 部门 ：<span th:text="${session.userSession.dataName}" ></span>
               职责：<span th:text="${session.userSession.depName}" ></span>
-              退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a th:href="@{/tuichu}">退出</a>
             </li>
           </ul>
         </nav>
@@ -181,7 +183,24 @@
 
 <!-- bootstrap-daterangepicker -->
 <script>
-  $(document).ready(function() {
+  /*$(document).ready(function() {
+    $("#wait").click(function () {
+      var userRole=$("#wait").attr("name");
+      if(userRole==19){
+        $("#wait").setAttribute("href",waitList);
+        alert(2);
+       // location.href="waitList";
+      }else if (userRole==21) {
+        location.href="xinchou";
+      }else if(userRole==18){
+        location.href="addArchive";
+      }else{
+        location.href="#";
+      }
+     
+    })*/
+
+
     $('#birthday').daterangepicker({
       singleDatePicker: true,
       calender_style: "picker_4"

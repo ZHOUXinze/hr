@@ -4,6 +4,8 @@ import com.manage.hr.entity.Archive;
 import com.manage.hr.util.ArchiveTools;
 import com.manage.hr.util.PageSurport;
 
+import java.util.List;
+
 
 public interface ArchiveService {
     int addArchive(Archive archive);
@@ -20,5 +22,6 @@ public interface ArchiveService {
     //代办查询
     PageSurport<Archive> findArchiveWaitList(ArchiveTools archiveTools, int pageIndex, int pageSize);
     String findArchiveByName( String  userName);
+    PageSurport<Archive> findArchiveMarList(ArchiveTools archiveTools, int pageIndex, int pageSize);
 
 }

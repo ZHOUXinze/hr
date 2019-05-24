@@ -45,21 +45,7 @@ public class ArchiveTools {
         this.archStatus = archStatus;
     }
 
-    /*public Date getBeginTime() {
-        return beginTime;
-    }
 
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }*/
 
     public Date getBt() {
         return bt;

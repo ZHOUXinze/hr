@@ -30,6 +30,7 @@ public class WaitingController {
         /* 人事专员    人事经理*/
         LoadDataBase.loadDictionary();
         List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+
         //分页
         int pageSize=3;
         //当前页默认为1

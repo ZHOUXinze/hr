@@ -24,5 +24,8 @@ public interface ArchiveDao {
     int findArchiveWaitCount(@Param("archiveTools") ArchiveTools archiveTools);
     List<Archive> findArchiveWaitList(@Param("archiveTools") ArchiveTools archiveTools,@Param("from") int from,@Param("pageSize") int pageSize);
     String findArchiveByName(@Param("userName") String  userName);
+//
+int findArchiveMarCount(@Param("archiveTools") ArchiveTools archiveTools);
+    List<Archive> findArchiveMarList(@Param("archiveTools") ArchiveTools archiveTools,@Param("from") int from,@Param("pageSize") int pageSize);
 
 }

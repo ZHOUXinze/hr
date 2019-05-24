@@ -4,6 +4,7 @@ import com.manage.hr.entity.*;
 import com.manage.hr.service.ArchiveService;
 import com.manage.hr.service.DictionaryService;
 import com.manage.hr.util.ArchiveTools;
+import com.manage.hr.util.Constrans;
 import com.manage.hr.util.LoadDataBase;
 import com.manage.hr.util.PageSurport;
 import com.mysql.cj.util.StringUtils;
@@ -45,7 +46,7 @@ public class ArchiveController {
     public  String doCheckChangeArchive(Archive archive,Model model){
         int rel=archiveService.updateArchive(archive);
         if(rel>0){
-            return "redirect:/registerList";//进入列表页面
+            return "redirect:/waitList";//进入列表页面
         }else {
             model.addAttribute("error","变更复核失败！！！");
             return "renshidanganbiangengfuhe";
@@ -62,12 +63,12 @@ public class ArchiveController {
 
         return "renshidanganbiangengfuhe";
     }
-
+    //处理复核
     @RequestMapping(value = "/doCheckArchive",method = RequestMethod.POST)
     public  String doCheckArchive(Archive archive,Model model){
         int rel=archiveService.updateArchive(archive);
         if(rel>0){
-            return "redirect:/registerList";//进入列表页面
+            return "redirect:/waitList";//进入列表页面
         }else {
             model.addAttribute("error","复核失败！！！");
             return "renshidanganfuhe";
@@ -77,8 +78,6 @@ public class ArchiveController {
     //显示复核的页面
     @RequestMapping(value = "/checkArchive",method = RequestMethod.GET)
     public  String checkArchive(@RequestParam int id,Model model){
-
-
         Archive archive=archiveService.findArchiveById(id);
         init(model);
         model.addAttribute("archive",archive);
@@ -91,7 +90,7 @@ public class ArchiveController {
     public  String doChangeArchive(Archive archive,Model model){
         int rel=archiveService.updateArchive(archive);
         if(rel>0){
-            return "redirect:/registerList";//进入列表页面
+            return "redirect:/waitList";//进入列表页面
         }else {
             model.addAttribute("error","变更失败！！！");
             return "renshidanganbiangeng";
@@ -191,11 +190,11 @@ public class ArchiveController {
         }else{
             i=archiveService.findMaxId();
         }
-        /* archive.setReviewStatus(7);*/
+
         archive.setChangeStatus(0);
         archive.setArchCode("BDQN"+(i+1));
         archive.setPhotoPath(photoName);
-        archive.setAnnex("doc/"+docName);
+        archive.setAnnex(docName);
         int rel= archiveService.addArchive(archive);
         if(rel>0){
             return "redirect:/registerList";
@@ -216,10 +215,10 @@ public class ArchiveController {
     //显示登记列表
     @RequestMapping("/registerList")
     public String show(ArchiveTools archiveTools,@RequestParam(required=false) Integer pageIndex,HttpSession session,Model model){
-     /*   User user =new User();
-        user.setUserRoleName("人事经理");*/
-
-        /* 人事专员    人事经理*/
+      User user=(User)session.getAttribute(Constrans.USERSESSION);
+     String userRoleName= user.getDataName();
+     String registerPerson=user.getUserName();
+     System.out.println(userRoleName);
         LoadDataBase.loadDictionary();
         List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
         //分页
@@ -230,16 +229,26 @@ public class ArchiveController {
             curIndex=Integer.valueOf(pageIndex);
         }
         //查询Archive的信息
+        PageSurport<Archive> pageSurport=null;
+
+if(userRoleName.equals("人事专员")){
+    archiveTools.setRegisterPerson(registerPerson);
+    pageSurport= archiveService.findArchiveList(archiveTools, curIndex, pageSize);
+}else{
+    archiveTools.setRegisterPerson(null);
+    pageSurport= archiveService.findArchiveMarList(archiveTools, curIndex, pageSize);
+
+}
 
 
-        PageSurport<Archive> pageSurport=archiveService.findArchiveList(archiveTools, curIndex, pageSize);
         pageSurport.setPageIndex(curIndex);
         pageSurport.setPageSize(pageSize);
         //向页面传值
         model.addAttribute("pageSurport", pageSurport);
         model.addAttribute("dictionaryList",dictionaryList);
         model.addAttribute("archiveTools",archiveTools);
-        /*model.addAttribute("user",user);*/
+
+
         return "registerList";
     }
 
@@ -251,7 +260,7 @@ public class ArchiveController {
         Archive archive=archiveService.findArchiveById(i);
         init(model);
         model.addAttribute("archive",archive);
-        if(archive.getReviewStatus()==6||archive.getReviewStatus()==7||archive.getReviewStatus()==8){
+        if(archive.getReviewStatuss().equals("起草")||archive.getReviewStatuss().equals("审核中")||archive.getReviewStatuss().equals("驳回")){
             return "renshidanganmixi";
         }else{
             return "renshidanganbiangengmingxi";
