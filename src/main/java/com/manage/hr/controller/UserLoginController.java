@@ -69,5 +69,11 @@ return "redirect:main";
 
         return "main";
     }
+    //退出功能
+    @RequestMapping("/tuichu")
+    public  String userOut(HttpSession session){
+    session.invalidate();
+        return "redirect:login";
+    }
 
 }
