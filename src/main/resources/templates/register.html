@@ -78,6 +78,7 @@
 <div class="x_content">
 	<br>
 	<form th:action="@{/addArchive}" method="post" enctype="multipart/form-data" id="frm" name="frm" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+
 		<ul>
 
 			<li class="lefttop">
@@ -85,10 +86,11 @@
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="depName">所属部门 <span class="required">*</span>
 					</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input readonly="readonly" id="depName" type="text" name="depName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+						<input readonly="readonly" id="depName" type="text" name="depName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12" onblur="checkdep()">
 						<input type="hidden" id="depId" name="depId">
-						<span id="depnames"></span>
+
 					</div><i id="myBT"  class="fa fa-search-plus"></i>
+					<span style="color: red;" id="depnames" text=""></span>
 					<div id="yincang">
 						<ul>
 							<li th:each="department:${departmentList}">
@@ -103,28 +105,29 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12 ">档案状态</label>
 					<div class="col-md-6 col-sm-6 col-xs-12" >
-						<select class="form-control" name="archStatus">
+						<select class="form-control" name="archStatus" id="archStatus" onblur="checkarch()">
 							<option value=""> --请选择-- </option>
 							<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"th:text="${dictionary.dataName}" th:value="${dictionary.id}">
 						</select>
-						<span id="archstatus"></span>
 					</div>
 				</div>
-			</li>
 
+			</li>
+			<span style="color: red;" id="archstatuss"></span>
 			<li class="lefttop">
 				<div class="col-md-8col-sm-8 col-xs-12">
-					<input type="file" id="photo" name="photos" value="" required="required" class="form-control col-md-7 col-xs-12">
+					<input type="file" id="photo" onblur="checkpic()" name="photos" value="" required="required" class="form-control col-md-7 col-xs-12">
 				</div>
 			</li>
+			<span id="pic"></span>
 			<li class="lefttop">
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">职位名称:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input readonly="readonly" id="posName" type="text" name="posName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+						<input readonly="readonly" onblur="checkpos()" id="posName" type="text" name="posName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
 						<input type="hidden" id="posId" name="posId">
-						<span id="posnames"></span>
 					</div><i id="myBTPos"  class="fa fa-search-plus"></i>
+					<span style="color: red;" id="posnames"></span>
 					<div id="psn">
 						<ul>
 							<li th:each="position:${positionList}">
@@ -141,7 +144,7 @@
 
 						<input type="text" id="posCode" name="posCode" value=""
 							   readonly  required="required" class="form-control col-md-7 col-xs-12">
-						<span id="poscodes"></span>
+						<span style="color: red;" id="poscodes"></span>
 					</div>
 				</div>
 			</li>
@@ -151,10 +154,11 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">职称名称:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input readonly="readonly" id="titleName" type="text" name="titleName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+						<input readonly="readonly" onblur="checktitle()" id="titleName" type="text" name="titleName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
 						<input type="hidden" id="titleId" name="titleId">
-						<span id="tiltenames"></span>
+
 					</div><i id="mytitle"  class="fa fa-search-plus"></i>
+					<span style="color: red;" id="titlenames"></span>
 					<div id="titles">
 						<ul>
 							<li th:each="title:${titleList}">
@@ -176,21 +180,22 @@
 				</div>
 			</li>
 			<li class="lefttop"></li>
+
 			<li class="lefttop">
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">姓名:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<input type="text" id="name" name="name" value="" class="form-control col-md-7 col-xs-12">
-						<span id="names"></span>
 					</div>
-
 				</div>
 			</li>
+			<span style="color:red;" id="names"></span>
+
 			<li class="lefttop">
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">性别:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select class="form-control" name="gender">
+						<select class="form-control" id="gender" onblur="checkgender()" name="gender">
 							<option value="0"> --请选择-- </option>
 							<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==gender"th:text="${dictionary.dataName}" th:value="${dictionary.id}">
 						</select>
@@ -203,7 +208,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="email">EMAIL:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" id="email" onblur="checkemail()" name="email" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="emails"></span>
 					</div>
 				</div>
@@ -212,7 +217,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="phoneNumber">联系电话:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="phoneNumber" name="phoneNumber" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkphoneNumber()" id="phoneNumber" name="phoneNumber" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="phonenumbers"></span>
 					</div>
 				</div>
@@ -224,7 +229,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">身份证号:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="idNumber" name="idNumber" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkidNumber()" id="idNumber" name="idNumber" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="idnumbers"></span>
 					</div>
 				</div>
@@ -233,7 +238,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">户口所在地:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="account" name="account" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkaccount()" id="account" name="account" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="accounts"></span>
 					</div>
 				</div>
@@ -242,20 +247,21 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">政治面貌:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select class="form-control" name="political">
-							<option value="0"> --请选择-- </option>
+						<select class="form-control" onblur="checkpolitical()" id="political" name="political">
+							<option value=""> --请选择-- </option>
 							<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==political" th:text="${dictionary.dataName}" th:value="${dictionary.id}">
 
 						</select>
-						<span id="politicals"></span>
+
 					</div>
 				</div>
 			</li>
+			<span id="politicals"></span>
 			<li class="leftmiddle">
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="school">毕业院校:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="school" name="school" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkschool()" id="school" name="school" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="schools"></span>
 					</div>
 				</div>
@@ -264,7 +270,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="major">专业:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkmajor()" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="majors"></span>
 					</div>
 				</div>
@@ -273,8 +279,8 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">学历</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select class="form-control" name="education">
-							<option value="0"> --请选择-- </option>
+						<select class="form-control" id="education" onblur="checkeducation()" name="education">
+							<option value=""> --请选择-- </option>
 							<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==education"th:text="${dictionary.dataName}" th:value="${dictionary.id}">
 
 						</select>
@@ -286,20 +292,20 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12">薪酬标准</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select class="form-control" name="salaryStandard">
-							<option value="0"> --请选择-- </option>
+						<select class="form-control" onblur="checksalaryStandard()"id="salaryStandard" name="salaryStandard">
+							<option value=""> --请选择-- </option>
 							<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==salaryStd"th:text="${dictionary.dataName}" th:value="${dictionary.id}">
 
 						</select>
-						<span id="salarystandards"></span>
+
 					</div>
 				</div>
-			</li>
+			</li><span id="salarystandards"></span>
 			<li class="leftmiddle">
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="bank">开户行:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="bank" name="bank" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkbank()" id="bank" name="bank" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="banks"></span>
 					</div>
 				</div>
@@ -308,7 +314,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="bankCard">银行卡号:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="bankCard" name="bankCard" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkbankCard()" id="bankCard" name="bankCard" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="bankcards"></span>
 					</div>
 				</div>
@@ -317,7 +323,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4 col-sm-4 col-xs-12" for="sscNumber">社保卡号:</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="text" id="sscNumber" name="sscNumber" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checksscNumber()" id="sscNumber" name="sscNumber" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="sscnumbers"></span>
 					</div>
 				</div>
@@ -339,7 +345,7 @@
 							<div class="control-group">
 								<div class="controls">
 									<div class="col-md-11 xdisplay_inputx form-group has-feedback">
-										<input type="text" value=""
+										<input type="text" value="" onblur="checksingle_cal2()"
 											   class="form-control has-feedback" id="single_cal2" name="createDate" aria-describedby="inputSuccess2Status2">
 										<span id="text"></span>
 									</div>
@@ -354,7 +360,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						<input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+						<input type="text" onblur="checkaddress()" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
 						<span id="addreesss"></span>
 					</div>
 				</div>
@@ -363,7 +369,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-2 col-sm-2 col-xs-12" for="resumePath">个人履历:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						<textarea class="form-control" id="resumePath" name="resumePath"></textarea>
+						<textarea class="form-control" onblur="checkresumePath()" id="resumePath" name="resumePath"></textarea>
 						<span id="resumepaths"></span>
 					</div>
 				</div>
@@ -373,7 +379,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-2 col-sm-2 col-xs-12" for="family">家庭关系:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						<textarea class="form-control" id="family" name="family"></textarea>
+						<textarea class="form-control" onblur="checkfamily()" id="family" name="family"></textarea>
 						<span id="familys"></span>
 					</div>
 				</div>
@@ -382,7 +388,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-2 col-sm-2 col-xs-12" for="remark">备注:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						<textarea class="form-control" id="remark" name="remark"></textarea>
+						<textarea class="form-control" onblur="checkremark()" id="remark" name="remark"></textarea>
 						<span id="remarks"></span>
 					</div>
 				</div>
@@ -392,7 +398,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-2 col-sm-2 col-xs-12">简历附件:</label>
 					<div class="col-md-10 col-sm-10 col-xs-12">
-						<input type="file" name="docFile" value="" id="annex" required="required" class="form-control col-md-7 col-xs-12" placeholder=".input-xxlarge">
+						<input type="file" name="docFile" value="" onblur="checkannex()" id="annex" required="required" class="form-control col-md-7 col-xs-12" placeholder=".input-xxlarge">
 						<span id="annexs"></span>
 					</div>
 				</div>
@@ -424,14 +430,18 @@
 
 <script>
 	function submitClaimVoucher(action){
-		if(!confirm("确定"+action+"档案吗")) return;
-		if (action == '保存'){
-			document.getElementById("reviewStatus").setAttribute("value",6);
+		if(checkfrom()){
+			if(!confirm("确定"+action+"档案吗")) return;
+			if (action == '保存'){
+				document.getElementById("reviewStatus").setAttribute("value",6);
+			}else{
+				document.getElementById("reviewStatus").setAttribute("value",7);
+			}
+			document.frm.submit();
 		}else{
-			document.getElementById("reviewStatus").setAttribute("value",7);
+			alert("请输入所有内容");
 		}
 
-		document.frm.submit();
 
 
 	}
@@ -444,7 +454,71 @@
 <!--js-->
 <script th:src="@{/js/jquery.js}"></script>
 <script type="text/javascript">
+	function checkdep(){
+		var depName=$("#depName").val();
+		var depnames=$("#depnames").val();
+		if(depName==""){
+			$("#depnames").text("非空");
+			return false;
+		}
+
+	}
+
+	function checkarch(){
+		var archStatus=$("#archStatus").val();
+		var archstatuss=$("#archstatuss").val();
+		if(archStatus==""){
+			$("#archstatuss").text("非空");
+			return false;
+		} else {
+			$("#archstatuss").text("");
+		}
+
+	}
+	function checkpic(){
+		var photo=$("#photo").val();
+		var pic=$("#pic").val();
+		if(photo==""){
+			$("#pic").text("非空");
+			return false;
+		} else {
+			$("#pic").text("");
+		}
+
+	}
+	function checkpos(){
+		var posName=$("#posName").val();
+		var posnames=$("#posnames").val();
+		if(posName==""){
+			$("#posnames").text("非空");
+			return false;
+		}
+
+	}
+function checktitle(){
+	var titleName=$("#titleName").val();
+	var titlenames=$("#titlenames").val();
+
+	if(titleName==""){
+		$("#titlenames").text("非空");
+		return false;
+	}
+}
+function checkfrom(){
+	var flag=true;
+	if(!checkpic()) flag=false;
+	if(!checkarch()) flag=false;
+	if(!checkdep()) flag=false;
+	if(!checkpos()) flag=false;
+	if(!checktitle()) flag=false;
+
+
+	return flag;
+}
+
+
 	$(document).ready(function () {
+
 
 		//获取所属部门
 		$("#yincang span").click(function () {
@@ -454,6 +528,7 @@
 			$("#depName").val(depname);
 			if(depname!=null||depname==""){
 				$("#yincang").hide();
+				$("#depnames").text("");
 			}
 		});
 		//点击显示和隐藏
@@ -499,6 +574,7 @@
 
 			if(posName!=null && posName!=""){
 				$("#psn").hide();
+				$("#posnames").text("");
 				$.get("findPosCode",{"id":id},function (data) {
 					$("#posCode").val(data);
 				})
@@ -513,6 +589,7 @@
 		$("#titleName").val(titleName);
 		if(titleName!=null && titleName!=""){
 			$("#titles").hide();
+			$("#titlenames").text("");
 			$.get("findTitleCode",{"id":id},function (data) {
 				$("#titleCode").val(data);
 			})
