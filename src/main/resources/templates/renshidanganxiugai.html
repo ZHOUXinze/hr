@@ -54,7 +54,21 @@
 				vertical-align: middle;
 				
 			}
-			
+			#yincang{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
+			#psn{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
+			#titles{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
 		</style>
 	</head>
 
@@ -85,6 +99,29 @@
 
 					</li>
 					<li class="lefttop">
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12 ">档案状态</label>
+						<div class="col-md-6 col-sm-6 col-xs-12" >
+							<select class="form-control" name="archStatus">
+								<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
+										 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.archStatus})"
+										 th:value="${dictionary.id}">-- 请选择 --
+								</option>
+							</select>
+						</div>
+					</div>
+				</li>
+
+
+					<li class="lefttop">
+
+						<div class="image view view-first">
+							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
+							<input type="hidden" id="photo" name="photos" th:value="${archive.photoPath}" required="required" class="form-control col-md-7 col-xs-12">
+
+						</div>
+					</li>
+					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12">职位名称:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
@@ -100,30 +137,6 @@
 							</div >
 						</div>
 					</li>
-
-					<li class="lefttop">
-						<!--<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
-							</div>-->
-						<div class="image view view-first">
-							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
-							<input type="hidden" id="photo" name="photos" th:value="${archive.photoPath}" required="required" class="form-control col-md-7 col-xs-12">
-
-						</div>
-					</li>
-					<li class="lefttop">
-						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12 ">档案状态</label>
-							<div class="col-md-6 col-sm-6 col-xs-12" >
-								<select class="form-control" name="archStatus">
-									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==archStatus"
-											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.archStatus})"
-											 th:value="${dictionary.id}">-- 请选择 --
-									</option>
-								</select>
-							</div>
-						</div>
-					</li>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12">职位编码:</label>
@@ -137,6 +150,35 @@
 					<li class="lefttop">
 
 					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称名称:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input readonly="readonly" th:value="${archive.titleIds}" id="titleName" type="text" name="titleName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+								<input type="hidden" id="titleId" name="titleId">
+								<span id="tiltenames"></span>
+							</div><i id="mytitle"  class="fa fa-search-plus"></i>
+							<div id="titles">
+								<ul>
+									<li th:each="title:${titleList}">
+										<span th:text="${title.titleName}"  th:id="${title.id}"></span>
+									</li>
+								</ul>
+							</div >
+						</div>
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称编码:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+
+								<input type="text" id="titleCode" name="titleCode" th:value="${archive.titleCode}"
+									   readonly  required="required" class="form-control col-md-7 col-xs-12">
+								<span id="titlecodes"></span>
+							</div>
+						</div>
+					</li>
+					<li class="lefttop"></li>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">姓名:</label>
@@ -401,6 +443,9 @@
 					var depname=$(this).text();
 					$("#depId").val(id);
 					$("#depName").val(depname);
+					if(depname!=null||depname==""){
+						$("#yincang").hide();
+					}
 				});
 				//点击显示和隐藏
 				$("#yincang").hide();
@@ -424,18 +469,47 @@
 						$(this).html("");
 					}
 				});
-				$("#psn").hide();
-				$("#psn span").click(function(){
-					var id=$(this).attr("id");
-					var posName=$(this).text();
-					$("#posId").val(id);
-					$("#posName").val(posName);
-					if(posName!=null && posName!=""){
-						$.get("findPosCode",{"id":id},function (data) {
-							$("#posCode").val(data);
-						})
+				$("#mytitle").click(function () {
+					var o=$("#titles");
+					if(o.css("display")!="none"){
+						o.hide();
+						$(this).html("");
+					}else {
+						o.show();
+						$(this).html("");
 					}
 				});
+
+			});
+			$("#psn").hide();
+			$("#psn span").click(function(){
+				var id=$(this).attr("id");
+				var posName=$(this).text();
+				$("#posId").val(id);
+				$("#posName").val(posName);
+
+				if(posName!=null && posName!=""){
+					$("#psn").hide();
+					$.get("findPosCode",{"id":id},function (data) {
+						$("#posCode").val(data);
+					})
+				}
+
+			})
+			$("#titles").hide();
+			$("#titles span").click(function(){
+				var id=$(this).attr("id");
+				var titleName=$(this).text();
+				$("#titleId").val(id);
+				$("#titleName").val(titleName);
+				if(titleName!=null && titleName!=""){
+					$("#titles").hide();
+					$.get("findTitleCode",{"id":id},function (data) {
+						$("#titleCode").val(data);
+					})
+				}
+
+
 
 			})
 		</script>

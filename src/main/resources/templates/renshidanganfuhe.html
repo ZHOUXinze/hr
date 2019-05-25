@@ -54,7 +54,21 @@
 				vertical-align: middle;
 				
 			}
-			
+			#yincang{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
+			#psn{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
+			#titles{
+				width:120px;margin:0 auto;float:right;
+				background-color: ghostwhite;position: relative; z-index: 999;
+				border: 1px solid blue;
+			}
 		</style>
 	</head>
 
@@ -67,29 +81,22 @@
 
 				<ul>
 					<li class="lefttop">
-						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="deptment">所属部门:</label>
+						<div class="item form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="depName">所属部门 <span class="required">*</span>
+							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="deptment" th:value="${archive.depIds}" required="required" class="form-control col-md-7 col-xs-12">
-							</div>
+								<input readonly="readonly" th:value="${archive.depIds}" id="depName" type="text" name="depName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+								<input type="hidden" id="depId" name="depId">
+							</div><i id="myBT"  class="fa fa-search-plus"></i>
+							<div id="yincang">
+								<ul>
+									<li th:each="department:${departmentList}">
+										<span th:text="${department.depName}"  th:id="${department.id}"></span>
+									</li>
+								</ul>
+							</div >
 						</div>
-					</li>
-					<li class="lefttop">
-						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="positionName">职位名称:</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" th:value="${archive.posIds}" id="positionName" name="positionName" required="required" class="form-control col-md-7 col-xs-12">
-							</div>
-						</div>
-					</li>
-					<li class="lefttop">
-						<!--<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
-							</div>-->
-						<div class="image view view-first">
-							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
 
-						</div>
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
@@ -105,16 +112,72 @@
 						</div>
 					</li>
 					<li class="lefttop">
+						<!--<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
+							</div>-->
+						<div class="image view view-first">
+							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
+
+						</div>
+					</li>
+					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="posCode">职位编码:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职位名称:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input type="text" id="posCode" th:value="${archive.posCode}" name="posCode" required="required" class="form-control col-md-7 col-xs-12">
+								<input readonly="readonly" id="posName" th:value="${archive.depIds}" type="text" name="posName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+								<input type="hidden" id="posId" name="posId">
+							</div><i id="myBTPos"  class="fa fa-search-plus"></i>
+							<div id="psn">
+								<ul>
+									<li th:each="position:${positionList}">
+										<span th:text="${position.posName}"  th:id="${position.id}"></span>
+									</li>
+								</ul>
+							</div >
+						</div>
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职位编码:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12" id="strs">
+
+								<input type="text" th:id="posCode" name="posCode"  th:value="${archive.posCode}"
+									   readonly  required="required" class="form-control col-md-7 col-xs-12">
 							</div>
 						</div>
 					</li>
 					<li class="lefttop">
 
 					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称名称:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input readonly="readonly" th:value="${archive.titleIds}" id="titleName" type="text" name="titleName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+								<input type="hidden" id="titleId" name="titleId">
+								<span id="tiltenames"></span>
+							</div><i id="mytitle"  class="fa fa-search-plus"></i>
+							<div id="titles">
+								<ul>
+									<li th:each="title:${titleList}">
+										<span th:text="${title.titleName}"  th:id="${title.id}"></span>
+									</li>
+								</ul>
+							</div >
+						</div>
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称编码:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+
+								<input type="text" id="titleCode" name="titleCode" th:value="${archive.titleCode}"
+									   readonly  required="required" class="form-control col-md-7 col-xs-12">
+								<span id="titlecodes"></span>
+							</div>
+						</div>
+					</li>
+					<li class="lefttop"></li>
 					<li class="lefttop">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">姓名:</label>
@@ -384,7 +447,77 @@
 							"&nbsp;&nbsp;<a href=\""+annexhidden+"?m="+Math.random()+"\" >下载</a> &nbsp;&nbsp;" +
 							"<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a></p>");
 				}
+//获取所属部门
+				$("#yincang span").click(function () {
+					var id=$(this).attr("id");
+					var depname=$(this).text();
+					$("#depId").val(id);
+					$("#depName").val(depname);
+					if(depname!=null||depname==""){
+						$("#yincang").hide();
+					}
+				});
+				//点击显示和隐藏
+				$("#yincang").hide();
+				$("#myBT").click(function () {
+					var o=$("#yincang");
+					if(o.css("display")!="none"){
+						o.hide();
+						$(this).html("");
+					}else {
+						o.show();
+						$(this).html("");
+					}
+				});
+				$("#myBTPos").click(function () {
+					var o=$("#psn");
+					if(o.css("display")!="none"){
+						o.hide();
+						$(this).html("");
+					}else {
+						o.show();
+						$(this).html("");
+					}
+				});
+				$("#mytitle").click(function () {
+					var o=$("#titles");
+					if(o.css("display")!="none"){
+						o.hide();
+						$(this).html("");
+					}else {
+						o.show();
+						$(this).html("");
+					}
+				});
 
+			});
+			$("#psn").hide();
+			$("#psn span").click(function(){
+				var id=$(this).attr("id");
+				var posName=$(this).text();
+				$("#posId").val(id);
+				$("#posName").val(posName);
+
+				if(posName!=null && posName!=""){
+					$("#psn").hide();
+					$.get("findPosCode",{"id":id},function (data) {
+						$("#posCode").val(data);
+					})
+				}
+
+			})
+			$("#titles").hide();
+			$("#titles span").click(function(){
+				var id=$(this).attr("id");
+				var titleName=$(this).text();
+				$("#titleId").val(id);
+				$("#titleName").val(titleName);
+				if(titleName!=null && titleName!=""){
+					$("#titles").hide();
+					$.get("findTitleCode",{"id":id},function (data) {
+						$("#titleCode").val(data);
+					})
+				}
 
 
 			});

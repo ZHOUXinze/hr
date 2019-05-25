@@ -57,6 +57,11 @@ public class ArchiveServiceImpl implements ArchiveService {
     }
 
     @Override
+    public String findTitleCode(int id) {
+        return archiveDao.findTitleCode(id);
+    }
+
+    @Override
     public int delUpdateArchiveStatus(int id) {
         return archiveDao.delUpdateArchiveStatus(id);
     }

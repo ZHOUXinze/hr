@@ -17,6 +17,7 @@ public interface ArchiveDao {
     //更新用户表的电话
     /*int addArchivePhone();*/
     String findPosCode(int id);
+    String findTitleCode(int id);
     int  delUpdateArchiveStatus(@Param("id") int id);
     int recoverReg(@Param("id") int id,@Param("isdelete") int isdelete);
     int deleteAnnex(@Param("id") int id);

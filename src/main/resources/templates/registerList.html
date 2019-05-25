@@ -91,7 +91,7 @@
 						<!--<div class="control-group">-->
 						<div class="controls">
 							<div class="col-md-12 xdisplay_inputx form-group has-feedback">
-								<input type="text" readonly
+								<input type="text"
 									   th:value="${#dates.format(archiveTools.bt,'MM/dd/yyyy')}"
 									   class="form-control has-feedback" id="single_cal2" name="beginTime" aria-describedby="inputSuccess2Status2">
 								<!--至
@@ -113,7 +113,7 @@
 					<div class="control-group">
 						<div class="controls">
 							<div class="col-md-12 xdisplay_inputx form-group has-feedback">
-								<input type="text" readonly
+								<input type="text"
 									   th:value="${#dates.format(archiveTools.et,'MM/dd/yyyy')}"
 									   class="form-control has-feedback" id="single_cal3"  name="endTime" aria-describedby="inputSuccess3Status3">
 							</div>
@@ -155,58 +155,59 @@
 			<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">档案登记</font>
 			</font>
 		</button>
-	</a>
+
+	</a><br/><br/>
 
 
 	<div class="col-sm-12"><table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
 		<thead>
 		<tr role="row">
-			<th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="档案编码" style="width: 104px;">
+			<th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 70px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">档案编码</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 104px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 65px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">姓名</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Office：激活以对列升序进行排序" style="width: 104px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 40px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">性别</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 52px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 58px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">所属部门</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 52px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 58px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">职位</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 52px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 58px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">职称</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 52px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 62px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">审核状态</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="年龄：激活以对列升序进行排序" style="width: 80px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 80px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">档案状态</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 102px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 88px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">建档日期</font>
 				</font>
 			</th>
-			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 105px;">
+			<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"  style="width: 111px;">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">操作</font>
 				</font>
@@ -279,7 +280,14 @@
 
 		<div class="col-sm-5">
 			<div class="dataTables_info" id="datatable_info" role="status"
-				 aria-live="polite">当前页<span th:text="${pageSurport.pageIndex}"></span> /<span th:text="${pageSurport.totalPageCount }"></span>页 </div>
+				 aria-live="polite">当前页<span th:text="${pageSurport.pageIndex}"></span> /
+				<span th:if="${pageSurport.totalPageCount }!=0">
+                    <span th:text="${pageSurport.totalPageCount }"></span>页
+                </span>
+				<span th:if="${pageSurport.totalPageCount }==0">
+                    1页
+                </span>
+			</div>
 		</div>
 
 		<div class="col-sm-7">
@@ -329,7 +337,7 @@
 				var id = $(this).attr("id");
 				$.get("deleteReg", {"id": id}, function (data) {
 					if (data == "true") {
-						alert("删除成功！");
+						/*alert("删除成功！");*/
 						//删除当前行
 						athis.parent().parent().parent().parent().parent().parent().parent().remove();
 						window.location.reload();
@@ -346,7 +354,7 @@
 				var id = $(this).attr("id");
 				$.get("recoverReg", {"id": id}, function (data) {
 					if (data == "true") {
-						alert("恢复成功！");
+						/*alert("恢复成功！");*/
 						window.location.reload();
 					} else {
 						alert("恢复档案失败!");

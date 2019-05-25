@@ -239,8 +239,6 @@ if(userRoleName.equals("人事专员")){
     pageSurport= archiveService.findArchiveMarList(archiveTools, curIndex, pageSize);
 
 }
-
-
         pageSurport.setPageIndex(curIndex);
         pageSurport.setPageSize(pageSize);
         //向页面传值
@@ -274,6 +272,13 @@ if(userRoleName.equals("人事专员")){
         String str=  archiveService.findPosCode(id);
         return str;
     }
+    @RequestMapping(value = "/findTitleCode",method = RequestMethod.GET)
+    @ResponseBody
+    public String findTitleCode(int id) {
+        String str=  archiveService.findTitleCode(id);
+        return str;
+    }
+
     //永久删除
     @RequestMapping(value = "/deleteReg",method = RequestMethod.GET)
     @ResponseBody

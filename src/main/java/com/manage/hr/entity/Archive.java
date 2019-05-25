@@ -42,6 +42,7 @@ public class Archive {
     private Integer isdelete;
     private String depIds;
     private String titleIds;
+    private String titleCode;
     private String posIds;
     private String posCode;
     private String phone;
@@ -50,6 +51,13 @@ public class Archive {
     private String salaryStandards;
     private String isdeletes;
 
+    public String getTitleCode() {
+        return titleCode;
+    }
+
+    public void setTitleCode(String titleCode) {
+        this.titleCode = titleCode;
+    }
 
     public String getIsdeletes() {
         return isdeletes;

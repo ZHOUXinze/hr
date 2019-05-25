@@ -16,6 +16,7 @@ public interface ArchiveService {
     int deleteArchive(int id);
     Archive findArchiveById(int id);
     String findPosCode(int id);
+    String findTitleCode(int id);
     int  delUpdateArchiveStatus(int id);
     int recoverReg(int id,int isdelete);
     int deleteAnnex(int id);

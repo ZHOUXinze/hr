@@ -142,6 +142,31 @@
 					</li>
 					<li class="lefttop">
 						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称名称:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input readonly="readonly" th:value="${archive.titleIds}" id="titleName" type="text" name="titleName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+								<input type="hidden" id="titleId" name="titleId">
+								<span id="tiltenames"></span>
+							</div>
+
+						</div>
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称编码:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+
+								<input type="text" id="titleCode" name="titleCode" th:value="${archive.titleCode}"
+									   readonly  required="required" class="form-control col-md-7 col-xs-12">
+								<span id="titlecodes"></span>
+							</div>
+						</div>
+					</li>
+					<li class="lefttop">
+
+					</li>
+					<li class="lefttop">
+						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">姓名:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="name" name="name" th:value="${archive.name}" required="required" class="form-control col-md-7 col-xs-12">
@@ -400,7 +425,7 @@
 				}else{
 					$("#docFile").append("<p>"+annexhidden+
 							"&nbsp;&nbsp;<a href=\""+annexhidden+"?m="+Math.random()+"\" >下载</a> &nbsp;&nbsp;" +
-							"<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a></p>");
+							"</p>");/*<a href=\"javascript:onclick=delDocFile('"+id+"');\">删除</a>*/
 				}
 
 

@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manage.hr.dao.ArchiveDao">
     <insert id="addArchive" parameterType="Archive">
-        insert into archive (archCode,depId,posId,`name`,gender,photoPath,email,address,idNumber,account,political,school,major,education,salaryStandard,bank,bankCard,sscNumber,registerPerson,createDate,resumePath,family,remark,annex,reviewStatus,changeStatus,archStatus,phoneNumber,isdelete)
-         values (#{archCode},#{depId},#{posId},#{name},#{gender},#{photoPath},#{email},#{address},#{idNumber},#{account},#{political},#{school},#{major},#{education},#{salaryStandard},#{bank},#{bankCard},#{sscNumber},#{registerPerson},#{createDate},#{resumePath},#{family},#{remark},#{annex},#{reviewStatus},#{changeStatus},#{archStatus},#{phoneNumber},#{archStatus})
+        insert into archive (archCode,depId,posId,titleId`name`,gender,photoPath,email,address,idNumber,account,political,school,major,education,salaryStandard,bank,bankCard,sscNumber,registerPerson,createDate,resumePath,family,remark,annex,reviewStatus,changeStatus,archStatus,phoneNumber,isdelete)
+         values (#{archCode},#{depId},#{posId},#{titleId},#{name},#{gender},#{photoPath},#{email},#{address},#{idNumber},#{account},#{political},#{school},#{major},#{education},#{salaryStandard},#{bank},#{bankCard},#{sscNumber},#{registerPerson},#{createDate},#{resumePath},#{family},#{remark},#{annex},#{reviewStatus},#{changeStatus},#{archStatus},#{phoneNumber},#{archStatus})
     </insert>
     <select id="findMaxId" resultType="Integer">
         select MAX(id) from archive
@@ -20,7 +20,7 @@
                 and reviewStatus=#{archiveTools.reviewStatus}
             </if>
             <if test="archiveTools.archStatus!=null and archiveTools.archStatus!=''">
-                and archStatus=#{archiveTools.archStatus}
+                and isdelete=#{archiveTools.archStatus}
             </if>
             <if test="archiveTools.bt!=null">
                 and createDate &gt;= #{archiveTools.bt}
@@ -54,7 +54,7 @@
                 and reviewStatus=#{archiveTools.reviewStatus}
             </if>
             <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
-                and archStatus=#{archiveTools.archStatus}
+                and isdelete=#{archiveTools.archStatus}
             </if>
             <if test="archiveTools.bt!=null">
                 and createDate &gt;= #{archiveTools.bt}
@@ -244,6 +244,7 @@
         (SELECT dataName FROM dictionary d WHERE id=a.archStatus) archStatuss,
         (SELECT depName FROM department dpt WHERE id=a.depId) depIds,
         (SELECT titleName FROM title t WHERE id=a.titleId) titleIds,
+        (SELECT titleCode FROM title t WHERE id=a.titleId) titleCode,
         (SELECT posName FROM `position` p WHERE id=a.posId) posIds,
         (SELECT posCode FROM `position` p WHERE id=a.posId) posCode
         FROM `archive` a
@@ -251,6 +252,9 @@
     </select>
     <select id="findPosCode" resultType="String" parameterType="int">
         select posCode from `position` where id=#{id}
+    </select>
+    <select id="findTitleCode" parameterType="int" resultType="String">
+        select titleCode from `title` where id=#{id}
     </select>
     <update id="recoverReg">
          update archive set isdelete=#{isdelete} where id=#{id}
