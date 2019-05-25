@@ -10,6 +10,24 @@ public class Department {
     private String  introduction;
     private String remark;
     private Integer enable;
+    private String higherOfficeName;
+    private int pNum;
+
+    public int getpNum() {
+        return pNum;
+    }
+
+    public void setpNum(int pNum) {
+        this.pNum = pNum;
+    }
+
+    public String getHigherOfficeName() {
+        return higherOfficeName;
+    }
+
+    public void setHigherOfficeName(String higherOfficeName) {
+        this.higherOfficeName = higherOfficeName;
+    }
 
     public Integer getId() {
         return id;

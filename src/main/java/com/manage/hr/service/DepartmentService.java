@@ -8,4 +8,5 @@ public interface DepartmentService {
     List<Department> listDepartment();
     List<Department> cacheDepartment();
     int addDepartment(Department department);
+    Department getDepartmentById(int id);
 }

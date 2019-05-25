@@ -82,7 +82,7 @@
                 <td th:text="${salaryStandard.getStandardCode()}"></td>
                 <td th:text="${salaryStandard.getStandardName()}"></td>
                 <td th:text="${salaryStandard.getStatusName()}"></td>
-                <td th:text="${#dates.format(salaryStandard.getCreateDate(),'yyyy/MM/dd')}"></td>
+                <td th:text="${#dates.format(salaryStandard.getCreateDate(),'MM/dd/yyyy')}"></td>
                 <td th:if="${session.user.getUserRoleName()=='薪酬经理'}">
                     <a th:if="${salaryStandard.getStatusName()}=='起草'"
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'update')}">

@@ -35,7 +35,7 @@
                     '            </td>\n' +
                     '            <td align="center">\n' +
                     '                <div class="col-sm-10">\n' +
-                    '                        <input type="text" class="form-control si"  placeholder="必填" name="itemCode">\n' +
+                    '                        <input type="text" class="form-control si"  placeholder="必填" name="itemCode" required>\n' +
                     '                    </div>\n' +
                     '            </td align="center">\n' +
                     '            <td align="center">\n' +
@@ -50,7 +50,7 @@
                     '            </td>\n' +
                     '            <td align="center">\n' +
                     '                <div class="custom-control custom-switch">\n' +
-                    '                        <input type="checkbox" class="custom-control-input si" value="3"\n' +
+                    '                        <input type="checkbox" class="custom-control-input si" value="3" \n' +
                     '                               name="enable" id="c">\n' +
                     '                        <label class="custom-control-label" id="l2"></label>\n' +
                     '                    </div>\n' +
@@ -67,15 +67,15 @@
             });
             //获取表格的修改状态
             $(".si").change(function () {
-                var hidden = $(this).parent().parent().parent().children("input:last");
+                let hidden = $(this).parent().parent().parent().children("input:last");
                 if (hidden.val() == 0) {
                     hidden.val(1);
                 }
             });
             //保存，保存修改和添加的数据
             $.fn.serializeJson = function () {
-                var jsonData1 = {};
-                var serializeArray = this.serializeArray();
+                let jsonData1 = {};
+                let serializeArray = this.serializeArray();
                 // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
                 $(serializeArray).each(function () {
                     if (jsonData1[this.name]) {
@@ -88,18 +88,18 @@
                         jsonData1[this.name] = this.value;
                     }
                 });
-                // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
-                var vCount = 0;
+                // 再转成键值对的形式
+                let vCount = 0;
                 // 计算json内部的数组最大长度
-                for (var item in jsonData1) {
-                    var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
+                for (let item in jsonData1) {
+                    let tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
                     vCount = (tmp > vCount) ? tmp : vCount;
                 }
                 if (vCount > 1) {
-                    var jsonData2 = new Array();
-                    for (var i = 0; i < vCount; i++) {
-                        var jsonObj = {};
-                        for (var item in jsonData1) {
+                    let jsonData2 = new Array();
+                    for (let i = 0; i < vCount; i++) {
+                        let jsonObj = {};
+                        for (let item in jsonData1) {
                             jsonObj[item] = jsonData1[item][i];
                         }
                         jsonData2.push(jsonObj);
@@ -110,6 +110,8 @@
                 }
             };
             $('#save').click(function () {
+                $("input:checkbox:not(:checked)").val(4);
+                $("input:checkbox:not(:checked)").prop('checked', true);
                 $('#saveSalaryItemForm :radio').removeAttr("name");
                 let jsonStr = $('#saveSalaryItemForm').serializeJson();
                 $.ajax({
@@ -119,10 +121,11 @@
                     data: jsonStr,
                     success: function (data) {
                         if (data == "success") {
+                            successAlert();
                             window.location.reload();
-                            alert("保存成功");
                         } else if (data == "error") {
-                            alert("保存失败");
+                            failAlert();
+                            closeAlert();
                         }
                     }
                 });
@@ -139,9 +142,11 @@
                     $.get("deleteSalaryItem", {"id": id}, function (data) {
                         if (data == "success") {
                             radio.parent().parent().parent().remove();
-                            alert("删除成功!");
+                            successAlert();
+                            closeAlert();
                         } else {
-                            alert("出现了一点小错误");
+                            failAlert();
+                            closeAlert();
                         }
                     });
                 }
@@ -153,14 +158,36 @@
                 }
             });
         });
+        //提示成功
+        function successAlert() {
+            let alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
+                '    <strong>成功</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+        //提示失败
+        function failAlert() {
+            let alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
+                '    <strong>失败</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+        //一秒后自动关闭提示
+        function closeAlert() {
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 800);
+
+        }
     </script>
     <style type="text/css">
-        th{
-            text-align:center;
+        th {
+            text-align: center;
         }
     </style>
 </head>
 <body>
+<div id="alertDiv"></div>
 <div style="margin: 10px">
     <button type="button" class="btn btn-outline-primary" id="insert">新增</button>
     <button type="button" class="btn btn-outline-success" id="save">保存</button>
@@ -195,23 +222,21 @@
                 <td th:text="${status.count}" align="center">
                 </td>
                 <td align="center">
-                    <!--<input type="text" th:name="itemCode" th:value="${salaryItem.getItemCode()}" class="si"-->
-                           <!--&gt;-->
                     <div class="col-sm-10">
-                        <input type="text" class="form-control si"  placeholder="必填" th:name="itemCode" th:value="${salaryItem.getItemCode()}">
+                        <input type="text" class="form-control si" placeholder="必填" th:name="itemCode"
+                               th:value="${salaryItem.getItemCode()}">
                     </div>
                 </td>
                 <td align="center">
-                    <!--<input type="text" th:name="itemName" th:value="${salaryItem.getItemName()}" class="si"-->
-                           <!--placeholder="必填">-->
                     <div class="col-sm-10">
-                        <input type="text" class="form-control si"  placeholder="必填" th:name="itemName" th:value="${salaryItem.getItemName()}">
+                        <input type="text" class="form-control si" placeholder="必填" th:name="itemName"
+                               th:value="${salaryItem.getItemName()}">
                     </div>
                 </td>
                 <td align="center">
-                    <!--<input type="text" th:name="introduction" th:value="${salaryItem.getIntroduction()}" class="si">-->
                     <div class="col-sm-10">
-                        <input type="text" class="form-control si" th:name="introduction" th:value="${salaryItem.getIntroduction()}">
+                        <input type="text" class="form-control si" th:name="introduction"
+                               th:value="${salaryItem.getIntroduction()}">
                     </div>
                 </td>
                 <td th:if="${salaryItem.getEnable()}==3" align="center">
@@ -220,7 +245,6 @@
                                name="enable" th:id="customSwitch+${status.count}">
                         <label class="custom-control-label" th:for="customSwitch+${status.count}"></label>
                     </div>
-
                 </td>
                 <td th:if="${salaryItem.getEnable()}==4" align="center">
                     <div class="custom-control custom-switch">

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.hr.dao.PayrollDao">
+    <select id="listPayrollByPm" parameterType="int" resultType="Payroll">
+        SELECT
+        `id`,
+        `paymentId`,
+        `archId`
+        FROM
+        payroll
+        WHERE paymentId = #{paymentId}
+    </select>
+    <select id="listPayrollByDep" parameterType="int" resultType="Payroll">
+        SELECT
+        `id`,
+        `paymentId`,
+        `archId`
+        FROM
+        payroll
+        WHERE depId = #{depId}
+    </select>
+    <select id="listPayrollByPmDdp" resultType="Payroll">
+        SELECT
+        `id`,
+        `paymentId`,
+        `archId`
+        FROM
+        payroll
+        WHERE
+        pamentId = #{paymentId} and
+        depId = #{depId}
+    </select>
+    <select id="countPayrollByPaymentId" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM payroll WHERE paymentId = #{paymentId} ORDER BY archId
+    </select>
+</mapper>

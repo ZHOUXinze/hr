@@ -36,4 +36,28 @@
     <delete id="deleteSsdByStandardCode" parameterType="String">
         delete from`salaryStandardDetail` where `standardCode` = #{standardCode}
     </delete>
+    <select id="listSsdView" resultType="java.util.HashMap">
+        SET @sql = NULL;
+SELECT
+ GROUP_CONCAT(DISTINCT
+  CONCAT(
+   'Max(IF(s.`itemName` = ''',
+   s.itemName,
+   ''', s.`itemAmount`, 0)) AS ''',
+   s.itemName, ''''
+  )
+ ) INTO @sql
+FROM salaryStandardDetail s ;
+
+SET @sql = CONCAT (
+    'CREATE OR REPLACE VIEW ssdView AS SELECT archCode,a.standardCode,name,',
+    @sql,
+    ' FROM `archive` a INNER JOIN salaryStandardDetail s
+    ON a.standardCode = s.standardCode Group by a.archCode'
+  );
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SELECT * FROM ssdView;
+    </select>
 </mapper>

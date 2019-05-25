@@ -26,7 +26,6 @@ public class SalaryItemController {
     @RequestMapping(value = "/saveSalaryItem", method = RequestMethod.POST)
     @ResponseBody
     public String saveSalaryItem(@RequestBody List<SalaryItem> salaryItemList) {
-        System.out.println(3);
         return salaryItemService.saveSalaryItem(salaryItemList) == 1 ? "success" : "error";
     }
 
