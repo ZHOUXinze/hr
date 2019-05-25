@@ -48,8 +48,8 @@ public class SalaryItemServiceImpl implements SalaryItemService {
                 if ((itemCode.isEmpty() || itemCode == null) || (itemName.isEmpty() || itemName == null)) {
                     return 2;
                 }
-                //给enable为null的对象赋值
-                salaryItem.setEnable(salaryItem.getEnable() == null ? 4 : 3);
+//                //给enable为null的对象赋值
+//                salaryItem.setEnable(salaryItem.getEnable().equals("on") ? 3 : 4);
                 //判断操作码
                 //1：更新
                 //2：插入

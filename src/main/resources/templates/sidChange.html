@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="datepicker3">登记时间</label>
-                    <input id="datepicker3" name="createDate" th:value="${#dates.format(salaryStandard.getCreateDate(),'dd/MM/yyyy')}">
+                    <input id="datepicker3" name="createDate" th:value="${#dates.format(salaryStandard.getCreateDate(),'MM/dd/yyyy')}">
                     <script>
                         $('#datepicker3').datepicker({
                             uiLibrary: 'bootstrap4'

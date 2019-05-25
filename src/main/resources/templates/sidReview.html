@@ -105,7 +105,7 @@
                 <div class="col-md-4 mb-3">
                     <label for="date">登记日期</label>
                     <input type="text" class="form-control" id="date"
-                           th:value="${#dates.format(salaryStandard.getCreateDate(),'yyyy/MM/dd')}"
+                           th:value="${#dates.format(salaryStandard.getCreateDate(),'MM/dd/yyyy')}"
                            readonly>
                 </div>
 

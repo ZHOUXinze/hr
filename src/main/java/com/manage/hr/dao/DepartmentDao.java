@@ -10,4 +10,5 @@ public interface DepartmentDao {
     List<Department> listDepartment();
     List<Department> cacheDepartment();
     int addDepartment(Department department);
+    Department getDepartmentById(int id);
 }

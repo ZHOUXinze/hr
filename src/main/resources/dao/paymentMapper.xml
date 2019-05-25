@@ -14,4 +14,22 @@
         FROM
         payment
     </select>
+    <insert id="insertPayment" parameterType="Payment">
+        INSERT INTO `payment` (
+ `paymentCode`,
+  `paymentCount`,
+  `lastTime`,
+  `status`
+)
+VALUES
+  (
+     #{paymentCode},
+  #{paymentCount},
+  #{lastTime},
+  #{status}
+  );
+    </insert>
+    <update id="updatePayment" parameterType="Payment">
+
+    </update>
 </mapper>

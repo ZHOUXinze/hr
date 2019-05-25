@@ -13,6 +13,28 @@ public class Payment {
     private Integer status;
     private int peopleNumber;
     private int depId;
+    private int modelStatus;
+    private String last;
+
+    public void setDepId(int depId) {
+        this.depId = depId;
+    }
+
+    public String getLast() {
+        return last;
+    }
+
+    public void setLast(String last) {
+        this.last = last;
+    }
+
+    public int getModelStatus() {
+        return modelStatus;
+    }
+
+    public void setModelStatus(int modelStatus) {
+        this.modelStatus = modelStatus;
+    }
 
     public Integer getDepId() {
         return depId;
@@ -30,15 +52,6 @@ public class Payment {
         this.peopleNumber = peopleNumber;
     }
 
-    private int modelStatus;
-
-    public int getModelStatus() {
-        return modelStatus;
-    }
-
-    public void setModelStatus(int modelStatus) {
-        this.modelStatus = modelStatus;
-    }
 
     public Integer getId() {
         return id;

@@ -1,7 +1,6 @@
 package com.manage.hr.dao;
 
 import com.manage.hr.entity.SalaryStandardDetail;
-import com.manage.hr.entity.Ssd;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -3,17 +3,15 @@ package com.manage.hr.service.impl;
 import com.manage.hr.dao.PaymentDao;
 import com.manage.hr.dao.PayrollDao;
 import com.manage.hr.dao.PayrollDetailDao;
-import com.manage.hr.entity.Department;
 import com.manage.hr.entity.Payment;
 import com.manage.hr.entity.Payroll;
 import com.manage.hr.entity.PayrollDetail;
 import com.manage.hr.service.PaymentService;
-import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -61,8 +59,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public int savePayment(List<Payment> paymentList) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         for (Payment payment : paymentList) {
-            paymentDao.savePayment(payment);
+            int ms = payment.getModelStatus();
+            if (ms != 0) {
+                if (ms == 2) {
+                    paymentDao.insertPayment(payment);
+                }
+            }
         }
         return 1;
     }

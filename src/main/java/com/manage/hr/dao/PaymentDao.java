@@ -10,6 +10,6 @@ public interface PaymentDao {
     //查询所有
     List<Payment> listPayment();
 
-    int savePayment(Payment payment);
+    int insertPayment(Payment payment);
 }
 

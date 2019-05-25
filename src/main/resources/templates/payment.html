@@ -17,67 +17,63 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script>
+
         $(document).ready(function () {
             var idNum = 200;
             //添加，页面增加新的空行
             $('#insert').click(function () {
-
-
-                // let tr = '<tr >\n' +
-                //     '                    <td>\n' +
-                //     '                        <div class="custom-control custom-radio">\n' +
-                //     '                            <input type="radio" name="dr"\n' +
-                //     '                                   class="custom-control-input dr" \n' +
-                //     '                                   id="r" value="-1">\n' +
-                //     '                            <label class="custom-control-label" id="l1"></label>\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                    <td>\n' +
-                //     '                        <div class="col-sm-10">\n' +
-                //     '                            <input type="text" class="form-control si" name="paymentCode"\n' +
-                //     '                                   >\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                    <td>\n' +
-                //     '                        <div class="col-sm-10">\n' +
-                //     '                            <input type="text" class="form-control si" name="paymentCount"\n' +
-                //     '                                   >\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                    <td></td>\n' +
-                //     '                    <td>\n' +
-                //     '                        <div class="col-sm-10">\n' +
-                //     '                            <input type="text" class="form-control si" name="salaryTotal"\n' +
-                //     '                                  >\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                    <td >\n' +
-                //     '                        <div class="col-sm-10">\n' +
-                //     '                            <input type="text" class="form-control si" name="ActualTotal"\n' +
-                //     '                                   >\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                    <td >\n' +
-                //     '                        <div class="col-sm-10">\n' +
-                //     '                            <input type="text" class="form-control si" name="lastTime"\n' +
-                //     '                                   >\n' +
-                //     '                        </div>\n' +
-                //     '                    </td>\n' +
-                //     '                </tr >';
-                // $("#paymentTable").append(tr);
-                // $("#r").attr("id", 'r' + idNum + '');
-                // $("#l1").attr("for", 'r' + idNum + '');
-                // $("#l1").attr("id", 'l1' + idNum + '');
-                // idNum++;
+                let tr = '<tr>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="custom-control custom-radio">\n' +
+                    '            <input type="hidden" name="modelStatus" value="2">' +
+                    '                            <input type="radio" name="dr"\n' +
+                    '                                   class="custom-control-input dr" \n' +
+                    '                                   id="r" value="-1">\n' +
+                    '                            <label class="custom-control-label" id="l1"></label>\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="col-sm-10">\n' +
+                    '                            <input type="text" class="form-control si" placeholder="必填" name="paymentCode"\n' +
+                    '                                   >\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="col-sm-10">\n' +
+                    '                            <input type="text" class="form-control si" placeholder="必填" name="paymentCount"\n' +
+                    '                                   >\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                    <td></td>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="col-sm-10">\n' +
+                    '                            <input type="text" class="form-control si" placeholder="必填" name="salaryTotal"\n' +
+                    '                                   >\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="col-sm-10">\n' +
+                    '                            <input type="text" class="form-control si" placeholder="必填" name="ActualTotal"\n' +
+                    '                                   >\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                    <td>\n' +
+                    '                        <div class="col-sm-10">\n' +
+                    '                            <input id="datepicker1" name="lastTime">\n' +
+                    '                <script>\n' +
+                    '                    $(\'#datepicker1\').datepicker({\n' +
+                    '                        uiLibrary: \'bootstrap4\'\n' +
+                    '                    });\n' +
+                    '                <\/script>\n' +
+                    '                        </div>\n' +
+                    '                    </td>\n' +
+                    '                </tr>';
+                $('#paymentTable').append(tr);
+                $("#r").attr("id", 'r' + idNum + '');
+                $("#l1").attr("for", 'r' + idNum + '');
+                $("#l1").attr("id", 'l1' + idNum + '');
+                idNum++;
             });
-            // //获取表格的修改状态
-            // $(".si").change(function () {
-            //     var hidden = $(this).parent().parent().parent().children("input:last");
-            //     if (hidden.val() == 0) {
-            //         hidden.val(1);
-            //     }
-            // });
-            //保存，保存修改和添加的数据
             $.fn.serializeJson = function () {
                 var jsonData1 = {};
                 var serializeArray = this.serializeArray();
@@ -113,21 +109,23 @@
                 } else {
                     return "[" + JSON.stringify(jsonData1) + "]";
                 }
-            };
+            }
             $('#save').click(function () {
-                $('#saveSalaryItemForm :radio').removeAttr("name");
-                let jsonStr = $('#saveSalaryItemForm').serializeJson();
+                $('#paymentForm :radio').removeAttr("name");
+                let jsonStr = $('#paymentForm').serializeJson();
+                alert(jsonStr);
                 $.ajax({
                     type: "POST",
-                    url: "/saveSalaryItem",
+                    url: "/savePayment",
                     contentType: "application/json;charset=utf-8",
                     data: jsonStr,
                     success: function (data) {
                         if (data == "success") {
+                            successAlert();
                             window.location.reload();
-                            alert("保存成功");
                         } else if (data == "error") {
-                            alert("保存失败");
+                            failAlert();
+                            closeAlert();
                         }
                     }
                 });
@@ -143,10 +141,12 @@
                 if (confirm("确认删除吗?")) {
                     $.get("deleteSalaryItem", {"id": id}, function (data) {
                         if (data == "success") {
+                            successAlert();
                             radio.parent().parent().parent().remove();
-                            alert("删除成功!");
+                            closeAlert();
                         } else {
-                            alert("出现了一点小错误");
+                            failAlert();
+                            closeAlert();
                         }
                     });
                 }
@@ -158,10 +158,36 @@
                 }
             });
         });
+
+        //提示成功
+        function successAlert() {
+            let alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
+                '    <strong>成功</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+
+        //提示失败
+        function failAlert() {
+            let alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
+                '    <strong>失败</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+
+        //一秒后自动关闭提示
+        function closeAlert() {
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 800);
+
+        }
+
     </script>
 
 </head>
 <body>
+<div id="alertDiv"></div>
 <div>
     <div style="margin: 10px">
         <button type="button" class="btn btn-outline-primary" id="insert">新增</button>
@@ -185,6 +211,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="payment,status:${paymentList}">
+                    <input type="hidden" th:name="modelStatus" value="1">
                     <td>
                         <div class="custom-control custom-radio">
                             <input type="radio" name="dr"
@@ -224,6 +251,32 @@
                                    th:value="${#dates.format(payment.getLastTime(),'yyyy/MM/dd')}">
                         </div>
                     </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div>
+        <form name="salaryItemList" id="depForm">
+            <table class="table table-bordered" id="depTable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>I级</th>
+                    <th>II级</th>
+                    <th>人数</th>
+                    <th>基本薪酬</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="department,status:${depList}" th:if="${department.getHigherOffice()}!=0">
+                    <td th:text="${status.count}"></td>
+                    <td th:text="${department.getHigherOfficeName()}"></td>
+                    <td th:text="${department.getDepName()}"></td>
+                    <td th:text="${department.getpNum()}"></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
