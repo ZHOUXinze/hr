@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manage.hr.dao.ArchiveDao">
     <insert id="addArchive" parameterType="Archive">
-        insert into archive (archCode,depId,posId,titleId`name`,gender,photoPath,email,address,idNumber,account,political,school,major,education,salaryStandard,bank,bankCard,sscNumber,registerPerson,createDate,resumePath,family,remark,annex,reviewStatus,changeStatus,archStatus,phoneNumber,isdelete)
+        insert into archive (archCode,depId,posId,titleId,`name`,gender,photoPath,email,address,idNumber,account,political,school,major,education,salaryStandard,bank,bankCard,sscNumber,registerPerson,createDate,resumePath,family,remark,annex,reviewStatus,changeStatus,archStatus,phoneNumber,isdelete)
          values (#{archCode},#{depId},#{posId},#{titleId},#{name},#{gender},#{photoPath},#{email},#{address},#{idNumber},#{account},#{political},#{school},#{major},#{education},#{salaryStandard},#{bank},#{bankCard},#{sscNumber},#{registerPerson},#{createDate},#{resumePath},#{family},#{remark},#{annex},#{reviewStatus},#{changeStatus},#{archStatus},#{phoneNumber},#{archStatus})
     </insert>
     <select id="findMaxId" resultType="Integer">

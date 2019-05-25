@@ -92,7 +92,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12 ">变更状态</label>
 							<div class="col-md-6 col-sm-6 col-xs-12" >
-								<select class="form-control" name="changeStatus">
+								<select class="form-control" onblur="checkchangestatus()" id="changeStatus" name="changeStatus">
 									<option value="">请选择</option>
 									<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==chanStatus"
 											 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archive.changeStatus})"
@@ -436,20 +436,31 @@
 		</div>
 		<script>
 			function submitClaimVoucher(action){
-				if(!confirm("确定"+action+"档案吗")) return;
-				if (action == '变更'){
-					document.getElementById("reviewStatus").setAttribute("value",37);
-				}else{
-					document.getElementById("reviewStatus").setAttribute("value",5);
+				if(checkchangestatus()){
+					if(!confirm("确定"+action+"档案吗")) return;
+					if (action == '变更'){
+						document.getElementById("reviewStatus").setAttribute("value",37);
+					}else{
+						document.getElementById("reviewStatus").setAttribute("value",5);
+					}
+					/*alert(document.frm.revStatus.value);*/
+					document.frm.submit();
 				}
-				/*alert(document.frm.revStatus.value);*/
-				document.frm.submit();
+
 
 
 			}
 		</script>
 		<script th:src="@{/js/jquery.js}"></script>
 		<script>
+			function checkchangestatus() {
+				var changeStatus=$("#changeStatus").val();
+				if(changeStatus==""){
+					alert("变更状态不能为空！");
+				}
+				return true;
+			}
+
 			function back(){
 				window.history.back();
 			}

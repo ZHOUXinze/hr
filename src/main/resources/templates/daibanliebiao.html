@@ -121,8 +121,8 @@
 
     <div class="col-sm-12">
         <table id="datatable-fixed-header" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info"><thead>
-        <button type="submit" id="deal" name="deal" class="btn btn-round btn-info">处理</button>&nbsp;&nbsp;&nbsp;
-        <button type="submit" id="detail" th:name="detail" class="btn btn-success">明细</button>
+        <button th:if="${session.userSession.userRole}==19" type="submit" id="deal" name="deal" class="btn btn-round btn-info">处理</button>&nbsp;&nbsp;&nbsp;
+        <button th:if="${session.userSession.userRole}==19" type="submit" id="detail" th:name="detail" class="btn btn-success">明细</button>
         <tr role="row">
             <th class="sorting" tabindex="0" aria-controls="datatable-fixed-header" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 40px;">选择</th>
             <th class="sorting_asc" tabindex="0" aria-controls="datatable-fixed-header" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 101px;">姓名</th>

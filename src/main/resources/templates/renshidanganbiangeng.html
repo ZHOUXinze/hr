@@ -439,18 +439,24 @@
                 var changeStatus=$("#changeStatus").val();
                 if(changeStatus==""){
                     alert("变更状态不能为空！");
+                    return false;
                 }
+                return true;
             }
 
+
 			function submitClaimVoucher(action){
-				if(!confirm("确定"+action+"档案吗")) return;
-				if (action == '保存'){
-					document.getElementById("reviewStatus").setAttribute("value",5);
-				}else{
-					document.getElementById("reviewStatus").setAttribute("value",36);
-				}
-				/*alert(document.frm.revStatus.value);*/
-				document.frm.submit();
+                if(checkchangestatus()){
+                    if(!confirm("确定"+action+"档案吗")) return;
+                    if (action == '保存'){
+                        document.getElementById("reviewStatus").setAttribute("value",5);
+                    }else{
+                        document.getElementById("reviewStatus").setAttribute("value",36);
+                    }
+                    /*alert(document.frm.revStatus.value);*/
+                    document.frm.submit();
+                }
+
 
 
 			}
