@@ -1,5 +1,7 @@
 package com.manage.hr.entity;
 
+import java.math.BigDecimal;
+
 public class Department {
     private Integer id;
     private  String depCode;
@@ -12,6 +14,15 @@ public class Department {
     private Integer enable;
     private String higherOfficeName;
     private int pNum;
+    private BigDecimal totalSs;
+
+    public BigDecimal getTotalSs() {
+        return totalSs;
+    }
+
+    public void setTotalSs(BigDecimal totalSs) {
+        this.totalSs = totalSs;
+    }
 
     public int getpNum() {
         return pNum;

@@ -25,4 +25,6 @@ public interface ArchiveService {
     String findArchiveByName( String  userName);
     PageSurport<Archive> findArchiveMarList(ArchiveTools archiveTools, int pageIndex, int pageSize);
 
+    List<Archive> listArchiveByDep(int depId);
+
 }

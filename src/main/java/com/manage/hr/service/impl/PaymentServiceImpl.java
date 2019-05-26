@@ -1,11 +1,13 @@
 package com.manage.hr.service.impl;
 
+import com.manage.hr.dao.ArchiveDao;
 import com.manage.hr.dao.PaymentDao;
 import com.manage.hr.dao.PayrollDao;
 import com.manage.hr.dao.PayrollDetailDao;
 import com.manage.hr.entity.Payment;
 import com.manage.hr.entity.Payroll;
 import com.manage.hr.entity.PayrollDetail;
+import com.manage.hr.service.ArchiveService;
 import com.manage.hr.service.PaymentService;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class PaymentServiceImpl implements PaymentService {
     private PayrollDao payrollDao;
     @Resource
     private PayrollDetailDao payrollDetailDao;
+    @Resource
+    private ArchiveDao archiveDao;
 
     //查询所有
     public List<Payment> listPayment() {
@@ -39,20 +43,20 @@ public class PaymentServiceImpl implements PaymentService {
 
         //查询薪酬单总金额
         //根据薪酬单id查询所有的工资条
-        for (Payment payment : paymentList) {
-            BigDecimal actualTotal = BigDecimal.valueOf(0);
-            List<Payroll> payrollList = payrollDao.listPayrollByPm(payment.getId());
-            for (Payroll payroll : payrollList) {
-                List<PayrollDetail> payrollDetailList = payrollDetailDao.listPayrollDetailByPrId(payroll.getId());
-                for (PayrollDetail payrollDetail : payrollDetailList) {
-                    actualTotal = actualTotal.add(payrollDetail.getItemAmount());
-                }
-            }
-            payment.setActualTotal(actualTotal);
-            //查询薪酬人数
-            payment.setPeopleNumber(payrollDao.countPayrollByPaymentId(payment.getId()));
+//        for (Payment payment : paymentList) {
+//            BigDecimal actualTotal = BigDecimal.valueOf(0);
+//            List<Payroll> payrollList = payrollDao.listPayrollByPm(payment.getId());
+//            for (Payroll payroll : payrollList) {
+//                List<PayrollDetail> payrollDetailList = payrollDetailDao.listPayrollDetailByPrId(payroll.getId());
+//                for (PayrollDetail payrollDetail : payrollDetailList) {
+//                    actualTotal = actualTotal.add(payrollDetail.getItemAmount());
+//                }
+//            }
+//            payment.setActualTotal(actualTotal);
+//            //查询薪酬人数
+//            payment.setPeopleNumber(payrollDao.countPayrollByPaymentId(payment.getId()));
 
-        }
+//        }
 
         return paymentDao.listPayment();
     }

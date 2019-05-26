@@ -1,5 +1,6 @@
 package com.manage.hr.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Archive {
@@ -50,6 +51,15 @@ public class Archive {
     private String educations;
     private String salaryStandards;
     private String isdeletes;
+    private String ssCode;
+
+    public String getSsCode() {
+        return ssCode;
+    }
+
+    public void setSsCode(String ssCode) {
+        this.ssCode = ssCode;
+    }
 
     public String getTitleCode() {
         return titleCode;

@@ -103,10 +103,13 @@ public class ArchiveServiceImpl implements ArchiveService {
         return pageSurport;
     }
 
+    @Override
+    public List<Archive> listArchiveByDep(int depId) {
+        return archiveDao.listArchiveByDep(depId);
+    }
 
 
-
-public void page(ArchiveTools archiveTools, int pageIndex, int pageSize){
+    public void page(ArchiveTools archiveTools, int pageIndex, int pageSize){
     Date bt=null;
     Date et=null;
     SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy");
