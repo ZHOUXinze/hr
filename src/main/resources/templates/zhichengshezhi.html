@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>职称设置</title>
+		<title>职称管理</title>
 	<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -35,40 +35,42 @@
 		
 		<div class="x_content">
                     <br>
-                    <div style="text-align: center;"><ul>
+                    <div style="text-align: center;">
 			<li>
-                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-
+                    <form th:action="@{/zhichengshezhi}" method="get" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                        <ul>
+                            <input type="hidden" name="pageIndex" id="pageIndex" value="1"/>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">职称名称： 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >职称名称：
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                          <input th:value="${title.titleName}" name="titleName" type="text" id="titleName" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       
                     </li>
  <li> <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">所属部门： </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">所属部门： </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>Option one</option>
-                            <option>Option two</option>
-                            <option>Option three</option>
-                            <option>Option four</option>
+                          <select class="form-control" name="depId">
+                            <option value="">请选择</option>
+                              <option th:each="depart:${departmentList}"th:text="${depart.depName}"
+                                      th:selected="(${depart.id}==${title.depId}) "
+                                      th:value="${depart.id}"></option>
                           </select>
                         </div>
                       </div></li>
                       
                       
                <li>       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">是否启用： </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >是否启用： </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control">
-                            <option>请选择</option>
-                            <option>启用</option>
-                            <option>不启用</option>
+                          <select class="form-control" name="enable">
+                            <option value="">请选择</option>
+                              <option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==enable"
+                                       th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${title.enable})"
+                                       th:value="${dictionary.id}">
+                              </option>
                             
                           </select>
                         </div>
@@ -88,9 +90,10 @@
                         </div>
                       </div>
 
-                    </form>
+
                     </li> 
                     </ul>
+                    </form>
                   </div></div>
 		
 		
@@ -109,7 +112,7 @@
 		
 		
 		<div class="col-sm-12"><table id="datatable-fixed-header" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info"><thead>
-                <a href="#">  <button type="button" class="btn btn-round btn-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">新增职称</font></font></button>   </a> 
+                <a th:href="@{/trainRanks}">  <button type="button" class="btn btn-round btn-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">新增职称</font></font></button>   </a>
                       <tr role="row">
                         	<th class="sorting_asc" tabindex="0" aria-controls="datatable-fixed-header" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 194px;">职称编码</th>
                         	<th class="sorting" tabindex="0" aria-controls="datatable-fixed-header" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 312px;">职称名称</th>
@@ -123,29 +126,89 @@
                       <tbody>
                
                         
-                      <tr role="row" class="odd">
-                          <td class="sorting_1">Airi Satou</td>
-                          <td>Accountant</td>
-                          <td><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"></td>
-                          <td>Tokyo</td>
-                          <td><a>修改</a> &nbsp  <a>明细</a>&nbsp  <a>删除</a></td>
-                        </tr>
-                        <tr role="row" class="even">
-                          <td class="sorting_1">Angelica Ramos</td>
-                          <td>Chief Executive Officer (CEO)</td>
-                          <td><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"></td>
-                          <td>Tokyo</td>
-                          <td><a>修改</a> &nbsp  <a>明细</a> &nbsp  <a>删除</a></td>
-                          
-                        </tr>
+                      <tr role="row" class="odd" th:each="title:${pageSurport.dataList}">
+                          <td th:text="${title.titleCode}"></td>
+                          <td th:text="${title.titleName}"></td>
+                          <td th:text="${title.dataName}"></td>
+                          <td th:text="${title.depName}"></td>
+                          <td><a th:href="@{/zhichengxiugai(titleId=${title.id}  )}">修改</a>
+                              &nbsp  <a th:href="@{/zhichengmingxi(titleId=${title.id}  )}">明细</a>&nbsp
+                              <a th:href="@{/detTitle(titleId=${title.id}  )}  " onclick='return xiugai();'>删除</a></td>
+
                       </tbody>
                     </table></div>
-                    <div class="col-sm-5">
-        		
-        	</div>
-		<div  class="col-sm-7"><div  class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="datatable-checkbox_previous"><a href="#" aria-controls="datatable-checkbox" data-dt-idx="0" tabindex="0">首页</a></li><li class="paginate_button active"><a href="#" aria-controls="datatable-checkbox" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="datatable-checkbox" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button "><a href="#" aria-controls="datatable-checkbox" data-dt-idx="3" tabindex="0">3</a></li><li class="paginate_button "><a href="#" aria-controls="datatable-checkbox" data-dt-idx="4" tabindex="0">4</a></li><li class="paginate_button "><a href="#" aria-controls="datatable-checkbox" data-dt-idx="5" tabindex="0">5</a></li><li class="paginate_button "><a href="#" aria-controls="datatable-checkbox" data-dt-idx="6" tabindex="0">6</a></li><li class="paginate_button next" id="datatable-checkbox_next"><a href="#" aria-controls="datatable-checkbox" data-dt-idx="7" tabindex="0">下一页</a><a href="#" aria-controls="datatable-checkbox" data-dt-idx="7" tabindex="0">末页</a></li></ul></div></div>
-		
-		<!-- jQuery -->
+        <div class="row">
+
+            <div class="col-sm-5">
+                <div class="dataTables_info" id="datatable_info" role="status"
+                     aria-live="polite">当前页<span th:text="${pageSurport.pageIndex}"></span> /<span th:text="${pageSurport.totalPageCount }"></span>页 </div>
+            </div>
+
+            <div class="col-sm-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                    <ul class="pagination">
+					<span th:if="${pageSurport.pageIndex }>1" class="pagination" id="span1">
+							<li class="paginate_button" id="datatable_previous">
+								<a th:href="'javascript:page_nav(document.forms[0],1)'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									首页</a>
+							</li>
+							<li class="paginate_button">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.pageIndex }-1)+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									上一页</a>
+							</li>
+					</span>
+                        <span th:if="${pageSurport.pageIndex }<${pageSurport.totalPageCount }" class="pagination" id="span2">
+							<li class="paginate_button ">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.pageIndex }+1)+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									下一页</a>
+							</li>
+							<li class="paginate_button" id="datatable_next">
+								<a th:href="'javascript:page_nav(document.forms[0],'+(${pageSurport.totalPageCount })+')'" aria-controls="datatable" data-dt-idx="7" tabindex="0">
+									末页 </a>
+							</li>
+						</span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <!--分页-->
+        <script th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript">
+            function  xiugai()
+
+            {
+
+                if(confirm("确定要删除吗吗？"))
+
+                {
+
+                    return true;
+
+                }
+
+                else
+
+                {
+
+                    return false;
+
+                }
+
+            }
+
+
+
+            function page_nav(frm, num) {
+                frm.pageIndex.value = num;
+                frm.submit();
+            }
+        </script>
+
+
+        <!-- jQuery -->
          <script src="js/datepicker/daterangepicker.js"></script>
         <script src="js/moment/moment.min.js"></script>
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
@@ -361,7 +424,14 @@
     <!-- jQuery autocomplete -->
     <script>
       $(document).ready(function() {
-        var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"?land Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"C?te d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"S?o Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };
+        var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"?land Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",
+            BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"C?te d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",
+            DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",
+            FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",
+            HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",
+            LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",
+            NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",
+            SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"S?o Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };
 
         var countriesArray = $.map(countries, function(value, key) {
           return {

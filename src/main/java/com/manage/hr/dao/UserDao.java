@@ -16,4 +16,6 @@ public interface UserDao {
    User findUserByID( @Param("userId") int userId);
    User userLogin(@Param("userCode") String userCode);
    int delUserById( int userId);
+   String findUserByCode( String userCode );
+    int updUser( @Param("userId")int userId,@Param("password")String password);
 }

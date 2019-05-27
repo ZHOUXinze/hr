@@ -20,7 +20,7 @@
     <!--<link href="../build/css/custom.min.css" rel="stylesheet">-->
     <style type="text/css">
         #yincang{
-            width: 150px;height: 100px;margin:0 auto;float: left;border:1px solid  #000;
+            width: 150px;height: 500px;margin:0 auto;float: left;border:1px solid  #000;
 
         }
 
@@ -71,18 +71,19 @@
     </div>
 
     <div id="yincang">
-        <form>
-            <input type="hidden" th:value="${department.id}" name="id" >
+        <form th:action="@{/org}" method="post">
+            <input type="hidden" th:value="${department2.id}" name="id" >
 
 
             <ul >
                 <li th:each="department:${departmentList} "th:if="${department.higherOffice}==0" >
-
-              <a th:href="@{/orgadd(depNames=${department.depName})}" >    <i  id="add" name=""  class="fa fa-search-plus"></i>  </a>          <span th:text="${department.depName}" th:id="${department.id}"></span>
+              <a th:href="@{/orgadd(depNames=${department.depName}) }"   >    <i  id="add" name=""  class="fa fa-search-plus"></i>  </a>
+                    <span id="a1" th:text="${department.depName}" th:value="${department.depName}"></span>
                 </li>
                 <ul>
-                    <li th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1">
-                <a   >        <i   id="${department.id}" class="fa fa-search-minus"></i>    </a>       <span  th:text="${department2.depName}"th:id="${department2.id}"></span>
+                    <li th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1" id="sada">
+                <a href="#" th:href="@{/orgDet(depID=${department2.id})}"  onclick='return del();' >        <i  class="fa fa-search-minus"></i>    </a>
+                        <span id="b2" th:text="${department2.depName}"th:value="${department2.depName}"></span>
                     </li>
 
                 </ul>
@@ -99,56 +100,61 @@
 
 
             <div id="aaa" class="page-title">
-                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-                    <ul>
+                <form th:action="@{/org}" method="post" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                    <input type="hidden" id="idDep" name="idDep" th:value="idDep" >
+                        <ul>
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgCode">组织编码:</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >组织编码:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgCode" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input name="depCode"  type="text" id="depCode" required="required" class="form-control col-md-7 col-xs-12">
+                                </div> <span id="err1" style="color: red">请输入！</span>
+                            </div>
+                        </li>
+                        <li class="lefttop">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >所属组织:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input readonly="readonly" value="总裁办" type="text" id="" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                         </li>
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgBelong">所属组织:</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >组织简称:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input  readonly="readonly" type="text" id="orgBelong" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
-                            </div>
-                        </li>
-                        <li class="lefttop">
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgAbbr">组织简称:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgAbbr" name="orgAbbr" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
+                                    <input  type="text" id="abbreviation" name="abbreviation" required="required" class="form-control col-md-7 col-xs-12">
+                                </div><span id="err2" style="color: red">请输入！</span>
                             </div>
                         </li>
 
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgName">组织全称:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgName" name="orgName" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >组织全称:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12" id="psn">
+                                    <input   id="depName" type="text" name="depName" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+
+                                </div><span id="err3" style="color: red">请输入！</span>
+
+
+
                             </div>
                         </li>
 
                         <li class="leftfooter1">
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input  type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>  <span id="err4" style="color: red">请输入！</span>
                             </div>
                         </li>
                         <li class="leftfooter">
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12" >简介:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <textarea class="form-control" ></textarea>
-                                </div>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <textarea id="introduction" name="introduction" class="form-control" ></textarea>
+                                </div> <span id="err5" style="color: red">请输入！</span>
                             </div>
                             <br/>
                         </li><br/>
@@ -156,26 +162,26 @@
                         <li class="leftfooter">
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12" >备注:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <textarea class="form-control" ></textarea>
-                                </div>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <textarea  id="remark" name="remark" class="form-control" ></textarea>
+                                </div>  <span id="err6" style="color: red">请输入！</span>
                             </div>
 
                         </li>
                         <li class="leftfooter1">
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">是否启用</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <select  class="form-control" name="">
+                                <div class="col-md-8 col-sm-8col-xs-12">
+                                    <select  id="enable" class="form-control" name="enable" >
 
+<option>请选择</option>
 
-
-                                        <option   >-- 请选择 --
+                                        <option th:each="dictionary:${dictionaryList}" th:if="${dictionary.dataType}==enable" th:text="${dictionary.dataName}" th:value="${dictionary.id}" >-- 请选择 --
 
 
                                         </option>
                                     </select>
-                                </div>
+                                </div><span id="err7" style="color: red">请选择！</span>
                             </div>
                         </li>
 
@@ -184,7 +190,7 @@
                     <ul class="form-group">
                         <li class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
                           <!--  <button type="submit" class="btn btn-primary">保存</button>-->
-                            <button type="submit" class="btn btn-success">提交</button>
+                            <button id="tijiao" type="submit" class="btn btn-success"  onclick='return xiugai();' >提交</button>
                         </li>
                     </ul>
 
@@ -215,20 +221,177 @@
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
 <script type="text/javascript">
+    function  xiugai()
+
+    {
+
+        if(confirm("确定要修改吗吗？"))
+
+        {
+
+            return true;
+
+        }
+
+        else
+
+        {
+
+            return false;
+
+        }
+
+    }
+    function  del()
+
+    {
+
+        if(confirm("确定要删除吗？"))
+
+        {
+
+            return true;
+
+        }
+
+        else
+
+        {
+
+            return false;
+
+        }
+
+    }
     $(document).ready(function () {
+
+
+
+        $('#err1').hide();$('#err2').hide();$('#err3').hide();$('#err4').hide();$('#err5').hide();$('#err6').hide();$('#err7').hide();
+        //失去焦点验证
+        $("#demo-form2 input:text").blur(function () {
+            var txtval=$(this).val();
+            if(txtval==null ||txtval=='' )
+            {
+                $(this).parent().next("span").show();
+
+            }else
+            {
+                $(this).parent().next("span").hide();
+            }
+
+
+        });
+        $("#demo-form2 textarea ").blur(function () {
+            var thtext=$(this).val();
+
+            if(thtext==null ||thtext=='' )
+            {
+                $(this).parent().next("span").show();
+
+            }else
+            {
+                $(this).parent().next("span").hide();
+
+            }
+        })
+        //提交验证
+        $('#tijiao').click(function(event){
+            var data = $('#depCode').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+                $('#err1').show();
+                event.preventDefault();
+            } else {
+                $('#err1').hide();
+            }
+            var data = $('#abbreviation').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+               $('#err2').show();
+                event.preventDefault();
+            } else {
+                $('#err2').hide();
+            }
+            var data = $('#depName').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+                $('#err3').show();
+                event.preventDefault();
+            } else {
+                $('#err3').hide();
+            }
+            var data = $('#address').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+                $('#err4').show();
+                event.preventDefault();
+            } else {
+                $('#err4').hide();
+            }
+            var data = $('#introduction').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+                $('#err5').show();
+                event.preventDefault();
+            } else {
+                $('#err5').hide();
+            }
+            var data = $('#remark').val();
+            data = $.trim(data);
+            if(data.length < 1) {
+                $('#err6').show();
+                event.preventDefault();
+            } else {
+                $('#err6').hide();
+            }
+            var data = $('#enable').val();
+            data = $.trim(data);
+
+            if(data =="请选择") {
+                $("#err7").show();
+                event.preventDefault();
+            } else {
+                $('#err7').hide();
+            }
+        });
+
 
         //获取所属部门
         $("#yincang  span").click(function () {
-            var id=$(this).attr("id");
+            $('#err1').hide();$('#err2').hide();$('#err3').hide();$('#err4').hide();$('#err5').hide();$('#err6').hide();$('#err7').hide();
+            var depname=$(this).text();
 
-            $("#id").val(id);
+            $("#depName").val(depname);
+           //
+            $.post("depNames",{'dname':depname},function (data) {
+              // alert(data.depName);
+         var depCode=data.depCode;
+         var id=data.id;
+
+                var abbreviation=data.abbreviation;
+                var address=data.address;
+                var introduction=data.introduction;
+                var remark=data.remark;
+               /* var enable=data.enable;*/
+
+         $("#depCode").val(depCode)
+
+                $("#idDep").val(id)
+                $("#abbreviation").val(abbreviation)
+                $("#address").val(address)
+                $("#introduction").val(introduction)
+                $("#remark").val(remark)
+               /* $("#enable").val(enable)*/
+
+            },"json")
 
 
         })
 
 
 
-    })
+   })
 
 
 

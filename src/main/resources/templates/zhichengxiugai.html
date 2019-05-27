@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
@@ -25,6 +25,12 @@
 		<link href="../build/css/custom.min.css" rel="stylesheet">
 					<!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			#yincang{
+				width: 90px;height: 30px;margin:0 auto;float: right;
+
+			}
+		</style>
 
 	</head>
 
@@ -35,78 +41,85 @@
 					
 					<div class="x_content">
 
-						<form class="form-horizontal form-label-left" novalidate="">
-
+						<form th:action="@{/zhichengxiugai}" method="post" class="form-horizontal form-label-left" novalidate="">
+                             <input type="hidden" name="id" th:value="${title.id}">
 							
 							<span class="section"></span>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">职位编码 <span class="required">*</span>
-                        </label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" >职称编码<span class="required">*</span>
+								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="number" id="number" name="number" required="required" data-validate-minmax="10,100" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">职称名称<span class="required">*</span>
-                        </label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="请输入用户名称" required="required" type="text">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">职称分类</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control">
-
-										<option selected="" value="---请选择---">---请选择---</option>
-										<option value="管理">管理</option>
-										<option value="技术">技术</option>
-										<option value="实施">实施</option>
-										<option value="测试">测试</option>
-										<option value="售前">售前</option>
-										<option value="财务">财务</option>
-										<option value="行政">行政</option>
-									</select>
+									<input  th:value="${title.titleCode}"   id="titleCode" type="text" name="titleCode" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
 
 								</div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">所属部门 <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" >职称名称<span class="required">*</span>
                         </label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="occupation" type="text" name="occupation" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
-								</div><i class="fa fa-search-plus"></i>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">职称描述 <span class="required">*</span>
-                        </label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>
+									<input th:value="${title.titleName}" id="titleName" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="titleName" placeholder="请输入用户名称" required="required" type="text">
 								</div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">备注 <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="depName">所属部门 <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input th:value="${title.depName}"  readonly="readonly" id="depName" type="text" name="depName"
+										   data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
+									<input type="hidden"  id="depId" name="depId" th:value="${title.depId}" >
+								</div><i  id="myBT"  class="fa fa-search-plus"></i>
+								<div id="yincang" >
+									<ul  >
+
+										<li th:each="department:${departmentList}">
+											<span th:text="${department.depName}"  th:id="${department.id}"></span>
+										</li>
+									</ul>
+
+
+
+								</div >
+							</div>
+
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" >职称描述 <span class="required">*</span>
                         </label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>
+									<textarea th:text="${title.introduction}" id="introduction" required="required" name="introduction" class="form-control col-md-7 col-xs-12"></textarea>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" >备注 <span class="required">*</span>
+                        </label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<textarea th:text="${title.remark}" id="remark" required="required" name="remark" class="form-control col-md-7 col-xs-12"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">是否启用 <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" >是否启用 <span class="required">*</span>
                         		</label>
-							<input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;">
-										 Checked
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select  class="form-control" th:value="${title.enable}" name="enable">
+
+
+
+										<option th:each="dictionary:${dictionaryList}" th:if="${dictionary.dataType}==enable" th:text="${dictionary.dataName}" th:value="${dictionary.id}" >-- 请选择 --
+
+
+										</option>
+									</select>
+								</div>
 
                           </div>
                           
                       <div class="form-group ">
                         <div class="col-md-6 col-md-offset-3 ">
-                        	<button id="send " type="submit " class="btn btn-success ">保存</button>
-                          <button type="submit " class="btn btn-primary ">返回</button>
-                          
-                        </div>
+                        	<button id="send " type="submit " class="btn btn-success " onclick='return xiugai();'>修改</button>
+                 <a th:href="@{/zhichengshezhi}">      <input  type="button " value="返回" class="btn btn-primary "></input></a>
+
+						</div>
                       </div>
-                        </div>
+					</div>
                       </div>
 		
 	<!-- jQuery -->
@@ -145,6 +158,67 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js "></script>
+				<script type="text/javascript">
+
+					function  xiugai()
+
+					{
+
+						if(confirm("确定要修改吗吗？"))
+
+						{
+
+							return true;
+
+						}
+
+						else
+
+						{
+
+							return false;
+
+						}
+
+					}
+					$(document).ready(function () {
+
+						$("#fanhui").click(function () {
+							window.history.back();
+						})
+
+
+
+						$("#fanhui").click(function () {
+							window.history.back();
+						})
+						//获取所属部门
+						$("#yincang").hide();
+						$("#yincang  span").click(function () {
+							var id=$(this).attr("id");
+							var depname=$(this).text();
+							$("#depId").val(id);
+							$("#depName").val(depname);
+
+						})
+
+
+						//点击显示和隐藏
+						$("#myBT").click(function () {
+							var o=$("#yincang");
+							if(o.css("display")!="none"){
+								o.hide();
+								$(this).html("");
+							}else {
+								o.show();
+								$(this).html("");
+							}
+						})
+					})
+
+
+
+				</script>
 
     <!-- validator -->
     <script>
@@ -199,7 +273,7 @@
             ],
             fontTarget = $('[title=Font]').siblings('.dropdown-menu');
           $.each(fonts, function(idx, fontName) {
-            fontTarget.append($('<li><a data-edit="fontName ' + fontName + ' " style="font-family:\ '' + fontName + '\' ">' + fontName + '</a></li>'));
+
           });
           $('a[title]').tooltip({
             container: 'body'

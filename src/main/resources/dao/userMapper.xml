@@ -48,7 +48,7 @@ userCode=#{userCode},
 userName=#{userName},
 userRole=#{userRole},
 depId=#{depId},
-password=#{password},
+
 phoneNumber=#{phoneNumber} where id=#{id}
 </update>
 <select id="findUserByID"  resultType="User">
@@ -68,5 +68,11 @@ FROM `user` AS u where userCode=#{userCode}
 delete from  `user` where id=#{userId}
 
    </delete>
+   <select id="findUserByCode" resultType="String">
+      SELECT  userCode FROM `user` WHERE userCode=#{userCode}
+   </select>
+   <update id="updUser" >
+   update `user` set password=#{password} where id=#{userId}
+</update>
 
 </mapper>

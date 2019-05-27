@@ -10,4 +10,74 @@
     <select id="cachePosition" parameterType="int" resultType="Position">
           SELECT `id`,`posCode`,`posName` FROM `position`
     </select>
+    <select id="findAllPosition" resultType="Position">
+        SELECT p.`id`,p.`posCode`,p.`posName`,p.`posClass`,
+        (SELECT  d.dataName FROM dictionary AS d WHERE d.`id`=p.posClass) AS dicClass,
+        p.`depId`,(SELECT e.depName FROM department AS e
+        WHERE e.id=p.depId)AS depName,p.`introduction`,p.`remark`,p.`enable`,
+        (SELECT dataName FROM dictionary AS d
+        WHERE d.id=p.enable)AS dataName FROM `position` AS p
+
+       <where>
+            <if test="position.posName!=null and position.posName!=''">
+                and  posName=#{position.posName}
+            </if>
+            <if test="position.enable!=null">
+                and enable=#{position.enable}
+            </if>
+            <if test="position.depId!=null">
+                and depId=#{position.depId}
+            </if>
+        </where>
+        ORDER BY id DESC LIMIT  #{from},#{pageSize}
+
+    </select>
+    <select id="findAllPotCount" resultType="int">
+        select  count(1) from `position`
+       <where>
+            <if test="position.posName!=null and position.posName!=''">
+                and  posName=#{position.posName}
+            </if>
+            <if test="position.enable!=null">
+                and enable=#{position.enable}
+            </if>
+            <if test="position.depId!=null">
+                and depId=#{position.depId}
+            </if>
+        </where>
+
+    </select>
+    <insert id="addPosition" parameterType="Position">
+INSERT INTO `position` (`posCode`,`posName`,`posClass`,`depId`,`introduction`,`remark`,`enable`)
+VALUES(#{posCode},#{posName},#{posClass},#{depId},#{introduction},#{remark},#{enable})
+
+    </insert>
+
+    <select id="findPositionByID" resultType="Position">
+  SELECT p.posCode,p.posName,p.posClass,p.id,
+(SELECT d.dataName FROM dictionary AS d WHERE d.id=p.posClass) AS dicClass,
+p.`depId`,(SELECT e.depName FROM department AS e
+WHERE e.id=p.depId)AS depName,p.introduction,p.remark,p.enable,
+(SELECT dataName FROM dictionary AS d
+WHERE d.id=p.enable)AS dataName FROM position AS p where `id`=#{positionId}
+    </select>
+    <update id="updatePosition" parameterType="Position" >
+       update `position` set
+posCode=#{posCode},
+posName=#{posName},
+depId=#{depId},
+posClass=#{posClass},
+introduction=#{introduction},
+remark=#{remark},
+ enable=#{enable}
+ where id=#{id}
+
+    </update>
+    <delete id="detPositionByID" parameterType="int">
+        delete from `position`  where id=#{positionId}
+    </delete>
+    <select id="findPositByCode" resultType="String">
+        select posCode from position where posCode=#{posCode}
+
+    </select>
 </mapper>

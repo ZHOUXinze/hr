@@ -16,7 +16,7 @@
 
 
 
-    </style>
+
     <style>
         ul li{
             list-style: none;
@@ -69,66 +69,77 @@
 
 
             <div id="aaa" class="page-title">
-                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                <form id="demo-form2" data-parsley-validate="" th:action="@{/orgadd}" method="post" class="form-horizontal form-label-left" novalidate="">
                     <ul>
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgCode">组织编码:</label>
+                                <label id="label1" class="control-label col-md-3 col-sm-3 col-xs-12" for="depCode">组织编码:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgCode" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="depCode" name="depCode" required="required" class="form-control col-md-7 col-xs-12">
+
                                 </div>
+                                 <span id="err1" style="color: red">请输入！</span>
+
                             </div>
                         </li>
                         <li class="lefttop">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgBelong" >所属组织:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input th:value="${depNames}" readonly="readonly" type="text" id="orgBelong" name="orgBelong" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input th:value="${depNames}"  readonly="readonly" type="text" id="orgBelong" name="higherOffice" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                         </li>
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgAbbr">组织简称:</label>
+                                <label id="label2" class="control-label col-md-3 col-sm-3 col-xs-12" for="abbreviation" >组织简称:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgAbbr" name="orgAbbr" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
+                                    <input type="text" id="abbreviation" name="abbreviation" required="required" class="form-control col-md-7 col-xs-12">
+
+                                </div> <span id="err2" style="color: red">请输入！</span>
                             </div>
                         </li>
 
                         <li class="lefttop">
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="orgName">组织全称:</label>
+                                <label id="label3" class="control-label col-md-3 col-sm-3 col-xs-12" for="depName" >组织全称:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="orgName" name="orgName" required="required" class="form-control col-md-7 col-xs-12">
-                                </div>
+                                    <input type="text" id="depName" name="depName" required="required" class="form-control col-md-7 col-xs-12">
+
+                                </div> <span id="err3" style="color: red">请输入！</span>
                             </div>
                         </li>
 
                         <li class="leftfooter1">
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                <label id="label4" class="control-label col-md-2 col-sm-2 col-xs-12" for="address">住址:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
                                     <input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+
                                 </div>
+                                <span id="err4" style="color: red">请输入！</span>
+
                             </div>
                         </li>
                         <li class="leftfooter">
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12" >简介:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <textarea class="form-control" ></textarea>
+                                <label id="label5" class="control-label col-md-2 col-sm-2 col-xs-12"  for="introduction">简介:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <textarea  class="form-control" id="introduction" name="introduction"></textarea>
+
                                 </div>
+                                <span id="err5" style="color: red">请输入！</span>
                             </div>
                             <br/>
                         </li><br/>
 
                         <li class="leftfooter">
                             <div class="form-group">
-                                <label class="control-label col-md-2 col-sm-2 col-xs-12" >备注:</label>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <textarea class="form-control" ></textarea>
+                                <label id="label6" class="control-label col-md-2 col-sm-2 col-xs-12" for="remark" >备注:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <textarea class="form-control" id="remark" name="remark" ></textarea>
                                 </div>
+                                <span id="err6" style="color: red">请输入！</span>
                             </div>
 
                         </li>
@@ -136,23 +147,24 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">是否启用:</label>
                                 <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <select  class="form-control" name="">
+                                    <select  class="form-control" name="enable">
 
 
 
-                                        <option th:each="dictionary:"  >-- 请选择 --
+                                        <option th:each="dictionary:${dictionaryList}" th:if="${dictionary.dataType}==enable" th:text="${dictionary.dataName}" th:value="${dictionary.id}" >-- 请选择 --
 
 
                                         </option>
                                     </select>
-                            </div>
+                                </div></div>
                         </li>
                     </ul>
 
                     <ul class="form-group">
                         <li class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">
                             <!--  <button type="submit" class="btn btn-primary">保存</button>-->
-                            <button type="submit" class="btn btn-success">提交</button>
+                            <button id="tijiao" type="submit" class="btn btn-success" >提交</button>
+                            <button id="fanhui"  type="button" class="btn btn-success">返回</button>
                         </li>
                     </ul>
 
@@ -183,8 +195,98 @@
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
 
+
+
+
+
+   $(document).ready(function () {
+
+
+       $('#err1').hide();$('#err2').hide();$('#err3').hide();$('#err4').hide();$('#err5').hide();$('#err6').hide();
+       //失去焦点验证
+         $("#demo-form2 input:text").blur(function () {
+             var txtval=$(this).val();
+             if(txtval==null ||txtval=='' )
+             {
+                 $(this).parent().next("span").show();
+             }else
+             {
+                 $(this).parent().next("span").hide();
+             }
+
+
+         });
+       $("#demo-form2 textarea").blur(function () {
+           var thtext=$(this).val();
+           if(thtext==null ||thtext=='' )
+           {
+               $(this).parent().next("span").show();
+           }else
+           {
+               $(this).parent().next("span").hide();
+           }
+       })
+       //提交验证
+       $('#tijiao').click(function(event){
+           var data = $('#depCode').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err1').show();
+               event.preventDefault();
+           } else {
+               $('#err1').hide();
+           }
+           var data = $('#abbreviation').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err2').show();
+               event.preventDefault();
+           } else {
+               $('#err2').hide();
+           }
+           var data = $('#depName').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err3').show();
+               event.preventDefault();
+           } else {
+               $('#err3').hide();
+           }
+           var data = $('#address').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err4').show();
+               event.preventDefault();
+           } else {
+               $('#err4').hide();
+           }
+           var data = $('#introduction').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err5').show();
+               event.preventDefault();
+           } else {
+               $('#err5').hide();
+           }
+           var data = $('#remark').val();
+           data = $.trim(data);
+           if(data.length < 1) {
+               $('#err6').show();
+               event.preventDefault();
+           } else {
+               $('#err6').hide();
+           }
+
+       });
+
+
+
+
+       //
+        $("#fanhui").click(function () {
+            window.history.back();
+        })
         //获取所属部门
         $("#yincang  span").click(function () {
             var id=$(this).attr("id");

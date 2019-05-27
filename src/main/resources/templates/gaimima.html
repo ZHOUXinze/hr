@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>修改密码</title>
-		 <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -19,70 +19,68 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    			<!-- Bootstrap -->
+    <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	</head>
-	<body>
-		
-		
-		<div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                   
-                    
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <br>
-                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+</head>
+<body>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
 
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">请输入旧密码 
-                        </label><span class="required">*您本次登录时的密码</span>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">请输入新密码 
-                        </label><span class="required">* 新密码不少于6个字符</span>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                     
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">请再次新密码 
-                        </label><span class="required">* 新密码不少于6个字符</span>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                     
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3" align="center">
-                          <button type="submit" class="btn btn-primary">确认修改密码</button>
-                          <button type="submit" class="btn btn-success">取消</button>
-                        </div>
-                      </div>
-
-                    </form>
-                  </div>
-                </div>
-              </div>
+                <div class="clearfix"></div>
             </div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
+            <div class="x_content">
+                <br>
+                <form  th:action="@{gaimima}" method="post" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
 
-    <!-- /Datatables -->
-	</body>
+                    <div class="form-group">
+                        <li role="presentation" class="dropdown">
+                            <span th:text="${err}"></span>
+
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
+                                请输入旧密码</span>
+                            </label>
+                        </li>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                            <input  type="text" name="password" id="password" required="required"                                 class="form-control col-md-7 col-xs-12">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="new_password">
+                            请输入新密码
+                            </span></label><span class="required">* 新密码不少于6个字符</span>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" id="new_password" name="new_password" required="required"  class="form-control col-md-7 col-xs-12">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="now_password">
+                            <span >请再次输入新密码</span>
+                        </label><span class="required">* 新密码不少于6个字符</span>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" id="now_password" name="now_password" value="" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="hidden" id="deg" name="deg" value="" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3" align="center">
+                            <button type="submit" class="btn btn-primary">确认修改密码</button>
+                            <button type="submit" class="btn btn-success">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Datatables -->
+</body>
 </html>

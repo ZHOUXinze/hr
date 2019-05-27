@@ -19,4 +19,24 @@ VALUES(#{depCode},#{depName},#{abbreviation},#{higherOffice},#{address},#{introd
     <select id="getDepartmentById" parameterType="int" resultType="Department">
         select * from department where id = #{id}
     </select>
+    <update id="updateDepartmentByID" parameterType="Department">
+      update `department` set
+
+      depName=#{depName},
+      abbreviation=#{abbreviation},
+      higherOffice=#{higherOffice},
+      address=#{address},
+      introduction=#{introduction},
+      remark=#{remark},
+      enable=#{enable} where id=#{id}
+
+    </update>
+    <select id="findDepartmentBydepName" resultType="Department">
+select `id`, `depCode`,`depName`,`abbreviation`,`higherOffice`,`address`,`introduction`,`remark`,`enable` from `department`
+where `depName`=#{depName}
+
+    </select>
+    <delete id="detDepartByID" parameterType="int">
+        delete  from department where id=#{depID}
+    </delete>
 </mapper>

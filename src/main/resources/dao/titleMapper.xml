@@ -11,4 +11,72 @@
         select `id`,`titleCode`,`titleName`,`depId`
         from `title`
     </select>
+    <select id="findAllTitle" resultType="Title">
+        SELECT t.`id`,t.`titleCode`,t.`titleName`,t.`depId`,(SELECT p.depName FROM department AS p
+        WHERE p.id=t.depId)AS depName ,t.`introduction`,t.`remark`,t.`enable`,
+        (SELECT dataName FROM dictionary AS d
+        WHERE id=t.enable)AS dataName FROM `title` AS t
+<where>
+    <if test="title.titleName!=null and title.titleName!=''">
+        and  titleName=#{title.titleName}
+    </if>
+    <if test="title.enable!=null">
+        and enable=#{title.enable}
+    </if>
+    <if test="title.depId!=null">
+        and depId=#{title.depId}
+    </if>
+
+
+</where>
+        ORDER BY id DESC LIMIT  #{from},#{pageSize}
+    </select>
+    <select id="findAllTitleCount" resultType="int">
+        select  count(1) from `Title`
+        <where>
+            <if test="title.titleName!=null and title.titleName!=''">
+                and  titleName=#{title.titleName}
+            </if>
+            <if test="title.enable!=null">
+                and enable=#{title.enable}
+            </if>
+            <if test="title.depId!=null">
+                and depId=#{title.depId}
+            </if>
+
+        </where>
+    </select>
+    <insert id="addTitle" parameterType="Title">
+INSERT INTO `title` (`titleCode`,`titleName`,`depId`,`introduction`,`remark`,`enable`)
+VALUES(#{titleCode},#{titleName},#{depId},#{introduction},#{remark},#{enable})
+
+    </insert>
+    <select id="findTitleByID" resultType="Title">
+        SELECT t.`id`,t.`titleCode`,t.`titleName`,t.`depId`,(SELECT p.depName FROM department AS p
+        WHERE p.id=t.depId)AS depName ,t.`introduction`,t.`remark`,t.`enable`,
+        (SELECT dataName FROM dictionary AS d
+        WHERE id=t.enable)AS dataName FROM `title` AS t  where  t.id=#{titleId}
+
+    </select>
+    <update id="updateTitle" parameterType="Title">
+     update `title` set
+titleCode=#{titleCode},
+titleName=#{titleName},
+depId=#{depId},
+depId=#{depId},
+introduction=#{introduction},
+remark=#{remark},
+ enable=#{enable}
+ where id=#{id}
+
+    </update>
+    <delete id="detTitleByID" parameterType="int">
+
+        delete from title where id=#{titleId}
+    </delete>
+    <select id="findtitleByCode" resultType="String">
+        select titleCode from Title where titleCode=#{titleCode}
+
+    </select>
+
 </mapper>

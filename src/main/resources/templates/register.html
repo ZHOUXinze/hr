@@ -479,6 +479,7 @@
         }else {
             $("#resumepaths").text("")
         }
+		return true;
     }
     function checkfamily() {
         var family=$("#family").val();
@@ -489,6 +490,7 @@
         }else {
             $("#familys").text("")
         }
+		return true;
     }
     function checkremark() {
         var remark=$("#remark").val();
@@ -499,6 +501,7 @@
         }else {
             $("#remarks").text("")
         }
+		return true;
     }
     function checkannex() {
         var annex=$("#annex").val();
@@ -509,6 +512,7 @@
         }else {
             $("#annexs").text("")
         }
+		return true;
     }
 
     function checkdep(){
@@ -518,7 +522,7 @@
 			$("#depnames").text("非空");
 			return false;
 		}
-
+		return true;
 	}
     function checkaddress() {
         var address=$("#address").val();
@@ -529,6 +533,8 @@
         }else {
             $("#addreesss").text("")
         }
+
+		return true;
     }
     function checksingle_cal2() {
         var single_cal2=$("#single_cal2").val();
@@ -539,6 +545,7 @@
         }else {
             $("#createdates").text("")
         }
+		return true;
     }
     function checksscNumber() {
         var sscNumber=$("#sscNumber").val();
@@ -549,6 +556,7 @@
         }else {
             $("#sscnumbers").text("")
         }
+		return true;
     }
     function checkbankCard() {
         var bankCard=$("#bankCard").val();
@@ -559,6 +567,7 @@
         }else {
             $("#bankcards").text("")
         }
+		return true;
     }
     function checkbank() {
         var bank=$("#bank").val();
@@ -569,6 +578,7 @@
         }else {
             $("#banks").text("")
         }
+		return true;
     }
     function checksalaryStandard() {
         var salaryStandard=$("#salaryStandard").val();
@@ -579,6 +589,7 @@
         }else {
             $("#salarystandards").text("")
         }
+		return true;
     }
     function checkeducation() {
         var education=$("#education").val();
@@ -589,6 +600,7 @@
         }else {
             $("#educations").text("")
         }
+		return true;
     }
     function checkmajor(){
         var major=$("#major").val();
@@ -599,6 +611,7 @@
         }else {
             $("#majors").text("")
         }
+		return true;
     }
     function checkpolitical(){
         var political=$("#political").val();
@@ -609,6 +622,7 @@
         }else {
             $("#politicals").text("")
         }
+		return true;
     }
     function checkschool(){
         var school=$("#school").val();
@@ -619,6 +633,7 @@
         }else {
             $("#schools").text("")
         }
+		return true;
     }
     function checkaccount(){
         var account=$("#account").val();
@@ -629,6 +644,7 @@
         }else {
             $("#accounts").text("")
         }
+		return true;
     }
     function checkidNumber(){
         var idNumber=$("#idNumber").val();
@@ -639,6 +655,7 @@
         }else {
             $("#idnumbers").text("")
         }
+		return true;
     }
     function checkphoneNumber(){
         var phoneNumber=$("#phoneNumber").val();
@@ -650,6 +667,7 @@
         }else {
             $("#phonenumbers").text("")
         }
+		return true;
     }
 
 
@@ -662,17 +680,19 @@
         }else {
             $("#emails").text("")
         }
+		return true;
     }
     function checkname(){
         var name=$("#name").val();
         var names=$("#names").val();
-alert(name);
+
         if(name==""){
             $("#names").text("非空");
             return false;
         }else {
             $("#names").text("");
         }
+		return true;
     }
     function checkgender(){
         var gender=$("#gender").val();
@@ -683,6 +703,7 @@ alert(name);
         }else {
             $("#sex").text("")
         }
+		return true;
     }
 
 	function checkarch(){
@@ -694,7 +715,7 @@ alert(name);
 		} else {
 			$("#archstatuss").text("");
 		}
-
+		return true;
 	}
 	function checkpic(){
 		var photo=$("#photo").val();
@@ -705,7 +726,7 @@ alert(name);
 		} else {
 			$("#pic").text("");
 		}
-
+		return true;
 	}
 	function checkpos(){
 		var posName=$("#posName").val();
@@ -714,7 +735,7 @@ alert(name);
 			$("#posnames").text("非空");
 			return false;
 		}
-
+		return true;
 	}
 function checktitle(){
 	var titleName=$("#titleName").val();
@@ -724,16 +745,17 @@ function checktitle(){
 		$("#titlenames").text("非空");
 		return false;
 	}
+	return true;
 }
 function checkfrom(){
 	var flag=true;
-	/*if(!checkpic()) flag=false;if(!checkarch()) flag=false;if(!checkdep()) flag=false;if(!checkpos()) flag=false;if(!checktitle()) flag=false;
+	if(!checkpic()) flag=false;if(!checkarch()) flag=false;if(!checkdep()) flag=false;if(!checkpos()) flag=false;if(!checktitle()) flag=false;
     if(!checkname()) flag=false;if(!checkgender()) flag=false;if(!checkemail()) flag=false;
     if(!checkphoneNumber()) flag=false;if(!checkidNumber()) flag=false;if(!checkaccount()) flag=false;
     if(!checkaddress()) flag=false;if(!checkannex()) flag=false;if(!checkbank()) flag=false;if(!checkbankCard()) flag=false;if(!checkeducation()) flag=false;
     if(!checkfamily())flag=false;if(!checkmajor())flag=false;if(!checkpolitical())flag=false;if(!checkremark())flag=false;
     if(!checkresumePath())flag=false;if(!checksalaryStandard())flag=false;if(!checksingle_cal2())flag=false;
-    if(!checkschool())flag=false;if(!checksscNumber())flag=false;*/
+    if(!checkschool())flag=false;if(!checksscNumber())flag=false;
 
 	return flag;
 }

@@ -43,6 +43,11 @@ if(users!=null){
     }
 
     @Override
+    public String findUserByCode(String userCode) {
+        return findUserByCode(userCode);
+    }
+
+    @Override
     public int addUser(User user) {
         return userDao.addUser(user);
     }
@@ -64,6 +69,10 @@ if(users!=null){
     @Override
     public User findUserByID(int userId) {
         return userDao.findUserByID(userId);
+    }
+    @Override
+    public int upd(int userId, String password) {
+        return userDao.updUser(userId,password);
     }
 
 

@@ -32,4 +32,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department getDepartmentById(int id) {
         return departmentDao.getDepartmentById(id);
     }
+    @Override
+    public int updateDepartmentByID(Department department) {
+        return departmentDao.updateDepartmentByID(department);
+    }
+
+    @Override
+    public Department findDepartmentBydepName(String depName) {
+        return departmentDao.findDepartmentBydepName(depName);
+    }
+
+    @Override
+    public int detDepartByID(int depID) {
+        return departmentDao.detDepartByID(depID);
+    }
 }

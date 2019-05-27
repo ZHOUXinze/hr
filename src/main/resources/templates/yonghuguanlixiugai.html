@@ -52,13 +52,13 @@
                                        name="userName"  required="required" type="text">
                             </div>
                         </div>
-                        <div class="item form-group">
+                       <!-- <div class="item form-group">
                             <label for="password" class="control-label col-md-3">密码</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input th:value="${user.password}" id="password" type="password" name="password"
                                        data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">用户角色</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -107,8 +107,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <button id="send" type="submit" class="btn btn-success" >修改</button>
-                                <button type="submit" class="btn btn-primary">返回</button>
+                                <button id="send" type="submit" class="btn btn-success"  onclick='return xiugai();' >修改</button>
+                                <button id="fanhui" type="submit" class="btn btn-primary">返回</button>
 
                             </div>
                         </div>
@@ -132,9 +132,36 @@
     <script src="../build/js/custom.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+       // 修改提示
+        function  xiugai()
 
+        {
+
+            if(confirm("确定要修改吗吗？"))
+
+            {
+
+                return true;
+
+            }
+
+            else
+
+            {
+
+                return false;
+
+            }
+
+        }
+
+        //返回上个页面
+        $(document).ready(function () {
+            $("#fanhui").click(function () {
+                window.history.back();
+            })
             //获取所属部门
+            $("#yincang").hide();
             $("#yincang  span").click(function () {
                 var id=$(this).attr("id");
                 var depname=$(this).text();

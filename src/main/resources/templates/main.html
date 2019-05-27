@@ -68,7 +68,7 @@
 
                 </ul>
               </li>
-              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">系统设置 </font></font><span class="fa fa-chevron-down"></span></a>
+              <li><a th:if="${session.userSession.dataName}=='公司领导' or ${session.userSession.dataName}=='管理员' "><font style="vertical-align: inherit;" ><font style="vertical-align: inherit;">系统设置 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                   <li><a target="fr" th:href="org"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">组织结构设置</font></font></a></li>
                   <li><a th:target="fr" href="yonghuguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用户管理</font></font></a></li>
@@ -78,14 +78,14 @@
 
                 </ul>
               </li>
-              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
+              <li><a th:if="${session.userSession.dataName}=='薪酬专员' or ${session.userSession.dataName}=='薪酬经理' "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: block;">
                   <li th:target="fr" class="current-page"><a href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪标准管理</font></font></a></li>
                   <li><a th:target="fr" href="/xinchoufafangguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪发放管理</font></font></a></li>
 
                 </ul>
               </li>
-              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 人事管理</font></font><span class="fa fa-chevron-down"></span></a>
+              <li><a th:if="${session.userSession.dataName}=='人事专员' or ${session.userSession.dataName}=='人事经理' " ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 人事管理</font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                   <li><a th:target="fr" th:href="@{/registerList}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">人事档案管理</font></font></a></li>
 
@@ -99,11 +99,11 @@
 
                 </ul>
               </li>-->
-              <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">数据分析 </font></font><span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
+             <!-- <li><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"th:if="${session.userSession.dataName}=='' or ${session.userSession.dataName}=='' ">数据分析 </font></font><span class="fa fa-chevron-down"></span></a>
+               &lt;!&ndash; <ul class="nav child_menu">
                   <li><a th:target="fr" href="zhiyuanmingxibiao"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">职员明细表</font></font></a></li>
-                </ul>
-              </li>
+                </ul>&ndash;&gt;
+              </li>-->
             </ul>
           </div>
         </div>
@@ -123,9 +123,10 @@
           </div>
           <ul class="nav navbar-nav navbar-right">
             <li role="presentation" class="dropdown">
-              欢迎：<span th:text="${session.userSession.userName}" ></span> 部门 ：<span th:text="${session.userSession.dataName}" ></span>
-              职责：<span th:text="${session.userSession.depName}" ></span>
+              欢迎：<span th:text="${session.userSession.userName}" ></span> 职责 ：<span th:text="${session.userSession.dataName}" ></span>
+              部门  ：<span th:text="${session.userSession.depName}" ></span>
               <a th:href="@{/tuichu}">退出</a>
+
             </li>
           </ul>
         </nav>
@@ -135,7 +136,7 @@
 
     <!-- page content -->
     <div class="right_col" role="main">
-        <iframe name="fr" frameborder="" marginwidth="" marginheight=""  width="100%" height="1029" src="register"
+        <iframe name="fr" frameborder="" marginwidth="" marginheight=""  width="100%" height="1029" src="gaimima"
                 scrolling="no"></iframe>
     </div>
     <!-- /page content -->

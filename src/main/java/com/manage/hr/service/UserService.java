@@ -14,4 +14,8 @@ public interface UserService {
     User findUserByID(  int userId);
     int login(String userCode,String password,User user);
     int delUserById( int userId);
+    String findUserByCode( String userCode );
+    int upd(int userId,String password);
+
+
 }

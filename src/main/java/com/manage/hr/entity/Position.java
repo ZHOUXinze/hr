@@ -9,6 +9,33 @@ public class Position {
     private String introduction;
     private String remark;
     private Integer enable;
+    private String dicClass;
+    private String depName;
+    private  String dataName;
+    public String getDicClass() {
+        return dicClass;
+    }
+
+    public void setDicClass(String dicClass) {
+        this.dicClass = dicClass;
+    }
+
+    public String getDepName() {
+        return depName;
+    }
+
+    public void setDepName(String depName) {
+        this.depName = depName;
+    }
+
+    public String getDataName() {
+        return dataName;
+    }
+
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
+    }
+
 
     public Integer getId() {
         return id;

@@ -38,7 +38,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number" >用户编码 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12" >
-                                <input th:value="${user.userCode}" type="text" id="number" name="userCode" required="required"
+                                <input readonly th:value="${user.userCode}" type="text" id="number" name="userCode" required="required"
                                        data-validate-minmax="10,100" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
@@ -46,68 +46,41 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">用户名称<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input th:value="${user.userName}" id="name" class="form-control col-md-7 col-xs-12"
+                                <input readonly th:value="${user.dataName}" id="name" class="form-control col-md-7 col-xs-12"
                                        data-validate-length-range="6" data-validate-words="2"
                                        name="userName"  required="required" type="text">
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label for="password" class="control-label col-md-3">密码</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input th:value="${user.password}" id="password" type="password" name="password"
-                                       data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">用户角色</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select  class="form-control" name="dictionid">
-
-
-
-                                    <option  th:each="diction:${dictionaryList}" th:if="${diction.getDataType()}==userRole"
-                                             th:text="${diction.dataName}" th:selected="(${diction.id}==${user.userRole})"
-                                             th:value="${diction.id}">-- 请选择 --
-
-
-                                    </option>
-
-
-                                </select>
+                                <input readonly th:value="${user.userCode}" type="text" id="userCode" name="userCode" required="required"
+                                       data-validate-minmax="10,100" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="depName">所属部门 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input th:value="${user.depName}"  readonly="readonly" id="depName" type="text" name="depName"
+                                <input  th:value="${user.depName}"  readonly="readonly" id="depName" type="text" name="depName"
                                        data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12">
-                                <input type="hidden"  id="depId" name="depId">
-                            </div><i  id="myBT"  class="fa fa-search-plus"></i>
-                            <div id="yincang" >
-                                <ul  >
 
-                                    <li th:each="department:${departmentList}">
-                                        <span th:text="${department.depName}"  th:id="${department.id}"></span>
-                                    </li>
-                                </ul>
+                            </div>
 
-
-
-                            </div >
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">联系电话<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input th:value="${user.phoneNumber}" type="number" id="telephone" name="phoneNumber" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                                <input readonly th:value="${user.phoneNumber}" type="number" id="telephone" name="phoneNumber" required="required" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
 
-                                <button type="submit" class="btn btn-primary">返回</button>
+                                <button id="fanhui" type="button" class="btn btn-primary">返回</button>
 
                             </div>
                         </div>
@@ -132,6 +105,10 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+         $("#fanhui").click(function () {
+             window.history.back();
+         })
+
 
             //获取所属部门
             $("#yincang  span").click(function () {

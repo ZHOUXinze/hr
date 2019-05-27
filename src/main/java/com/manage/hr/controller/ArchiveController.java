@@ -216,7 +216,11 @@ public class ArchiveController {
     @RequestMapping("/registerList")
     public String show(ArchiveTools archiveTools,@RequestParam(required=false) Integer pageIndex,HttpSession session,Model model){
       User user=(User)session.getAttribute(Constrans.USERSESSION);
-     String userRoleName= user.getDataName();
+
+      String aa=  user.getDataName();
+
+     int  userRoleName= user.getUserRole();
+
      String registerPerson=user.getUserName();
      System.out.println(userRoleName);
         LoadDataBase.loadDictionary();
@@ -231,7 +235,7 @@ public class ArchiveController {
         //查询Archive的信息
         PageSurport<Archive> pageSurport=null;
 
-if(userRoleName.equals("人事专员")){
+if(aa.equals("人事专员")){
     archiveTools.setRegisterPerson(registerPerson);
     pageSurport= archiveService.findArchiveList(archiveTools, curIndex, pageSize);
 }else{
