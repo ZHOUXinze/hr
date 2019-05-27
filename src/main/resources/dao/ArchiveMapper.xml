@@ -265,4 +265,7 @@
     <select id="findArchiveByName" resultType="String">
     SELECT archCode FROM `archive` WHERE `name`=#{userName}
     </select>
+    <select id="listArchiveByDep" resultType="Archive" parameterType="int">
+        SELECT * FROM `archive` where depId = #{depId}
+    </select>
 </mapper>
