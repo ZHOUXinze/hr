@@ -108,6 +108,11 @@ public class ArchiveServiceImpl implements ArchiveService {
         return archiveDao.listArchiveByDep(depId);
     }
 
+    @Override
+    public int countAll() {
+        return archiveDao.countAll();
+    }
+
 
     public void page(ArchiveTools archiveTools, int pageIndex, int pageSize){
     Date bt=null;

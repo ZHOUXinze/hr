@@ -10,7 +10,7 @@
         `paymentCount`,
         `lastTime`,
         `status`,
-        `depId`
+        `peopleNumber`
         FROM
         payment
     </select>
@@ -19,17 +19,27 @@
  `paymentCode`,
   `paymentCount`,
   `lastTime`,
-  `status`
+  `status`,
+  `peopleNumber`,
+  depId
 )
 VALUES
   (
      #{paymentCode},
   #{paymentCount},
   #{lastTime},
-  #{status}
-  );
+  #{status},
+  #{peopleNumber},
+  #{depId}
+  )
     </insert>
     <update id="updatePayment" parameterType="Payment">
 
     </update>
+    <select id="listPaymentByCode" resultType="Payment" parameterType="String">
+        select * from payment where paymentCode = #{paymentCode}
+    </select>
+    <select id="getPaymentByCodeAndDep" resultType="Payment">
+
+    </select>
 </mapper>

@@ -15,6 +15,15 @@ public class Payment {
     private int depId;
     private int modelStatus;
     private String last;
+    private String depName;
+
+    public String getDepName() {
+        return depName;
+    }
+
+    public void setDepName(String depName) {
+        this.depName = depName;
+    }
 
     public void setDepId(int depId) {
         this.depId = depId;

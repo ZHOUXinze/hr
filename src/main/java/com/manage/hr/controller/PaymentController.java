@@ -32,7 +32,7 @@ public class PaymentController {
     @Resource
     SalaryStandardDetailService salaryStandardDetailService;
 
-    @RequestMapping(value = "/payment")
+    @RequestMapping(value = "/showPayment")
     public String showPayment(Model model) {
         BigDecimal sT = BigDecimal.valueOf(0);
         LoadDataBase.loadDepartment();
@@ -45,13 +45,15 @@ public class PaymentController {
             }
             department.setpNum(archives.size());
             for (Archive archive : archives) {
-                List<SalaryStandardDetail> salaryStandardDetailList = salaryStandardDetailService.listSalaryStandardDetailByCode(archive.getSsCode());
+                List<SalaryStandardDetail> salaryStandardDetailList = salaryStandardDetailService.listSalaryStandardDetailByCode(archive.getStandardCode());
                 for (SalaryStandardDetail salaryStandardDetail: salaryStandardDetailList){
                      sT = sT.add(salaryStandardDetail.getItemAmount());
                 }
             }
             department.setTotalSs(sT);
         }
+        //查询所有人数
+        model.addAttribute("pNum",archiveService.countAll());
         model.addAttribute("paymentList", paymentService.listPayment());
         model.addAttribute("depList", departmentList);
         return "payment";
@@ -63,4 +65,5 @@ public class PaymentController {
     public String saveSalaryItem(@RequestBody List<Payment> paymentList) {
         return paymentService.savePayment(paymentList) > 0 ? "success" : "error";
     }
+
 }

@@ -10,4 +10,8 @@ public interface PaymentService {
 
     //保存
     int savePayment(List<Payment> paymentList);
+
+    List<Payment> listPaymentByCode(String paymentCode);
+
+    Payment getPaymentByCodeAndDep(String paymentCode,int depId);
 }

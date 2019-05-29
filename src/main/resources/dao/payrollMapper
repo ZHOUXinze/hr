@@ -4,33 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manage.hr.dao.PayrollDao">
     <select id="listPayrollByPm" parameterType="int" resultType="Payroll">
-        SELECT
-        `id`,
-        `paymentId`,
-        `archId`
-        FROM
-        payroll
-        WHERE paymentId = #{paymentId}
+        SELECT id,paymentId,archId FROM payroll WHERE archId IN (
+        SELECT id FROM `archive` WHERE paymentId = #{paymentId})
     </select>
     <select id="listPayrollByDep" parameterType="int" resultType="Payroll">
-        SELECT
-        `id`,
-        `paymentId`,
-        `archId`
-        FROM
-        payroll
-        WHERE depId = #{depId}
+       SELECT id,paymentId,archId FROM payroll WHERE archId IN (
+        SELECT id FROM `archive` WHERE depId = #{depId})
     </select>
     <select id="listPayrollByPmDdp" resultType="Payroll">
-        SELECT
-        `id`,
-        `paymentId`,
-        `archId`
-        FROM
-        payroll
-        WHERE
-        pamentId = #{paymentId} and
-        depId = #{depId}
+         SELECT id,paymentId,archId FROM payroll WHERE archId IN (
+        SELECT id FROM `archive` WHERE depId = #{depId} AND paymentId = #{paymentId})
     </select>
     <select id="countPayrollByPaymentId" parameterType="int" resultType="int">
         SELECT COUNT(1) FROM payroll WHERE paymentId = #{paymentId} ORDER BY archId

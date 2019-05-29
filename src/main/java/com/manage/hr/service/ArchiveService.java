@@ -26,5 +26,6 @@ public interface ArchiveService {
     PageSurport<Archive> findArchiveMarList(ArchiveTools archiveTools, int pageIndex, int pageSize);
 
     List<Archive> listArchiveByDep(int depId);
+    int countAll();
 
 }

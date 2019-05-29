@@ -29,4 +29,5 @@ public interface ArchiveDao {
 int findArchiveMarCount(@Param("archiveTools") ArchiveTools archiveTools);
     List<Archive> findArchiveMarList(@Param("archiveTools") ArchiveTools archiveTools,@Param("from") int from,@Param("pageSize") int pageSize);
     List<Archive> listArchiveByDep(int depId);
+    int countAll();
 }

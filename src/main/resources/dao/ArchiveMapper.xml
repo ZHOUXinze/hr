@@ -268,4 +268,7 @@
     <select id="listArchiveByDep" resultType="Archive" parameterType="int">
         SELECT * FROM `archive` where depId = #{depId}
     </select>
+    <select id="countAll" resultType="int">
+        select count(1) from `archive`
+    </select>
 </mapper>

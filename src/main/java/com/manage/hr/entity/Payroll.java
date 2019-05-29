@@ -1,9 +1,20 @@
 package com.manage.hr.entity;
 
+import java.util.List;
+
 public class Payroll {
     private Integer id;
     private Integer paymentId;
     private Integer archId;
+    private List<PayrollDetail> payrollDetails;
+
+    public List<PayrollDetail> getPayrollDetails() {
+        return payrollDetails;
+    }
+
+    public void setPayrollDetails(List<PayrollDetail> payrollDetails) {
+        this.payrollDetails = payrollDetails;
+    }
 
     public Integer getId() {
         return id;

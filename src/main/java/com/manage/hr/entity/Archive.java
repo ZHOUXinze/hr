@@ -1,7 +1,7 @@
 package com.manage.hr.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Archive {
     private Integer id;
@@ -51,14 +51,23 @@ public class Archive {
     private String educations;
     private String salaryStandards;
     private String isdeletes;
-    private String ssCode;
+    private String standardCode;
+    private List<SalaryStandardDetail> salaryStandardDetailList;
 
-    public String getSsCode() {
-        return ssCode;
+    public List<SalaryStandardDetail> getSalaryStandardDetailList() {
+        return salaryStandardDetailList;
     }
 
-    public void setSsCode(String ssCode) {
-        this.ssCode = ssCode;
+    public void setSalaryStandardDetailList(List<SalaryStandardDetail> salaryStandardDetailList) {
+        this.salaryStandardDetailList = salaryStandardDetailList;
+    }
+
+    public String getStandardCode() {
+        return standardCode;
+    }
+
+    public void setStandardCode(String standardCode) {
+        this.standardCode = standardCode;
     }
 
     public String getTitleCode() {
