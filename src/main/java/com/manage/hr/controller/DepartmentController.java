@@ -2,9 +2,7 @@ package com.manage.hr.controller;
 
 import com.manage.hr.dao.DepartmentDao;
 import com.manage.hr.dao.UserDao;
-import com.manage.hr.entity.Department;
-import com.manage.hr.entity.Dictionary;
-import com.manage.hr.entity.User;
+import com.manage.hr.entity.*;
 import com.manage.hr.service.DepartmentService;
 import com.manage.hr.service.DictionaryService;
 import com.manage.hr.util.LoadDataBase;
@@ -100,6 +98,14 @@ public class DepartmentController {
         department.setEnable(enable);
         int rel =departmentService.addDepartment(department);
         if(rel>0){
+            LoadDataBase.loadDictionary();
+            LoadDataBase.loadPosition();
+            LoadDataBase.loadDepartment();
+            LoadDataBase.loadTitle();
+            List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+            List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
+            List<Position> positionList=LoadDataBase.DATA_BASE.get("position");
+            List<Title> titleList=LoadDataBase.DATA_BASE.get("title");
             return "redirect:/org";
         }else{
             model.addAttribute("err","添加失败");

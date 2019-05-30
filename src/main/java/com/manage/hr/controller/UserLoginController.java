@@ -1,9 +1,7 @@
 package com.manage.hr.controller;
 
 import com.manage.hr.dao.UserDao;
-import com.manage.hr.entity.Department;
-import com.manage.hr.entity.Dictionary;
-import com.manage.hr.entity.User;
+import com.manage.hr.entity.*;
 import com.manage.hr.service.DepartmentService;
 import com.manage.hr.service.DictionaryService;
 import com.manage.hr.service.UserService;
@@ -53,6 +51,12 @@ if(rel==0){
             model.addAttribute("error","密码错误");
             return "login";
         }
+        LoadDataBase.loadPosition();
+        LoadDataBase.loadDictionary();
+        LoadDataBase.loadDepartment();
+        LoadDataBase.loadTitle();
+
+
    session.setAttribute(Constrans.USERSESSION,userSession);
 return "redirect:main";
     }

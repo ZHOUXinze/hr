@@ -74,13 +74,14 @@
     <select id="findArchiveMarCount" resultType="int">
         select COUNT(1) from archive
         <where>
+            reviewStatus!=6
             <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
                 and archCode=#{archiveTools.archCode}
             </if>
-
-            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=6">
+            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
                 and reviewStatus=#{archiveTools.reviewStatus}
             </if>
+
             <if test="archiveTools.archStatus!=null and archiveTools.archStatus!=''">
                 and isdelete=#{archiveTools.archStatus}
             </if>
@@ -109,12 +110,14 @@
         (SELECT posName FROM `position` p WHERE id=a.posId) posIds
         FROM `archive` a
         <where>
+            reviewStatus!=6
             <if test="archiveTools.archCode!=null and archiveTools.archCode!=''">
                 and archCode=#{archiveTools.archCode}
             </if>
-            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=6">
+            <if test="archiveTools.reviewStatus!=null and archiveTools.reviewStatus!=''">
                 and reviewStatus=#{archiveTools.reviewStatus}
             </if>
+
             <if test="archiveTools.archStatus!=null  and archiveTools.archStatus!=''">
                 and isdelete=#{archiveTools.archStatus}
             </if>

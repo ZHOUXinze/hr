@@ -4,6 +4,7 @@ import com.manage.hr.dao.PositionDao;
 import com.manage.hr.entity.Department;
 import com.manage.hr.entity.Dictionary;
 import com.manage.hr.entity.Position;
+import com.manage.hr.entity.Title;
 import com.manage.hr.service.DepartmentService;
 import com.manage.hr.service.DictionaryService;
 import com.manage.hr.service.PositionService;
@@ -83,6 +84,14 @@ public class PositionController {
         position.setPosClass(posClass);
         int rel=positionDao.addPosition(position);
         if (rel > 0) {
+            LoadDataBase.loadDictionary();
+            LoadDataBase.loadPosition();
+            LoadDataBase.loadDepartment();
+            LoadDataBase.loadTitle();
+            List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+            List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
+            List<Position> positionList=LoadDataBase.DATA_BASE.get("position");
+            List<Title> titleList=LoadDataBase.DATA_BASE.get("title");
             return "redirect:/zhiweiguanli";
         } else {
             model.addAttribute("err", "添加失败");

@@ -2,6 +2,7 @@ package com.manage.hr.service;
 
 import com.manage.hr.entity.User;
 import com.manage.hr.util.PageSurport;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
@@ -16,6 +17,6 @@ public interface UserService {
     int delUserById( int userId);
     String findUserByCode( String userCode );
     int upd(int userId,String password);
-
+    String  findUserByPass(String userName, int password);
 
 }

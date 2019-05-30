@@ -1,10 +1,7 @@
 package com.manage.hr.controller;
 
 import com.manage.hr.dao.UserDao;
-import com.manage.hr.entity.Archive;
-import com.manage.hr.entity.Department;
-import com.manage.hr.entity.Dictionary;
-import com.manage.hr.entity.User;
+import com.manage.hr.entity.*;
 import com.manage.hr.service.ArchiveService;
 import com.manage.hr.service.DepartmentService;
 import com.manage.hr.service.DictionaryService;
@@ -86,6 +83,14 @@ public class UserController {
         int rel=   userDao.addUser(user);
 
         if(rel>0){
+            LoadDataBase.loadDictionary();
+            LoadDataBase.loadPosition();
+            LoadDataBase.loadDepartment();
+            LoadDataBase.loadTitle();
+            List<Dictionary> dictionaryList = LoadDataBase.DATA_BASE.get("dictionary");
+            List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
+            List<Position> positionList=LoadDataBase.DATA_BASE.get("position");
+            List<Title> titleList=LoadDataBase.DATA_BASE.get("title");
             return "redirect:/yonghuguanli";
         }else{
             model.addAttribute("err","添加失败");
@@ -184,9 +189,12 @@ public class UserController {
 
     }
 
+
+
+
     //显示修改密码
     @RequestMapping(value = "/gaimima" ,method = RequestMethod.GET)
-    public String modifyPassword(HttpSession session)
+    public String modifyPassword()
     {
 
 
@@ -227,5 +235,17 @@ public class UserController {
             }
         }
     }
+//获取密码是否一致
+/*@RequestMapping(value = "/getmima" ,method = RequestMethod.POST)
+@ResponseBody
+    public  String  geimima(@RequestParam (required = false ,value = "userpassword") int password,
+                            @RequestParam (required = false ,value = "nameuser")  String userName){
+     String rel=userService.findUserByPass(userName,password);
+
+
+
+        return rel;
+
+}*/
 
 }

@@ -5,24 +5,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>人事档案列表</title>
-	<!-- Bootstrap -->
 	<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Font Awesome -->
 	<link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<!-- NProgress -->
 	<link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-	<!-- Ion.RangeSlider -->
 	<link href="../vendors/normalize-css/normalize.css" rel="stylesheet">
 	<link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
 	<link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
-	<!-- Bootstrap Colorpicker -->
 	<link href="../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-
 	<link href="../vendors/cropper/dist/cropper.min.css" rel="stylesheet">
-
-	<!-- Custom Theme Style -->
 	<link href="../build/css/custom.min.css" rel="stylesheet">
-	<!-- Bootstrap -->
 	<link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		ul li{
@@ -61,15 +52,15 @@
 				<div class="form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">审核状态:</label>
 					<div class="col-md-8 col-sm-8 col-xs-12" th:if="${session.userSession.userRole}==19">
-					<select class="form-control" name="reviewStatus">
-						<option value="">请选择</option>
-						<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==revStatus"
-								 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archiveTools.reviewStatus})"
-								 th:value="${dictionary.id}">-- 请选择 --
-						</option>
+						<select class="form-control" name="reviewStatus">
+							<option value="">请选择</option>
+							<option  th:each="dictionary:${dictionaryList}" th:if="${dictionary.getDataType()}==revStatus and ${dictionary.getDataCode()}!='rs_draft'"
+									 th:text="${dictionary.dataName}" th:selected="(${dictionary.id}==${archiveTools.reviewStatus})"
+									 th:value="${dictionary.id}">-- 请选择 --
+							</option>
 
-					</select>
-				</div>
+						</select>
+					</div>
 					<div class="col-md-8 col-sm-8 col-xs-12" th:if="${session.userSession.userRole}==18">
 						<select class="form-control" name="reviewStatus">
 							<option value="">请选择</option>
@@ -82,6 +73,7 @@
 					</div>
 				</div>
 			</li>
+
 
 			<li>
 				<div class="form-group">

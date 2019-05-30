@@ -82,7 +82,7 @@
                 <ul>
 					<li class="lefttop">
 						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="deptment">档案编码:</label>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">档案编码:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="archCode" readonly th:value="${archive.archCode}" required="required" class="form-control col-md-7 col-xs-12">
 							</div>
@@ -107,11 +107,12 @@
 								<input type="file" id="comm" name="comm" required="required" class="form-control col-md-7 col-xs-12">
 							</div>-->
 						<div class="image view view-first">
-							<img style="width:180px;height:180px; display:block;" th:src="${archive.photoPath}"  alt="">
+							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
+							<input type="hidden" id="photo" name="photos" th:value="${archive.photoPath}" required="required" class="form-control col-md-7 col-xs-12">
 
 						</div>
 					</li>
-					<li class="lefttop">
+					<li class="lefttop" style="cursor:pointer">
 						<div class="item form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="depName">所属部门 <span class="required">*</span>
 							</label>
@@ -146,13 +147,9 @@
 
 					<li class="lefttop">
 
-						<div class="image view view-first">
-							<img style="width:160px;height:160px; display:block;" th:src="${archive.photoPath}"  alt="">
-							<input type="hidden" id="photo" name="photos" th:value="${archive.photoPath}" required="required" class="form-control col-md-7 col-xs-12">
 
-						</div>
 					</li>
-					<li class="lefttop">
+					<li class="lefttop" style="cursor:pointer">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12">职位名称:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
@@ -181,7 +178,7 @@
 					<li class="lefttop">
 
 					</li>
-					<li class="lefttop">
+					<li class="lefttop" style="cursor:pointer">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12">职称名称:</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
@@ -402,16 +399,15 @@
 					<li class="leftfooter1">
 						<div class="form-group">
 							<label class="control-label col-md-2 col-sm-2 col-xs-12" >附件:</label>
-							<div class="col-md-10 col-sm-10 col-xs-12" id="uploadfile" style="display: none">
+							<div class="col-md-6 col-sm-6 col-xs-12" id="uploadfile" style="display: none">
 								<input type="hidden" th:value="${archive.annex}" id="annexhidden" name="annex" required="required" class="form-control col-md-7 col-xs-12">
 								<input id="annex" type="file" th:value="${archive.annex}" class="form-control col-md-6 col-sm-6 col-xs-12" name="docFile">
 								<span style="color:red;display: inline-block; font-weight: bold;">*注：1、大小不得超过500m.2、文件类型：doc</span>
 							</div>
-							<div class="col-md-8 col-sm-8 col-xs-12" id="docFile"></div>
+							<div class="col-md-10 col-sm-10 col-xs-12" id="docFile"></div>
 						</div>
 
 					</li>
-
 				</ul>
 
 				<div class="form-group">

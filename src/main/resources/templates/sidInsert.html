@@ -117,11 +117,11 @@
                 <div class="col-md-4 mb-3">
                     <label for="formulator">制定人</label>
                     <input type="text" class="form-control" id="formulator"
-                           th:value="${session.user.getUserName()}" name="formulator">
+                           th:value="${session.userSession.userName}" name="formulator">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="register">登记人</label>
-                    <input type="text" class="form-control" id="register"
+                    <input  th:value="${session.userSession.userName}" type="text" class="form-control" id="register"
                            name="registerPerson">
                 </div>
                 <div class="col-md-4 mb-3">

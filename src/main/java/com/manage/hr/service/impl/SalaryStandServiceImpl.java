@@ -31,12 +31,12 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
             salaryStandard.setStatusName(LoadDataBase.DICTIONARY.get("revStatus").get(salaryStandard.getStatus()));
             salaryStandardList.add(salaryStandard);
         }
-        List<Map<String, Object>> mapList = salaryStandardDetailDao.listSsdView();
+        /*List<Map<String, Object>> mapList = salaryStandardDetailDao.listSsdView();
         for (Map<String, Object> map : mapList) {
             for (String key : map.keySet()) {
                 System.out.println(key);
             }
-        }
+        }*/
         return salaryStandardList;
     }
 

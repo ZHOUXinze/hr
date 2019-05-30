@@ -75,5 +75,10 @@ if(users!=null){
         return userDao.updUser(userId,password);
     }
 
+    @Override
+    public String findUserByPass(String userName ,int  password) {
+        return userDao.findUserByPass(userName,password);
+    }
+
 
 }

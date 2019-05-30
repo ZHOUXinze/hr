@@ -25,13 +25,9 @@ public class SalaryStandardController {
     private SalaryItemService salaryItemService;
 
     @RequestMapping(value = "/salaryStandard")
-    public String showSalaryStandardList(Model model, HttpSession session) {
-        User user = new User();
-        user.setUserRoleName("薪酬经理");
-        user.setUserName("张3");
+    public String showSalaryStandardList(Model model) {
         List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandard();
         model.addAttribute("salaryStandardList", salaryStandardList);
-        session.setAttribute("user", user);
         return "salaryStandard";
     }
 

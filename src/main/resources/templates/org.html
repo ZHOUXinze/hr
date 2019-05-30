@@ -76,13 +76,13 @@
 
 
             <ul >
-                <li th:each="department:${departmentList} "th:if="${department.higherOffice}==0" >
+                <li style="cursor:pointer" th:each="department:${departmentList} "th:if="${department.higherOffice}==0" >
               <a th:href="@{/orgadd(depNames=${department.depName}) }"   >    <i  id="add" name=""  class="fa fa-search-plus"></i>  </a>
                     <span id="a1" th:text="${department.depName}" th:value="${department.depName}"></span>
                 </li>
                 <ul>
-                    <li th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1" id="sada">
-                <a href="#" th:href="@{/orgDet(depID=${department2.id})}"  onclick='return del();' >        <i  class="fa fa-search-minus"></i>    </a>
+                    <li style="cursor:pointer" th:each="department2:${departmentList}"  th:if="${department2.higherOffice}==1" id="sada">
+                <a  th:href="@{/orgDet(depID=${department2.id})}"  onclick='return del();' >        <i  class="fa fa-search-minus"></i>    </a>
                         <span id="b2" th:text="${department2.depName}"th:value="${department2.depName}"></span>
                     </li>
 

@@ -74,5 +74,10 @@ delete from  `user` where id=#{userId}
    <update id="updUser" >
    update `user` set password=#{password} where id=#{userId}
 </update>
+<select id="findUserByPass" resultType="String">
+   SELECT `password` FROM `user` WHERE `password`=#{password}
+   and userName=#{userName}
+</select>
+
 
 </mapper>

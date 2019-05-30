@@ -34,18 +34,18 @@
             <div class="x_content">
                 <br>
                 <form  th:action="@{gaimima}" method="post" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
-
+                 <input type="hidden" id="userName" th:value="${session.userSession.userName}" name="userName">
                     <div class="form-group">
-                        <li role="presentation" class="dropdown">
+                        <span role="presentation" class="dropdown">
                             <span th:text="${err}"></span>
 
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
                                 请输入旧密码</span>
                             </label>
-                        </li>
+                        </span>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 
-                            <input  type="text" name="password" id="password" required="required"                                 class="form-control col-md-7 col-xs-12">
+                            <input  type="password" name="password" id="password" required="required"                                 class="form-control col-md-7 col-xs-12">
 
                         </div>
                     </div>
@@ -53,9 +53,9 @@
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="new_password">
                             请输入新密码
-                            </span></label><span class="required">* 新密码不少于6个字符</span>
+                            </span></label><span class="required"></span>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="new_password" name="new_password" required="required"  class="form-control col-md-7 col-xs-12">
+                            <input type="password" id="new_password" name="new_password" required="required"  class="form-control col-md-7 col-xs-12">
 
                         </div>
                     </div>
@@ -63,17 +63,17 @@
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="now_password">
                             <span >请再次输入新密码</span>
-                        </label><span class="required">* 新密码不少于6个字符</span>
+                        </label><span class="required"></span>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="now_password" name="now_password" value="" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="password" id="now_password" name="now_password" value="" required="required" class="form-control col-md-7 col-xs-12">
                             <input type="hidden" id="deg" name="deg" value="" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3" align="center">
-                            <button type="submit" class="btn btn-primary">确认修改密码</button>
-                            <button type="submit" class="btn btn-success">取消</button>
+                            <button id="send"  type="submit" class="btn btn-primary">确认修改密码</button>
+                           <!-- <button type="submit" class="btn btn-success">取消</button>-->
                         </div>
                     </div>
                 </form>
@@ -81,6 +81,49 @@
         </div>
     </div>
 </div>
+
+
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- validator -->
+<script src="../vendors/validator/validator.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+<!--<script type="text/javascript">
+$(document).ready(function () {
+   /* alert(111);*/
+    $("#password").blur(function () {
+
+        var mima=$(this).val();
+       /* var nameming=$(#userName).val();*/
+        $.post("getmima",{'userpassword':mima,'nameuser':nameming},function (data) {
+            alert(22)
+         if(data==null || data==""){
+             $("#send").attr("disabled").disabled;
+         }else{
+             $("#send").removeAttr("disabled");
+         }
+
+
+        },"html")
+    })
+
+})
+
+
+
+
+</script>-->
 <!-- /Datatables -->
 </body>
+
+
+
+
 </html>
