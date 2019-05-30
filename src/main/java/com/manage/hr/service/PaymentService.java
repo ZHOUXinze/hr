@@ -8,10 +8,9 @@ public interface PaymentService {
     //查询所有
     List<Payment> listPayment();
 
-    //保存
-    int savePayment(List<Payment> paymentList);
+    Payment insertPayment();
 
-    List<Payment> listPaymentByCode(String paymentCode);
+    int updatePayment(Payment payment);
 
-    Payment getPaymentByCodeAndDep(String paymentCode,int depId);
+    String getNewCode();
 }

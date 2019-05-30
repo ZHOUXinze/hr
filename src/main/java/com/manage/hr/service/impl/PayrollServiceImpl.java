@@ -28,5 +28,10 @@ public class PayrollServiceImpl implements PayrollService {
         return payrollDao.getPayrollByPmDdp(paymentId,depId);
     }
 
+    @Override
+    public int countPayrollByPaymentId(int paymentId) {
+        return payrollDao.countPayrollByPaymentId(paymentId);
+    }
+
 
 }

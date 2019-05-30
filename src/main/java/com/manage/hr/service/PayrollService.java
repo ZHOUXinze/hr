@@ -11,4 +11,6 @@ public interface PayrollService {
     List<Payroll> listPayrollByDep(int depId);
     //根据部门id和薪酬单id查询payroll
     Payroll getPayrollByPmDdp(int paymentId,int depId);
+
+    int countPayrollByPaymentId(int paymentId);
 }

@@ -8,13 +8,12 @@ import java.util.List;
 
 @Repository
 public interface PaymentDao {
-    //查询所有
-    List<Payment> listPayment();
+    int updatePayment(Payment payment);
 
     int insertPayment(Payment payment);
 
-    List<Payment> listPaymentByCode(String paymentCode);
+    List<Payment> listPayment();
 
-    Payment getPaymentByCodeAndDep(@Param("paymentCode") String paymentCode, @Param("depId") int depId);
+    Payment getPaymentByCode(String paymentCode);
 }
 

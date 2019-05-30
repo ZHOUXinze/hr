@@ -17,68 +17,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script>
-
         $(document).ready(function () {
-            var idNum = 200;
-            //添加，页面增加新的空行
-            $('#insert').click(function () {
-                let tr = '<tr>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="custom-control custom-radio">\n' +
-                    '            <input type="hidden" name="modelStatus" value="2">' +
-                    '                            <input type="radio" name="dr"\n' +
-                    '                                   class="custom-control-input dr" \n' +
-                    '                                   id="r" value="-1">\n' +
-                    '                            <label class="custom-control-label" id="l1"></label>\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="col-sm-10">\n' +
-                    '                            <input type="text" class="form-control si" name="paymentCode"\n' +
-                    '                                   >\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="col-sm-10">\n' +
-                    '                            <input type="text" class="form-control si" name="paymentCount"\n' +
-                    '                                >\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                    <td>' +
-                    '                       <div class="col-sm-10">\n' +
-                '                            <input type="text" id="pNum" class="form-control si" name="peopleNumber"\n' +
-                '                               >\n' +
-                '                        </div>\n' +
-                    '            </td>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="col-sm-10">\n' +
-                    '                            <input type="text" class="form-control si" name="salaryTotal"\n' +
-                    '                               >\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="col-sm-10">\n' +
-                    '                            <input type="text" class="form-control si" name="ActualTotal"\n' +
-                    '                               >\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                    <td>\n' +
-                    '                        <div class="col-sm-10">\n' +
-                    '                            <input id="datepicker1" name="last">\n' +
-                    '                <script>\n' +
-                    '                    $(\'#datepicker1\').datepicker({\n' +
-                    '                        uiLibrary: \'bootstrap4\'\n' +
-                    '                    });\n' +
-                    '                <\/script>\n' +
-                    '                        </div>\n' +
-                    '                    </td>\n' +
-                    '                </tr>';
-                $('#paymentTable').append(tr);
-                $("#r").attr("id", 'r' + idNum + '');
-                $("#l1").attr("for", 'r' + idNum + '');
-                $("#l1").attr("id", 'l1' + idNum + '');
-                idNum++;
-            });
             $.fn.serializeJson = function () {
                 var jsonData1 = {};
                 var serializeArray = this.serializeArray();
@@ -141,6 +80,7 @@
                 let id = radio.val();
                 if (id == -1) {
                     radio.parent().parent().parent().remove();
+                    $('#addDiv').hide();
                     successAlert();
                     closeAlert();
                     return;
@@ -190,6 +130,7 @@
 
         }
 
+
     </script>
 
 </head>
@@ -197,36 +138,39 @@
 <div id="alertDiv"></div>
 <div>
     <div style="margin: 10px">
-        <button type="button" class="btn btn-outline-primary" id="insert">新增</button>
-        <button type="button" class="btn btn-outline-success" id="save">保存</button>
-        <button type="button" class="btn btn-outline-secondary" id="cancel">取消</button>
-        <button type="button" class="btn btn-outline-danger" id="delete">删除</button>
+        <a th:href="paymentAdd">
+            <button type="button" class="btn btn-outline-primary" id="insert">新增</button>
+        </a>
+        <!--<button type="button" class="btn btn-outline-success" id="save">保存</button>-->
+        <!--<button type="button" class="btn btn-outline-secondary" id="cancel">取消</button>-->
+
     </div>
     <div>
         <form name="paymentList" id="paymentForm">
             <table class="table table-bordered" id="paymentTable">
                 <thead>
                 <tr>
-                    <th>选择</th>
+                    <!--<th>选择</th>-->
                     <th>薪酬单编号</th>
                     <th>薪酬次数</th>
                     <th>总人数</th>
                     <th>基本薪酬总额</th>
                     <th>实发金额</th>
                     <th>发放时间</th>
+                    <th>查看</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="payment,status:${paymentList}">
                     <input type="hidden" th:name="modelStatus" value="1">
-                    <td>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" name="dr"
-                                   class="custom-control-input dr" th:value="${payment.getPaymentCode()}"
-                                   th:id="customRadio+${status.count}">
-                            <label class="custom-control-label" th:for="customRadio+${status.count}"></label>
-                        </div>
-                    </td>
+                    <!--<td>-->
+                    <!--<div class="custom-control custom-radio">-->
+                    <!--<input type="radio" name="dr"-->
+                    <!--class="custom-control-input dr" th:value="${payment.getId()}"-->
+                    <!--th:id="customRadio+${status.count}">-->
+                    <!--<label class="custom-control-label" th:for="customRadio+${status.count}"></label>-->
+                    <!--</div>-->
+                    <!--</td>-->
                     <td>
                         <div class="col-sm-10">
                             <input type="text" class="form-control si" name="paymentCode"
@@ -242,7 +186,7 @@
                     <td th:text="${payment.getPeopleNumber()}"></td>
                     <td>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control si"  name="salaryTotal"
+                            <input type="text" class="form-control si" name="salaryTotal"
                                    th:value="${payment.getSalaryTotal()}" readonly>
                         </div>
                     </td>
@@ -258,34 +202,12 @@
                                    th:value="${#dates.format(payment.getLastTime(),'yyyy/MM/dd')}">
                         </div>
                     </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-    <div>
-        <form name="salaryItemList" id="depForm">
-            <table class="table table-bordered" id="depTable">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>I级</th>
-                    <th>II级</th>
-                    <th>人数</th>
-                    <th>基本薪酬</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="department,status:${depList}" th:if="${department.getHigherOffice()}!=0">
-                    <td th:text="${status.count}-1"></td>
-                    <td th:text="${department.getHigherOfficeName()}"></td>
-                    <td th:text="${department.getDepName()}"></td>
-                    <td th:text="${department.getpNum()}"></td>
-                    <td th:text="${department.getTotalSs()}"></td>
                     <td>
-                        <a th:href="@{/showPayroll(paymentCode = '111',depId = ${department.getId()})}">
-                            <button type="button" class="btn btn-outline-primary">登记</button>
+                        <a>
+                            <button type="button" class="btn btn-outline-primary" id="show">查看</button>
+                        </a>
+                        <a>
+                            <button type="button" class="btn btn-outline-danger" id="delete">删除</button>
                         </a>
                     </td>
                 </tr>
@@ -293,6 +215,7 @@
             </table>
         </form>
     </div>
+
 </div>
 
 </body>

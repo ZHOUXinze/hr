@@ -15,7 +15,7 @@
          SELECT id,paymentId,archId FROM payroll WHERE archId IN (
         SELECT id FROM `archive` WHERE depId = #{depId} AND paymentId = #{paymentId})
     </select>
-    <select id="countPayrollByPaymentId" parameterType="int" resultType="int">
-        SELECT COUNT(1) FROM payroll WHERE paymentId = #{paymentId} ORDER BY archId
+    <select id="countPayrollByPaymentId" resultType="int">
+        SELECT COUNT(1) FROM payroll WHERE paymentId = #{paymentId}
     </select>
 </mapper>

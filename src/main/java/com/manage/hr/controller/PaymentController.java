@@ -1,20 +1,11 @@
 package com.manage.hr.controller;
 
-import com.manage.hr.entity.Archive;
-import com.manage.hr.entity.Department;
-import com.manage.hr.entity.Payment;
-import com.manage.hr.entity.SalaryStandardDetail;
-import com.manage.hr.service.ArchiveService;
-import com.manage.hr.service.DepartmentService;
-import com.manage.hr.service.PaymentService;
-import com.manage.hr.service.SalaryStandardDetailService;
+import com.manage.hr.entity.*;
+import com.manage.hr.service.*;
 import com.manage.hr.util.LoadDataBase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -24,16 +15,36 @@ import java.util.List;
 public class PaymentController {
 
     @Resource
-    PaymentService paymentService;
+    private PaymentService paymentService;
     @Resource
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
     @Resource
-    ArchiveService archiveService;
+    private ArchiveService archiveService;
     @Resource
-    SalaryStandardDetailService salaryStandardDetailService;
+    private SalaryStandardDetailService salaryStandardDetailService;
+    @Resource
+    private PaymentDepService paymentDepService;
+    @Resource
+    private PayrollService payrollService;
 
-    @RequestMapping(value = "/showPayment")
+
+    @RequestMapping(value = "/payment")
     public String showPayment(Model model) {
+        //显示payment
+        List<Payment> paymentList = paymentService.listPayment();
+        for (Payment payment : paymentList) {
+            //计算人数
+            payment.setPeopleNumber(payrollService.countPayrollByPaymentId(payment.getId()));
+            //计算总额
+
+        }
+        model.addAttribute("paymentList", paymentList);
+        return "payment";
+    }
+
+
+    @RequestMapping(value = "/paymentAdd")
+    public String paymentAdd(Model model) {
         BigDecimal sT = BigDecimal.valueOf(0);
         LoadDataBase.loadDepartment();
         List<Department> departmentList = LoadDataBase.DATA_BASE.get("department");
@@ -46,24 +57,19 @@ public class PaymentController {
             department.setpNum(archives.size());
             for (Archive archive : archives) {
                 List<SalaryStandardDetail> salaryStandardDetailList = salaryStandardDetailService.listSalaryStandardDetailByCode(archive.getStandardCode());
-                for (SalaryStandardDetail salaryStandardDetail: salaryStandardDetailList){
-                     sT = sT.add(salaryStandardDetail.getItemAmount());
+                for (SalaryStandardDetail salaryStandardDetail : salaryStandardDetailList) {
+                    sT = sT.add(salaryStandardDetail.getItemAmount());
                 }
             }
             department.setTotalSs(sT);
         }
-        //查询所有人数
-        model.addAttribute("pNum",archiveService.countAll());
-        model.addAttribute("paymentList", paymentService.listPayment());
-        model.addAttribute("depList", departmentList);
-        return "payment";
+        Payment payment = new Payment();
+        payment.setPaymentCode(paymentService.getNewCode());
+        model.addAttribute("payment", payment);
+        model.addAttribute("departmentList", departmentList);
+        return "paymentAdd";
     }
 
-    //保存新增和修改
-    @RequestMapping(value = "/savePayment", method = RequestMethod.POST)
-    @ResponseBody
-    public String saveSalaryItem(@RequestBody List<Payment> paymentList) {
-        return paymentService.savePayment(paymentList) > 0 ? "success" : "error";
-    }
 
 }
+

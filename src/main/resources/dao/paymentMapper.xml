@@ -8,9 +8,7 @@
         `id`,
         `paymentCode`,
         `paymentCount`,
-        `lastTime`,
-        `status`,
-        `peopleNumber`
+        `lastTime`
         FROM
         payment
     </select>
@@ -18,28 +16,25 @@
         INSERT INTO `payment` (
  `paymentCode`,
   `paymentCount`,
-  `lastTime`,
-  `status`,
-  `peopleNumber`,
-  depId
+  `lastTime`
 )
 VALUES
   (
      #{paymentCode},
   #{paymentCount},
-  #{lastTime},
-  #{status},
-  #{peopleNumber},
-  #{depId}
-  )
+  #{lastTime})
     </insert>
     <update id="updatePayment" parameterType="Payment">
 
     </update>
-    <select id="listPaymentByCode" resultType="Payment" parameterType="String">
-        select * from payment where paymentCode = #{paymentCode}
-    </select>
-    <select id="getPaymentByCodeAndDep" resultType="Payment">
-
+    <select id="getPaymentByCode" resultType="Payment" parameterType="String">
+        SELECT
+        `id`,
+        `paymentCode`,
+        `paymentCount`,
+        `lastTime`
+        FROM
+        payment
+        where paymentCode = #{paymentCode}
     </select>
 </mapper>

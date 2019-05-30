@@ -7,10 +7,8 @@ import com.manage.hr.dao.PayrollDetailDao;
 import com.manage.hr.entity.Payment;
 import com.manage.hr.service.PaymentService;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,34 +31,29 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public int savePayment(List<Payment> paymentList) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        for (Payment payment : paymentList) {
-            int ms = payment.getModelStatus();
-            if (ms != 0) {
-                try {
-                    payment.setLastTime(simpleDateFormat.parse(payment.getLast()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (ms == 2) {
-                    payment.setStatus(6);
-                    paymentDao.insertPayment(payment);
-                }
-            }
-        }
-        return 1;
+    public Payment insertPayment() {
+        List<Payment> paymentList = paymentDao.listPayment();
+        Payment lastPayment = paymentList.get(paymentList.size() - 1);
+        Payment payment = new Payment();
+        int pay = lastPayment.getId() + 1;
+        payment.setPaymentCode("pay" + pay);
+        payment.setLastTime(new Date());
+        payment.setPaymentCount(lastPayment.getPaymentCount() + 1);
+        paymentDao.insertPayment(payment);
+        return paymentDao.getPaymentByCode(payment.getPaymentCode());
     }
 
     @Override
-    public List<Payment> listPaymentByCode(String paymentCode) {
-        return paymentDao.listPaymentByCode(paymentCode);
+    public int updatePayment(Payment payment) {
+        return paymentDao.updatePayment(payment);
     }
 
     @Override
-    public Payment getPaymentByCodeAndDep(String paymentCode, int depId) {
-        return paymentDao.getPaymentByCodeAndDep(paymentCode, depId);
+    public String getNewCode() {
+        List<Payment> paymentList = paymentDao.listPayment();
+        Payment lastPayment = paymentList.get(paymentList.size() - 1);
+        int pay = lastPayment.getId() + 1;
+        return "pay" + pay;
     }
-
 
 }

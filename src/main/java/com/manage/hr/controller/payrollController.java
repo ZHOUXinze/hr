@@ -26,6 +26,7 @@ public class payrollController {
 
     @RequestMapping(value = "showPayroll")
     public String showPayroll(String paymentCode, int depId, Model model) {
+
         //显示employee
         List<Archive> archiveList = archiveService.listArchiveByDep(depId);
         List<Archive> newArchList = new ArrayList<>();
@@ -34,12 +35,10 @@ public class payrollController {
             System.out.println(salaryStandardDetailService.listSalaryStandardDetailByCode(archive.getStandardCode()).size());
             newArchList.add(archive);
         }
-
         //显示薪酬项目
         List<SalaryItem> salaryItemList = salaryItemService.listSalaryItem();
         //查询payment
-
-        model.addAttribute("payment", paymentService.listPaymentByCode(paymentCode));
+        // model.addAttribute("payment", paymentService.listPaymentByCode(paymentCode));
         model.addAttribute("salaryItemList", salaryItemList);
         model.addAttribute("archiveList", newArchList);
         return "payroll";
