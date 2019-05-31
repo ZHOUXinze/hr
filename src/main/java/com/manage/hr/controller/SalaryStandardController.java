@@ -49,7 +49,7 @@ public class SalaryStandardController {
         if (operating.equals("show")) return "sidShow";
         if (operating.equals("delete")) {
             salaryStandardService.deleteSalaryStandard(id);
-            return "salaryStandard";
+            return "/salaryStandard";
         }
         return "/salaryStandard";
     }
