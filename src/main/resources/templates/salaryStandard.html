@@ -16,6 +16,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <script>
+        $('.delete').click(function () {
+            window.location.replace("/salaryStandard");
+        });
+    </script>
 </head>
 <body>
 <div style="margin-top: 100px">
@@ -105,7 +110,7 @@
                     </a>
                     <a th:if="${salaryStandard.getStatusName()}=='起草'"
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'delete')}">
-                        <button type="button" class="btn btn-outline-danger">删除</button>
+                        <button type="button" class="btn btn-outline-danger delete">删除</button>
                     </a>
                 </td>
                 <td th:if="${session.userSession.dataName=='薪酬专员'}">
@@ -126,7 +131,7 @@
                     </a>
                     <a th:if="${salaryStandard.getStatusName()}=='起草'"
                        th:href="@{/operatingSalaryStandard(id=${salaryStandard.getId()},operating = 'delete')}">
-                        <button type="button" class="btn btn-outline-danger">删除</button>
+                        <button type="button" class="btn btn-outline-danger delete">删除</button>
                     </a>
                 </td>
             </tr>

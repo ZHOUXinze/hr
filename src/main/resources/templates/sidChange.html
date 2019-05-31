@@ -91,9 +91,10 @@
                                 success: function (data) {
                                     if (data == "success") {
                                         window.location.replace("/salaryStandard");
-                                        alert("保存成功");
+                                        successAlert();
+                                        closeAlert();
                                     } else if (data == "error") {
-                                        alert("保存失败");
+                                        successAlert();
                                     }
                                 }
                             });
@@ -122,9 +123,31 @@
             const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
             return (num1 * baseNum + num2 * baseNum) / baseNum;
         }
+        //提示成功
+        function successAlert() {
+            let alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
+                '    <strong>成功</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+        //提示失败
+        function failAlert() {
+            let alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
+                '    <strong>失败</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+        //一秒后自动关闭提示
+        function closeAlert() {
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 800);
+
+        }
     </script>
 </head>
 <body>
+<div id="alertDiv"></div>
 <div>
     <div>
         <form id="salaryStandardForm">
