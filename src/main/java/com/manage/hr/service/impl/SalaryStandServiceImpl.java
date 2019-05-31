@@ -131,7 +131,13 @@ public class SalaryStandServiceImpl implements SalaryStandardService {
                 status = -1;
                 break;
         }
-        return salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, startTime, endTime);
+        List<SalaryStandard> salaryStandardList = new ArrayList<>();
+        for (SalaryStandard salaryStandard : salaryStandardDao.listSalaryStandardByCondition(salaryStandardCode, status, startTime, endTime)) {
+            salaryStandard.setStatusName(LoadDataBase.DICTIONARY.get("revStatus").get(salaryStandard.getStatus()));
+            salaryStandardList.add(salaryStandard);
+        }
+        return salaryStandardList;
+
     }
 
 

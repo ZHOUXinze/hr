@@ -18,9 +18,13 @@
     <title>薪资标准变更</title>
     <script>
         $(function () {
+            const pattern = /^[0-9]+(.[0-9]{1,3})?$/;
             calculateSum();
             //获取表格的修改状态
             $(".itemAmount").change(function () {
+                if ($(this).val() == '' || pattern.test($(this).val()) == false) {
+                    $(this).val(0.00);
+                }
                 //动态计算总额
                 calculateSum();
                 let hidden = $(this).parent().parent().children("input:last");

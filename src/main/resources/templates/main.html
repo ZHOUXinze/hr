@@ -61,7 +61,7 @@
               <li  class="active"><a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 我的工作平台 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: block;">
                   <li><a th:target="fr" th:href="waitList" id="wait" th:if="${session.userSession.userRole}==19"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
-                  <li><a th:target="fr" href="" id="waitpay" th:if="${session.userSession.userRole}==21"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
+                  <!--<li><a th:target="fr" href="" id="waitpay" th:if="${session.userSession.userRole}==21"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>-->
                   <!--<li><a th:target="fr" th:href="addArchive" id="waitzhuangyuan" th:if="${session.userSession.userRole}==18"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">代办列表</font></font></a></li>
 -->
                   <li><a target="fr" th:href="gaimima"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修改密码</font></font></a></li>
@@ -74,14 +74,14 @@
                   <li><a th:target="fr" href="yonghuguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用户管理</font></font></a></li>
                   <li><a th:target="fr" href="zhiweiguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">职位设置</font></font></a></li>
                   <li><a th:target="fr" href="zhichengshezhi"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">职称设置</font></font></a></li>
-                  <li><a th:target="fr" href="salaryItem"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪项目设置</font></font></a></li>
 
                 </ul>
               </li>
-              <li><a th:if="${session.userSession.dataName}=='薪酬专员' or ${session.userSession.dataName}=='薪酬经理' "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
+              <li><a th:if="${session.userSession.dataName}=='薪酬经理' "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪管理 </font></font><span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
+                  <li th:if="${session.userSession.dataName}!='薪酬专员'"><a th:target="fr" href="salaryItem"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪项目设置</font></font></a></li>
                   <li  class="current-page"><a th:target="fr" href="salaryStandard"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪标准管理</font></font></a></li>
-                  <li><a th:target="fr" href="xinchoufafangguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪发放管理</font></font></a></li>
+                  <!--<li><a th:target="fr" href="xinchoufafangguanli"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">酬薪发放管理</font></font></a></li>-->
 
                 </ul>
               </li>
@@ -198,7 +198,7 @@
       }else{
         location.href="#";
       }
-     
+
     })*/
 
 

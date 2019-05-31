@@ -19,9 +19,14 @@
     <script>
         $(function () {
             calculateSum();
+            const pattern = /^[0-9]+(.[0-9]{1,3})?$/;
+
 
             //获取表格的修改状态
             $(".itemAmount").change(function () {
+                if ($(this).val() == '' || pattern.test($(this).val()) == false) {
+                    $(this).val(0.00);
+                }
                 //动态计算总额
                 calculateSum();
                 let hidden = $(this).parent().parent().children("input:last");
@@ -41,7 +46,18 @@
             });
         });
 
+
         function sub(url) {
+            let flag = 0;
+            $('.must').each(function () {
+                if ($(this).val() == '') {
+                    flag = 1;
+                }
+            });
+            if (flag == 1) {
+                alert('存在未填字段');
+                return;
+            }
             let jsonArr = $('#salaryStandardForm').serializeArray();
             $.ajax({
                 type: "POST",
@@ -61,9 +77,11 @@
                             success: function (data) {
                                 if (data == "success") {
                                     window.location.replace("/salaryStandard");
-                                    alert("成功");
+                                    successAlert();
+                                    closeAlert();
                                 } else if (data == "error") {
-                                    alert("失败");
+                                    failAlert();
+                                    closeAlert();
                                 }
                             }
                         });
@@ -91,21 +109,46 @@
             const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
             return (num1 * baseNum + num2 * baseNum) / baseNum;
         }
+
+        //提示成功
+        function successAlert() {
+            let alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
+                '    <strong>成功</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+
+        //提示失败
+        function failAlert() {
+            let alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
+                '    <strong>失败</strong>\n' +
+                '</div>';
+            $("#alertDiv").append(alert);
+        }
+
+        //一秒后自动关闭提示
+        function closeAlert() {
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 800);
+
+        }
     </script>
 </head>
 <body>
+<div id="alertDiv"></div>
 <div>
     <div>
         <form id="salaryStandardForm">
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="staCode">薪酬标准编号</label>
-                    <input type="text" class="form-control" id="staCode"
+                    <input type="text" class="form-control must" id="staCode"
                            name="standardCode">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="staName">薪酬标准名称</label>
-                    <input type="text" class="form-control" id="staName"
+                    <input type="text" class="form-control must" id="staName"
                            name="standardName">
                 </div>
                 <div class="col-md-4 mb-3">
@@ -116,17 +159,18 @@
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="formulator">制定人</label>
-                    <input type="text" class="form-control" id="formulator"
+                    <input type="text" class="form-control must" id="formulator"
                            th:value="${session.userSession.userName}" name="formulator">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="register">登记人</label>
-                    <input  th:value="${session.userSession.userName}" type="text" class="form-control" id="register"
+                    <input th:value="${session.userSession.userName}" type="text" class="form-control must"
+                           id="register"
                            name="registerPerson">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="datepicker5">登记时间</label>
-                    <input id="datepicker5" name="createDate">
+                    <input id="datepicker5" name="createDate" class="must">
                     <script>
                         $('#datepicker5').datepicker({
                             uiLibrary: 'bootstrap4'
@@ -155,11 +199,12 @@
                                name="itemName" th:value="${salaryItem.getItemName()}" readonly>
                     </td>
                     <td th:if="${salaryItem.getEnable()}==4">
-                        <input type="text" value="已停用" disabled>
+                        <input type="text" class="form-control"
+                               value="已停用" disabled>
                     </td>
                     <td th:if="${salaryItem.getEnable()}==3">
                         <input type="text" class="form-control itemAmount"
-                               name="itemAmount" value="0" pattern="^[0-9]+(.[0-9]{2})?$" >
+                               name="itemAmount" value="0" pattern="^[0-9]+(.[0-9]{2})?$">
                     </td>
                 </tr>
                 </tbody>

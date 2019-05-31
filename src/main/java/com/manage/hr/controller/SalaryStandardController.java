@@ -64,6 +64,9 @@ public class SalaryStandardController {
     @RequestMapping(value = "/selectSalaryStandard", method = RequestMethod.POST)
     public String selectSalaryStandard(String salaryStandardCode, String statusName, String start, String end, Model model) {
         List<SalaryStandard> salaryStandardList = salaryStandardService.listSalaryStandardByCondition(salaryStandardCode, statusName, start, end);
+        for (SalaryStandard salaryStandard : salaryStandardList) {
+            System.out.println(salaryStandard.getStatusName());
+        }
         model.addAttribute("salaryStandardList", salaryStandardList);
         return "salaryStandard";
     }

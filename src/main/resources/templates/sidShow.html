@@ -68,8 +68,12 @@
                            th:value="${salaryStandard.getRegisterPerson()}"
                            readonly>
                 </div>
-                <input type="text" readonly
-                       th:value="${#dates.format(salaryStandard.getCreateDate(),'MM/dd/yyyy')}">
+                <div class="col-md-4 mb-3">
+                    <label for="register">登记日期</label>
+                    <input type="text" readonly class="form-control"
+                           th:value="${#dates.format(salaryStandard.getCreateDate(),'MM/dd/yyyy')}">
+                </div>
+
             </div>
         </form>
     </div>

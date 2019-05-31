@@ -24,10 +24,11 @@
         UPDATE `salaryStandard` SET `reviewOpinion` = #{reviewOpinion},`status` = #{status} WHERE `id` = #{id}
     </update>
     <select id="listSalaryStandardByCondition" resultType="SalaryStandard">
-        SELECT `id`,`standardCode`,`standardName`,
-        `formulator`, `registerPerson`,
-        `createDate`, `reviewOpinion`,
-        `changeReason`, `status`
+--         SELECT `id`,`standardCode`,`standardName`,
+--         `formulator`, `registerPerson`,
+--         `createDate`, `reviewOpinion`,
+--         `changeReason`, `status`
+        select *
         FROM
         `salaryStandard`
         WHERE
